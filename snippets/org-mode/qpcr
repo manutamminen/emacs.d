@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: qpcr
+# key: qpcr_
+# --
+|------+-----------------------------|
+|   1X |                             |
+|------+-----------------------------|
+|   12 | H2O                         |
+|    5 | 5x Phusion HF Buffer        |
+|  0.5 | 10 mM dNTPs                 |
+| 1.25 | 20X EvaGreen                |
+|  2.5 | 3 µM for primer             |
+|  2.5 | 3 µM rev primer             |
+| 0.25 | Phusion HF Polymerase 2U/µl |
+|------+-----------------------------|
+$0

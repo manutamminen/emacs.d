@@ -1,0 +1,13 @@
+# key: lsf
+# name: lsf batch script
+# --
+#+BEGIN_SRC sh
+#!/bin/bash
+#
+#BSUB -W ${1:02}:00                # wall-clock time (hrs:mins)
+#BSUB -e errors.%J.hybrid     # error file name in which %J is replaced by the job ID
+#BSUB -o output.%J.hybrid     # output file name in which %J is replaced by the job ID
+
+# Script begins
+$0
+#+END_SRC

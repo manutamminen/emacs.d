@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: r block
+# key: r_
+# --
+#+BEGIN_SRC R :session
+$0
+#+END_SRC

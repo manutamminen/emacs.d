@@ -1,0 +1,18 @@
+# key: lsf_parallel
+# name: lsf parallel batch job
+# --
+#+BEGIN_SRC sh
+#!/bin/bash
+#BSUB -n 1
+#BSUB -R "rusage[mem=${1:2048}]"    # mem usage (eg. 1024, 2048 etc)
+#BSUB -J ${2:name}[1-$3]              # job name and amount of sub-jobs
+#BSUB -o wrf.%I
+#BSUB -e wrf.%I
+#BSUB -W ${4:02}:00                 # wall-clock time (hrs:mins)
+
+# set input files and program variables
+name=$(sed -n "$LSB_JOBINDEX"p namelist)
+
+# run the analysis commands
+$0
+#+END_SRC

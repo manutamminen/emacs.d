@@ -1,0 +1,80 @@
+# -*- mode: snippet -*-
+# name: epic
+# key: epic_
+# --
+Into 50 µl of the sample, add
+- 200 µl of 12% / 0.32% acrylamide / bisacryloylcystamine
+- 25 µl of 10% ammoniumpersulfate
+Vortex into 600 µl of Span/Tween/Triton oil.
+- Add 25 µl TEMED and vortex. Extract with diethylether after 1.5 h polymerization. Wash with water until clear.
+
+Span/Tween/Triton oil
+- 2,25 ml Span 80
+- 200 µl Tween 80
+- 25 µl Triton X-100
+Mineral oil to 50 ml
+
+Emulsion fusion PCR:
+|----------+---------+----------------------|
+| 1X       | 2X      |                      |
+|----------+---------+----------------------|
+| 10 µl    | 20 μl   | 5X HF                |
+| 1 µl     | 2 μl    | 50 mM MgCl2          |
+| 1.25 µl  | 2.5 μl  | 10 mM dNTP           |
+| 5 µl     | 10 μl   | 10 µM primer 9       |
+| 5 µl     | 10 μl   | 10 µM primer 5       |
+| 0.5 µl   | 1 μl    | 1 µM primer 2        |
+| 23.25 µl | 46.5 μl | polyacrylamide beads |
+| 4 µl     | 8 μl    | Phusion              |
+|----------+---------+----------------------|
+Add 450 µl of mineral oil with 4% Abil EM 90
+Vortex into an emulsion with 4 1 mm glass beads
+
+1. 94°C 30 seconds
+2. 94°C 5 seconds
+3. 52°C 30 seconds
+4. 72°C 45 seconds
+5. Move to step 2. 32 times
+6. 72°C 5 minutes
+
+|-----------+--------------------------+-----------------------------------------|
+| Zurich ix | Name                     | Sequence                                |
+|-----------+--------------------------+-----------------------------------------|
+|         9 | 1492R                    | GGTTACCTTGTTACGACTT                     |
+|         5 | 18S 1629-1647 for        | AGCGACGGGCGGTGTGTAC                     |
+|         2 | 18S 1266-1286 for - 519R | GWATTACCGCGGCKGCTGTGGTGGTGCATGGCCGTTCTT |
+|-----------+--------------------------+-----------------------------------------|
+
+Extract twice with water-saturated diethylether (~2 ml), once with water-saturated ethylacetate (~2 ml) and twice more with water-saturated diethylether (~1 ml).
+
+Purify the fusion reaction using AMPure beads: into 100 µl of the extracted reaction, add 100 µl of AMPure slurry. Incubate 10 min. Wash 2X with 400 µl of 70% EtOH. Dry 1 min and suspend into 50 µl water.
+
+|---------+--------+-----------------------------|
+| 1X      | 3X     |                             |
+|---------+--------+-----------------------------|
+| 7.25 μl | 29. μl | H2O                         |
+| 5 μl    | 20 μl  | 5x Phusion HF Buffer        |
+| 0.5 μl  | 2. μl  | 10 mM dNTPs                 |
+| 2.5 μl  | 10. μl | 3 µM primer 10              |
+| 2.5 μl  | 10. μl | 3 µM primer 146             |
+| 2.5 μl  | 10. μl | 32 µM primer 16             |
+| 2.5 μl  | 10. μl | 32 µM primer 17             |
+| 0.25 μl | 1 μl   | Phusion HF Polymerase 2U/µl |
+|---------+--------+-----------------------------|
+
+1. 98°C 30 seconds
+2. 98°C 10 seconds
+3. 52°C 30 seconds
+4. 72°C 30 seconds
+5. Move to step 2. 39 times
+6. 72°C 5 minutes
+
+|-----------+---------------+-----------------------------------------------------|
+| Zurich ix | Name          | Sequence                                            |
+|-----------+---------------+-----------------------------------------------------|
+|        10 | i_E786R       | CGGCATTCCTGCTGAACCGCTCTTCCGATCTGGACTACHVGGGTWTCTAAT |
+|       146 | PE18S_1440R   | ACACGACGCTCTTCCGATCTYRYRGGCATCACAGACCTGTTAT         |
+|        16 | U519R-block10 | TTTTTTTTTTGWATTACCGCGGCKGCTG/3SpC3/                 |
+|        17 | U519F-block10 | TTTTTTTTTTCAGCMGCCGCGGTAATWC/3SpC3/                 |
+|-----------+---------------+-----------------------------------------------------|
+$0

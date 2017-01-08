@@ -1,0 +1,54 @@
+# -*- mode: snippet -*-
+# name: mda
+# key: mda_
+# --
+Start by preparing the denaturation and neutralization buffers:
+
+Buffer A
+- 321 µl 5 M KOH
+- 270 µl 0.5 M EDTA
+- 111 µl 1 M DTT
+- 3541 µl water
+
+Buffer B
+- 350 µl 32% HCl
+- 2000 µl 1 M Tris-HCl pH8
+- 7689 µl water
+
+Mix these 1:1 and test pH using Merck MColorpHast strips. Should be about pH 7.
+
+Then prepare the WGA mastermix.
+
+|---------------+-----------+---------------------------------------|
+| WGA mastermix |           |                                       |
+|---------------+-----------+---------------------------------------|
+| 1X            | 100 X     |                                       |
+|---------------+-----------+---------------------------------------|
+| 2.331 μl      | 233.1 μl  | 10X RepliPhi buffer                   |
+| 1.162 μl      | 116.2 μl  | 1 ng/µl Random hexamers               |
+| 0.931 μl      | 93.1 μl   | 100 mM DTT                            |
+| 0.931 μl      | 93.1 μl   | 25 mM dNTP                            |
+| 0.231 μl      | 23.1 μl   | 20X EvaGreen (add after UV treatment) |
+| 0.119 μl      | 11.9 μl   | phi29 polymerase                      |
+| 7.119 μl      | 711.9 μl  | water                                 |
+|---------------+-----------+---------------------------------------|
+| 12.824 μl     | 1282.4 μl | total                                 |
+|---------------+-----------+---------------------------------------|
+
+Wrap parafilm around the heads of buffer A and B tubes and the mastermix tube. Roast in UV oven on ice for 1 h.
+
+Sterilize the following in a laminar hood for 30 min in UV:
+- pipettes: 1 ml, 100 µl, 10 µl, 5 µl multichannel
+- Tips
+- PCR tube rack + four strips
+- Eppendorf tubes (Brand 780540)
+- Plate seal
+- Waste bin
+
+On a sorted plate, add 5 µl buffer A
+Incubate 5 min
+Add 5 µl buffer B
+Add 13 µl WGA mastermix
+
+Run on ABI 7500 qPCR machine, measure every 30 minutes..
+$0
