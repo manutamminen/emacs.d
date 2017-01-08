@@ -1,0 +1,1 @@
+My Emacs configuration. Highly recommend [use-package](https://github.com/jwiegley/use-package) for anyone!
