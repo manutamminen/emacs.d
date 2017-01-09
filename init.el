@@ -25,7 +25,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters evil-lispy lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
+    (exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters evil-lispy lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -107,6 +107,7 @@
 (use-package evil-magit :ensure t
   :config
   (add-hook 'magit-mode-hook (evil-local-mode 1)))
+(use-package exec-path-from-shell :ensure t)
 (use-package aggressive-indent :ensure t
   :init
   (dolist (hook '(emacs-lisp-mode-hook
@@ -215,5 +216,8 @@
       (self-insert-command 1))))
 
 (load "~/.emacs.d/org-defaults.el")
+
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
 
 (when window-system (set-frame-size (selected-frame) 160 50)) ; set window size
