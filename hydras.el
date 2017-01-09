@@ -28,13 +28,14 @@
   "
 Molecular biology
 -----------------
-_a_mpure  _e_pic           m_d_a
-_r_ block i_m_age ipython  _p_cr
-_c_ycle   _i_python        _q_pcr
+_a_mpure  _e_pic  m_d_a
+_p_cr   _c_ycle   _q_pcr
 
 Computation
 -----------
+_i_python    i_m_age ipython
 _l_sf block  l_s_f parallel block
+_r_ block 
 
 "
   ("a" (y-expand "ampure_"))
