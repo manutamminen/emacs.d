@@ -77,3 +77,4 @@ BEG and END (region to sort)."
 	((eq major-mode 'python-mode) (python-shell-send-buffer))
 	((eq major-mode 'ess-mode) (ess-eval-buffer nil))
 	(t (message "Not defined for this major mode"))))
+

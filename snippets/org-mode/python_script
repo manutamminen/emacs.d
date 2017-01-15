@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: python script
+# key: python_script
+# --
+#+BEGIN_SRC ipython :session :noweb-ref $1
+$0
+EOF
+#+END_SRC
+ 
+#+BEGIN_SRC sh :noweb yes :dir $3 :results value verbatim
+cat <<'EOF' > $2
+<<$1>>
+sem -j -1 'python ./$2 2>&1'
+#+END_SRC

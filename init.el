@@ -201,19 +201,25 @@
 
   (general-nmap
    :prefix "SPC"
-   "TAB" 'mode-line-other-buffer))
+   "TAB" 'mode-line-other-buffer)
 
-(define-key org-mode-map "<"
-  (lambda () (interactive)
-    (if (looking-back "^")
-	(hydra-org-template/body)
-      (self-insert-command 1))))
+  (define-key org-mode-map "<"
+    (lambda () (interactive)
+      (if (looking-back "^")
+	  (hydra-org-template/body)
+	(self-insert-command 1))))
 
-(define-key python-mode-map "<"
-  (lambda () (interactive)
-    (if (looking-back "^")
-	(hydra-python-template/body)
-      (self-insert-command 1))))
+  (define-key org-mode-map ">"
+    (lambda () (interactive)
+      (if (looking-back "^")
+	  (hydra-org-mol-template/body)
+	(self-insert-command 1))))
+
+  (define-key python-mode-map "<"
+    (lambda () (interactive)
+      (if (looking-back "^")
+	  (hydra-python-template/body)
+	(self-insert-command 1)))))
 
 (load "~/.emacs.d/org-defaults.el")
 
@@ -221,3 +227,4 @@
   (exec-path-from-shell-initialize))
 
 (when window-system (set-frame-size (selected-frame) 160 50)) ; set window size
+
