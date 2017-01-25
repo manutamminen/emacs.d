@@ -203,6 +203,12 @@
    :prefix "SPC"
    "TAB" 'mode-line-other-buffer)
 
+  (define-key lispy-mode-map ")"
+    (lambda () (interactive)
+      (progn
+	(hydra-lispy-magic/body)
+	(lispy-right-nostring 1))))
+
   (define-key org-mode-map "<"
     (lambda () (interactive)
       (if (looking-back "^")
@@ -227,4 +233,3 @@
   (exec-path-from-shell-initialize))
 
 (when window-system (set-frame-size (selected-frame) 160 50)) ; set window size
-

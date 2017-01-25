@@ -54,3 +54,7 @@ Python completions
   ("i" (lambda () (interactive) (split-window-right) (windmove-right)))
   ("-" (lambda () (interactive) (split-window-below) (windmove-down)))
   ("q" nil "cancel"))
+
+(defhydra hydra-lispy-magic ()
+  ("e" univ-eval)
+  (")" lispy-right-nostring 1))
