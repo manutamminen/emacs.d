@@ -51,6 +51,7 @@ BEG and END (region to sort)."
   (cond ((eq major-mode 'lisp-interaction-mode) (eval-defun nil))
 	((eq major-mode 'emacs-lisp-mode) (eval-defun nil))
 	((eq major-mode 'python-mode) (python-shell-send-defun))
+	((eq major-mode 'clojure-mode) (cider-eval-defun-at-point nil))
 	((eq major-mode 'ess-mode) (ess-eval-function nil))
 	(t (message "Not defined for this major mode"))))
 
