@@ -209,6 +209,12 @@
 	(hydra-lispy-magic/body)
 	(lispy-right-nostring 1))))
 
+  (define-key lispy-mode-map ")"
+    (lambda () (interactive)
+      (progn
+	(hydra-lispy-magic/body)
+	(lispy-right-nostring 1))))
+
   (define-key org-mode-map "<"
     (lambda () (interactive)
       (if (looking-back "^")

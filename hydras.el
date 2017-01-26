@@ -56,5 +56,9 @@ Python completions
   ("q" nil "cancel"))
 
 (defhydra hydra-lispy-magic ()
-  ("e" univ-eval)
-  (")" lispy-right-nostring 1))
+  "
+Modified lispy bindings
+"
+  ("b" univ-eval-buffer "Evaluate buffer")
+  ("e" univ-eval "Evaluate function")
+  ("p" univ-eval-line-last-sexp "Evaluate last sexp"))

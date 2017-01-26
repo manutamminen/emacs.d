@@ -60,6 +60,7 @@ BEG and END (region to sort)."
   (cond ((eq major-mode 'lisp-interaction-mode) (eval-last-sexp nil))
 	((eq major-mode 'emacs-lisp-mode) (eval-last-sexp nil))
 	((eq major-mode 'python-mode) (my-python-send-region))
+	((eq major-mode 'clojure-mode) (cider-eval-last-sexp nil))
 	((eq major-mode 'ess-mode) (ess-eval-line))
 	(t (message "Not defined for this major mode"))))
 
@@ -68,6 +69,7 @@ BEG and END (region to sort)."
   (cond ((eq major-mode 'lisp-interaction-mode) (eval-region (region-beginning) (region-end)))
 	((eq major-mode 'emacs-lisp-mode) (eval-region (region-beginning) (region-end)))
 	((eq major-mode 'python-mode) (python-shell-send-region (region-beginning) (region-end)))
+	((eq major-mode 'clojure-mode) (cider-eval-region (region-beginning) (region-end)))
 	((eq major-mode 'ess-mode) (ess-eval-region (region-beginning) (region-end)))
 	(t (message "Not defined for this major mode"))))
 
@@ -76,6 +78,7 @@ BEG and END (region to sort)."
   (cond ((eq major-mode 'lisp-interaction-mode) (eval-buffer nil))
 	((eq major-mode 'emacs-lisp-mode) (eval-buffer nil))
 	((eq major-mode 'python-mode) (python-shell-send-buffer))
+	((eq major-mode 'clojure-mode) (cider-eval-buffer nil))
 	((eq major-mode 'ess-mode) (ess-eval-buffer nil))
 	(t (message "Not defined for this major mode"))))
 
