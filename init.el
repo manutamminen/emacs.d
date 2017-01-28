@@ -30,7 +30,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters evil-lispy lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
+    (evil-org exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters evil-lispy lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -38,27 +38,78 @@
  ;; If there is more than one, they won't work right.
  )
 
-(use-package general :ensure t
+(use-package general
+  :ensure t
   :config
   (general-evil-setup 1))
-(use-package ivy :ensure t
+
+(use-package ivy
+  :ensure t
   :config
   (ivy-mode 1))
-(use-package counsel :ensure t)
-(use-package swiper :ensure t)
-(use-package evil :ensure t
+
+(use-package counsel
+  :ensure t)
+
+(use-package swiper
+  :ensure t)
+
+(use-package lispy
+  :ensure t
+  :defer t
+  :init
+  (dolist (hook '(emacs-lisp-mode-hook
+		  lisp-interaction-mode-hook
+		  lisp-mode-hook
+		  clojure-mode-hook))
+    (add-hook hook (lambda () (lispy-mode 1)))))
+
+(use-package magit
+  :ensure t
+  :defer t)
+
+(use-package evil
+  :ensure t
+  :init
+  (progn
+    (use-package evil-escape
+      :ensure t)
+
+    (use-package evil-lispy
+      :ensure t)
+
+    (use-package evil-org
+      :ensure t
+      :init (add-hook 'org-mode-hook 'evil-org-mode))
+
+    (use-package evil-magit :ensure t
+      :config
+      (add-hook 'magit-mode-hook (evil-local-mode 1))))
+
   :config
   (evil-mode 1)
   (evil-escape-mode 1)
   (setq-default evil-escape-key-sequence "kj"))
-(use-package evil-escape :ensure t)
-(use-package avy :ensure t)
-(use-package which-key :ensure t
+
+
+
+(use-package avy
+  :ensure t)
+
+(use-package which-key
+  :ensure t
   :config
   (which-key-mode 1))
-(use-package dash :ensure t)
-(use-package s :ensure t)
-(use-package f :ensure t)
+
+(use-package dash
+  :ensure t)
+
+(use-package s
+  :ensure t)
+
+(use-package f
+  :ensure t)
+
 (use-package elpy
   :ensure t
   :defer 2
@@ -73,68 +124,85 @@
     (elpy-enable)
     ;; jedi is great
     (setq elpy-rpc-backend "jedi")))
-(use-package ob-ipython :ensure t)
-(use-package company :ensure t
+
+(use-package ob-ipython
+  :ensure t)
+
+(use-package company
+  :ensure t
   :config
   (add-hook 'after-init-hook 'global-company-mode))
+
 (use-package yasnippet
   :ensure t
   :defer t
   :config
   (yas-reload-all)
   (yas-global-mode 1))
-(use-package ace-window :ensure t)
-(use-package cider :ensure t
+
+(use-package ace-window
+  :ensure t)
+
+(use-package cider
+  :ensure t
   :config
   (add-hook 'cider-mode-hook #'eldoc-mode))
-(use-package which-key :ensure t)
-(use-package rainbow-delimiters :ensure t
+
+(use-package which-key
+  :ensure t)
+
+(use-package rainbow-delimiters
+  :ensure t
   :config
   (rainbow-delimiters-mode 1))
-(use-package rainbow-identifiers :ensure t
+
+(use-package rainbow-identifiers
+  :ensure t
   :config
   (add-hook 'prog-mode-hook 'rainbow-identifiers-mode))
-(use-package hydra :ensure t
+
+(use-package hydra
+  :ensure t
   :config
   (load "~/.emacs.d/hydras.el"))
-(use-package ivy-hydra :ensure t)
-(use-package lispy
+
+(use-package ivy-hydra
+  :ensure t)
+
+
+
+(use-package buffer-move
+  :ensure t)
+
+(use-package ranger
+  :ensure t)
+
+(use-package exec-path-from-shell
+  :ensure t)
+
+(use-package aggressive-indent
   :ensure t
-  :defer t
-  :init
-  (dolist (hook '(emacs-lisp-mode-hook
-		  lisp-interaction-mode-hook
-		  lisp-mode-hook
-		  clojure-mode-hook))
-    (add-hook hook (lambda () (lispy-mode 1)))))
-(use-package evil-lispy :ensure t)
-(use-package buffer-move :ensure t)
-(use-package ranger :ensure t)
-(use-package magit
-  :ensure t
-  :defer t
-  :init
-  (use-package evil-magit :ensure t
-    :config
-    (add-hook 'magit-mode-hook (evil-local-mode 1))))
-(use-package exec-path-from-shell :ensure t)
-(use-package aggressive-indent :ensure t
   :init
   (dolist (hook '(emacs-lisp-mode-hook
 		  lisp-interaction-mode-hook
 		  lisp-mode-hook
 		  clojure-mode-hook))
     (add-hook hook (lambda () (aggressive-indent-mode 1)))))
-(use-package ace-popup-menu :ensure t
+
+(use-package ace-popup-menu
+  :ensure t
   :config
   (ace-popup-menu-mode 1))
+
 (use-package ess-site
   :init
   (add-to-list 'Info-default-directory-list "~/elisp/ess-16.10/doc/info/")
   :load-path "~/elisp/ess-16.10/lisp/"
   :defer 5
   :config)
-(use-package general :ensure t
+
+(use-package general
+  :ensure t
   :config
   (general-define-key
    :states '(normal visual insert emacs)
@@ -192,6 +260,8 @@
    "o" '(:ignore t :which-key "Org-mode tools")
    "oc" 'org-capture
    "oa" 'org-agenda
+   "os" 'org-schedule
+   "ol" 'org-columns
 
    "a" '(:ignore t :which-key "Applications")
    "ar" 'ranger
