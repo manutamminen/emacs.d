@@ -41,3 +41,24 @@
 (add-to-list 'exec-path "/Users/tamminma/bin")
 (add-to-list 'exec-path "/usr/local/Cellar/emacs/25.1/bin/")
 (setq with-editor-emacsclient-executable "/usr/local/Cellar/emacs/25.1/bin/emacsclient")
+
+(setq org-todo-keywords
+      '((sequence "TODO" "WAITING" "INACTIVE" "CANCELLED" "MEETING" "DELEGATED" "DONE")))
+
+(setq org-todo-keyword-faces
+      '(("TODO" . org-warning) ("WAITING" . "blue")
+	("INACTIVE" . "black") ("MEETING" . "dark magenta")
+	("DELEGATED" . "light green")
+	("CANCELLED" . "dark gray")))
+
+(setq org-capture-templates
+      '(("t" "todo" entry (file org-default-notes-file)
+	 "* TODO %?\n%u\n%a\n" :clock-in t :clock-resume t)
+	("m" "Meeting" entry (file org-default-notes-file)
+	 "* MEETING with %? :MEETING:\n%t" :clock-in t :clock-resume t)
+	("d" "Diary" entry (file+datetree "~/org/diary.org")
+	 "* %?\n%U\n" :clock-in t :clock-resume t)
+	("i" "Idea" entry (file org-default-notes-file)
+	 "* %? :IDEA: \n%t" :clock-in t :clock-resume t)
+	("n" "Next Task" entry (file+headline org-default-notes-file "Tasks")
+	 "** NEXT %? \nDEADLINE: %t") ))

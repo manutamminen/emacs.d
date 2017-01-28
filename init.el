@@ -17,7 +17,12 @@
   (package-refresh-contents) ; updage packages archive
   (package-install 'use-package)) ; and install the most recent version of use-package
 
-(require 'use-package)
+;; Enable use-package
+(eval-when-compile
+  (require 'use-package))
+(require 'diminish)                ;; if you use :diminish
+(require 'bind-key)                ;; if you use any :bind variant
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -73,6 +78,8 @@
   :config
   (add-hook 'after-init-hook 'global-company-mode))
 (use-package yasnippet
+  :ensure t
+  :defer t
   :config
   (yas-reload-all)
   (yas-global-mode 1))
@@ -103,10 +110,13 @@
 (use-package evil-lispy :ensure t)
 (use-package buffer-move :ensure t)
 (use-package ranger :ensure t)
-(use-package magit :ensure t)
-(use-package evil-magit :ensure t
-  :config
-  (add-hook 'magit-mode-hook (evil-local-mode 1)))
+(use-package magit
+  :ensure t
+  :defer t
+  :init
+  (use-package evil-magit :ensure t
+    :config
+    (add-hook 'magit-mode-hook (evil-local-mode 1))))
 (use-package exec-path-from-shell :ensure t)
 (use-package aggressive-indent :ensure t
   :init
@@ -178,6 +188,10 @@
    "wc" 'evil-window-delete
    "wv" 'evil-window-vsplit
    "ws" 'evil-window-split
+
+   "o" '(:ignore t :which-key "Org-mode tools")
+   "oc" 'org-capture
+   "oa" 'org-agenda
 
    "a" '(:ignore t :which-key "Applications")
    "ar" 'ranger
