@@ -91,8 +91,6 @@
   (evil-escape-mode 1)
   (setq-default evil-escape-key-sequence "kj"))
 
-
-
 (use-package avy
   :ensure t)
 
@@ -237,6 +235,12 @@
    "ee" 'univ-eval
    "el" 'univ-eval-line-last-sexp
    "eb" 'univ-eval-buffer
+
+   "t" '(:ignore t :which-key "Toggles")
+   "tl" 'lispy-mode
+   "to" 'evil-org-mode
+   "tr" 'rainbow-delimiters-mode
+   "ti" 'rainbow-identifiers-mode
 
    "w" '(:ignore t :which-key "Window tools")
    "ww" 'hydra-windows/body
