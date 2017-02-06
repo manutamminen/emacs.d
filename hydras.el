@@ -17,6 +17,7 @@ Lab protocols
 Code blocks
 "
   ("r" (y-expand "r_") "R block")
+  ("h" (y-expand "shell") "shell script")
   ("p" (y-expand "python_script") "Python shell script")
   ("m" (y-expand "pyi") "IPython block with image")
   ("i" (y-expand "py") "IPython block")

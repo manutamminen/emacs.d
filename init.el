@@ -79,12 +79,12 @@
       :ensure t)
 
     (use-package evil-org
-      :ensure t
-      :init (add-hook 'org-mode-hook 'evil-org-mode))
+      :ensure t)
 
-    (use-package evil-magit :ensure t
+    (use-package evil-magit
+      :ensure t
       :config
-      (add-hook 'magit-mode-hook (evil-local-mode 1))))
+      (add-hook 'magit-mode-hook 'evil-local-mode)))
 
   :config
   (evil-mode 1)
@@ -258,13 +258,17 @@
    "ws" 'evil-window-split
 
    "o" '(:ignore t :which-key "Org-mode tools")
+   "ob" 'org-iswitchb
    "oc" 'org-capture
    "oa" 'org-agenda
    "os" 'org-schedule
-   "ol" 'org-columns
+   "om" 'org-columns
+   "ol" 'org-store-link
+   "ot" 'org-show-todo-tree
 
    "a" '(:ignore t :which-key "Applications")
    "ar" 'ranger
+   "ac" 'calc
    "ad" 'dired)
 
   (general-nmap
