@@ -268,7 +268,8 @@
    "os" 'org-schedule
    "om" 'org-columns
    "ol" 'org-store-link
-   "ot" 'org-show-todo-tree
+   "oo" 'org-show-todo-tree
+   "ot" 'org-todo
 
    "a" '(:ignore t :which-key "Applications")
    "ar" 'ranger
@@ -306,6 +307,9 @@
       (progn
 	(hydra-lispy-magic/body)
 	(lispy-right-nostring 1))))
+
+  (define-key evil-motion-state-map "ö"
+    'evil-end-of-line)
 
   (define-key org-mode-map "<"
     (lambda () (interactive)
