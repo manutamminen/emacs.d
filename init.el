@@ -280,6 +280,10 @@
    :prefix "SPC"
    "." 'evil-avy-goto-line)
 
+  (general-vmap
+   :prefix "SPC"
+   "." 'evil-avy-goto-line)
+
   (general-nmap
    :prefix "SPC"
    "," 'evil-avy-goto-char)
