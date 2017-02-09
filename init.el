@@ -241,6 +241,7 @@
    "to" 'evil-org-mode
    "tr" 'rainbow-delimiters-mode
    "ti" 'rainbow-identifiers-mode
+   "tw" 'toggle-truncate-lines
 
    "w" '(:ignore t :which-key "Window tools")
    "ww" 'hydra-windows/body
@@ -300,6 +301,12 @@
    :prefix "SPC"
    "TAB" 'mode-line-other-buffer)
 
+  (define-key inferior-ess-mode-map "<up>"
+    'comint-previous-matching-input-from-input)
+
+  (define-key ess-mode-map "<tab>"
+    'then_R_operator)
+
   (define-key lispy-mode-map ")"
     (lambda () (interactive)
       (progn
@@ -314,6 +321,12 @@
 
   (define-key evil-motion-state-map "ö"
     'evil-end-of-line)
+
+  (define-key evil-normal-state-map "."
+    'evil-avy-goto-line)
+
+  (define-key evil-normal-state-map ","
+    'evil-avy-goto-char)
 
   (define-key org-mode-map "<"
     (lambda () (interactive)

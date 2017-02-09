@@ -82,3 +82,9 @@ BEG and END (region to sort)."
 	((eq major-mode 'ess-mode) (ess-eval-buffer nil))
 	(t (message "Not defined for this major mode"))))
 
+(defun then_R_operator ()
+  "R - %>% operator or 'then' pipe operator"
+  (interactive)
+  (just-one-space 1)
+  (insert "%>%")
+  (reindent-then-newline-and-indent))
