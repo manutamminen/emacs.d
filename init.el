@@ -30,7 +30,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (evil-org exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters evil-lispy lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
+    (evil-surround evil-org exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters evil-lispy lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -79,6 +79,9 @@
       :ensure t)
 
     (use-package evil-org
+      :ensure t)
+
+    (use-package evil-surround
       :ensure t)
 
     (use-package evil-magit
@@ -271,6 +274,7 @@
    "ol" 'org-store-link
    "oo" 'org-show-todo-tree
    "ot" 'org-todo
+   "or" 'org-archive-subtree
 
    "a" '(:ignore t :which-key "Applications")
    "ar" 'ranger
