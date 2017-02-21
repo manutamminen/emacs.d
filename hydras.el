@@ -1,3 +1,7 @@
+;;; package --- Summary
+;;; Commentary:
+;;; Useful hydra shortcuts
+;;; Code:
 (defhydra hydra-org-mol-template (:color blue :hint nil)
   "
 Lab protocols
@@ -50,10 +54,9 @@ Python completions
   ("<left>" enlarge-window-horizontally)
   ("<right>" shrink-window-horizontally)
   ("p" previous-buffer "prev-buf")
-  ("m" delete-other-windows)
+  ("m" delete-other-windows "maximize")
   ("n" next-buffer "next-buf")
-  ("1" delete-other-windows "1")
-  ("d" delete-window "del")
+  ("c" delete-window "del")
   ("s" save-buffer "save")
   ("u" (progn (winner-undo) (setq this-command 'winner-undo)) "undo")
   ("r" winner-redo "redo")
@@ -68,3 +71,6 @@ Modified lispy bindings
   ("b" univ-eval-buffer "Evaluate buffer")
   ("e" univ-eval "Evaluate function")
   ("p" univ-eval-line-last-sexp "Evaluate last sexp"))
+
+(provide 'hydras)
+;;; hydras.el ends here

@@ -177,7 +177,7 @@
 (use-package projectile
   :ensure t
   :config
-  (projectile-global-mode 1))
+  (projectile-mode 1))
 
 (use-package counsel-projectile
   :ensure t
