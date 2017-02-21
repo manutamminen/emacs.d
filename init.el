@@ -37,7 +37,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (flycheck-cask evil-surround evil-org exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters evil-lispy lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
+    (ivy-rich counsel-projectile projectile flycheck-cask evil-surround evil-org exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters evil-lispy lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -49,6 +49,9 @@
   :ensure t
   :config
   (general-evil-setup 1))
+
+(use-package cl
+  :ensure t)
 
 (use-package ivy
   :ensure t
@@ -171,6 +174,23 @@
   (yas-reload-all)
   (yas-global-mode 1))
 
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-global-mode 1))
+
+(use-package counsel-projectile
+  :ensure t
+  :config
+  (counsel-projectile-on))
+
+(use-package ivy-rich
+  :ensure t
+  :config
+  (ivy-set-display-transformer 'ivy-switch-buffer 'ivy-rich-switch-buffer-transformer)
+  (setq ivy-virtual-abbreviate 'full
+	ivy-rich-switch-buffer-align-virtual-buffer t))
+
 (use-package ace-window
   :ensure t)
 
@@ -253,6 +273,10 @@
    "b" '(:ignore t :which-key "Buffer tools")
    "bd" 'kill-this-buffer
    "bb" 'ivy-switch-buffer
+
+   "c" '(:ignore t :which-key "Flycheck")
+   "cb" 'flycheck-buffer
+   "cl" 'flycheck-list-errors
 
    "e" '(:ignore t :which-key "Evaluation")
    "ee" 'univ-eval
