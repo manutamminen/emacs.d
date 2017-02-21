@@ -1,4 +1,4 @@
-;;; init.el --- Default Emacs configuration. -*- lexical-binding: t; coding: utf-8 -*-
+;;; init.el --- Default Emacs configuration.
 ;;; Commentary:
 ;;
 ;; Initialize Emacs configuration.
@@ -89,7 +89,9 @@
       :ensure t)
 
     (use-package evil-surround
-      :ensure t)
+      :ensure t
+      :config
+      (evil-org-mode 0))
 
     (use-package evil-magit
       :ensure t
@@ -132,8 +134,9 @@
 				    ;; (semantic-mode 1)
 				    (setq flycheck-checker 'python-pylint
 					  flycheck-checker-error-threshold 900
+					  flycheck-highlighting-mode 'lines
 					  flycheck-pylintrc "~/.pylintrc"))))))
-
+(setq flycheck-highlighting-mode 'lines)
 ;; (use-package flycheck-cask
 ;;   :ensure t
 ;;   :init (add-hook 'flycheck-mode-hook 'flycheck-cask-setup))
@@ -220,13 +223,13 @@
   :config
   (ace-popup-menu-mode 1))
 
-;(use-package ess-site
-;  :ensure t
-;  :init
-;  (add-to-list 'Info-default-directory-list "~/elisp/ess-16.10/doc/info/")
-;  :load-path "~/elisp/ess-16.10/lisp/"
-;  :defer 5
-;  :config)
+;; (use-package ess-site
+;;   :ensure t
+;;   :init
+;;   (add-to-list 'Info-default-directory-list "~/elisp/ess-16.10/doc/info/")
+;;   :load-path "~/elisp/ess-16.10/lisp/"
+;;   :defer 5
+;;   :config)
 
 (use-package general
   :ensure t
@@ -379,6 +382,7 @@
       (if (looking-back "^")
 	  (hydra-python-template/body)
 	(self-insert-command 1)))))
+
 
 (load "~/.emacs.d/org-defaults.el")
 
