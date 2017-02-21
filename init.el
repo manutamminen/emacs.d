@@ -1,3 +1,10 @@
+;;; init.el --- Default Emacs configuration. -*- lexical-binding: t; coding: utf-8 -*-
+;;; Commentary:
+;;
+;; Initialize Emacs configuration.
+;;
+;;; Code:
+
 (load "~/.emacs.d/defaults.el")
 (load "~/.emacs.d/utility_functions.el")
 
@@ -30,7 +37,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (evil-surround evil-org exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters evil-lispy lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
+    (flycheck-cask evil-surround evil-org exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters evil-lispy lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -111,6 +118,26 @@
 (use-package f
   :ensure t)
 
+(use-package flycheck
+  :ensure t
+  :config
+  (progn
+    (setq flycheck-display-errors-function nil)
+    (add-hook 'after-init-hook #'global-flycheck-mode)
+    ;; (add-hook 'python-mode-hook #'flycheck-python-setup)
+    (add-hook 'python-mode-hook (lambda ()
+				  (progn
+				    (flycheck-mode 1)
+				    #'flycheck-python-setup
+				    ;; (semantic-mode 1)
+				    (setq flycheck-checker 'python-pylint
+					  flycheck-checker-error-threshold 900
+					  flycheck-pylintrc "~/.pylintrc"))))))
+
+;; (use-package flycheck-cask
+;;   :ensure t
+;;   :init (add-hook 'flycheck-mode-hook 'flycheck-cask-setup))
+
 (use-package elpy
   :ensure t
   :defer 2
@@ -170,8 +197,6 @@
 (use-package ivy-hydra
   :ensure t)
 
-
-
 (use-package buffer-move
   :ensure t)
 
@@ -195,12 +220,13 @@
   :config
   (ace-popup-menu-mode 1))
 
-(use-package ess-site
-  :init
-  (add-to-list 'Info-default-directory-list "~/elisp/ess-16.10/doc/info/")
-  :load-path "~/elisp/ess-16.10/lisp/"
-  :defer 5
-  :config)
+;(use-package ess-site
+;  :ensure t
+;  :init
+;  (add-to-list 'Info-default-directory-list "~/elisp/ess-16.10/doc/info/")
+;  :load-path "~/elisp/ess-16.10/lisp/"
+;  :defer 5
+;  :config)
 
 (use-package general
   :ensure t
@@ -215,29 +241,46 @@
    "SPC" '(avy-goto-word-or-subword-1  :which-key "go to char")
 
    ;; Applications
-   "q" '(:ignore t :which-key "Quit!")
-   "qq" 'evil-quit
 
-   "m" '(:ignore t :which-key "Magit")
-   "ms" 'magit-status
-   "mp" 'magit-dispatch-popup
-
-   "f" '(:ignore t :which-key "File operations")
-   "ff" 'counsel-find-file
-   "fs" 'save-buffer
-
-   "s" '(:ignore t :which-key "Search tools")
-   "ss" 'swiper
-   "sa" 'swiper-all
+   "a" '(:ignore t :which-key "Applications")
+   "ar" 'ranger
+   "ac" 'calc
+   "ad" 'dired
 
    "b" '(:ignore t :which-key "Buffer tools")
    "bd" 'kill-this-buffer
    "bb" 'ivy-switch-buffer
 
-   "e" '(:ignore t :which-key "Evaluation") 
+   "e" '(:ignore t :which-key "Evaluation")
    "ee" 'univ-eval
    "el" 'univ-eval-line-last-sexp
    "eb" 'univ-eval-buffer
+
+   "f" '(:ignore t :which-key "File operations")
+   "ff" 'counsel-find-file
+   "fs" 'save-buffer
+
+   "m" '(:ignore t :which-key "Magit")
+   "ms" 'magit-status
+   "mp" 'magit-dispatch-popup
+
+   "o" '(:ignore t :which-key "Org-mode tools")
+   "ob" 'org-iswitchb
+   "oc" 'org-capture
+   "oa" 'org-agenda
+   "os" 'org-schedule
+   "om" 'org-columns
+   "ol" 'org-store-link
+   "oo" 'org-show-todo-tree
+   "ot" 'org-todo
+   "or" 'org-archive-subtree
+
+   "q" '(:ignore t :which-key "Quit!")
+   "qq" 'evil-quit
+
+   "s" '(:ignore t :which-key "Search tools")
+   "ss" 'swiper
+   "sa" 'swiper-all
 
    "t" '(:ignore t :which-key "Toggles")
    "tl" 'lispy-mode
@@ -263,23 +306,7 @@
    "wm" 'delete-other-windows
    "wc" 'evil-window-delete
    "wv" 'evil-window-vsplit
-   "ws" 'evil-window-split
-
-   "o" '(:ignore t :which-key "Org-mode tools")
-   "ob" 'org-iswitchb
-   "oc" 'org-capture
-   "oa" 'org-agenda
-   "os" 'org-schedule
-   "om" 'org-columns
-   "ol" 'org-store-link
-   "oo" 'org-show-todo-tree
-   "ot" 'org-todo
-   "or" 'org-archive-subtree
-
-   "a" '(:ignore t :which-key "Applications")
-   "ar" 'ranger
-   "ac" 'calc
-   "ad" 'dired)
+   "ws" 'evil-window-split)
 
   (general-nmap
    :prefix "SPC"
@@ -305,11 +332,14 @@
    :prefix "SPC"
    "TAB" 'mode-line-other-buffer)
 
-  (define-key inferior-ess-mode-map "<up>"
-    'comint-previous-matching-input-from-input)
+  ;; (define-key inferior-ess-mode-map "<up>"
+  ;;   'comint-previous-matching-input-from-input)
 
-  (define-key ess-mode-map "<tab>"
-    'then_R_operator)
+  ;; (define-key inferior-python-mode-map "<up>"
+  ;;   'comint-previous-matching-input-from-input)
+
+  ;; (define-key ess-mode-map "<tab>"
+  ;;   'then_R_operator)
 
   (define-key lispy-mode-map ")"
     (lambda () (interactive)
@@ -356,3 +386,6 @@
   (exec-path-from-shell-initialize))
 
 (when window-system (set-frame-size (selected-frame) 160 50)) ; set window size
+
+(provide 'init)
+;;; init.el ends here
