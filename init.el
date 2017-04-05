@@ -37,7 +37,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (ivy-rich counsel-projectile projectile flycheck-cask evil-surround evil-org exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters evil-lispy lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
+    (ob-ipython lispyville ivy-rich counsel-projectile projectile flycheck-cask evil-surround evil-org exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -72,7 +72,8 @@
 		  lisp-interaction-mode-hook
 		  lisp-mode-hook
 		  clojure-mode-hook))
-    (add-hook hook (lambda () (lispy-mode 1)))))
+    (add-hook hook (lambda () (lispy-mode 1)))
+    (add-hook 'lispy-mode-hook #'lispyville-mode)))
 
 (use-package magit
   :ensure t
@@ -85,7 +86,10 @@
     (use-package evil-escape
       :ensure t)
 
-    (use-package evil-lispy
+    ;; (use-package evil-lispy
+    ;;   :ensure t)
+
+    (use-package lispyville
       :ensure t)
 
     (use-package evil-org
@@ -137,9 +141,10 @@
 				    ;; (semantic-mode 1)
 				    (setq flycheck-checker 'python-pylint
 					  flycheck-checker-error-threshold 900
-					  flycheck-highlighting-mode 'lines
+					  ;; flycheck-highlighting-mode 'lines
+					  flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list
 					  flycheck-pylintrc "~/.pylintrc"))))))
-(setq flycheck-highlighting-mode 'lines)
+
 ;; (use-package flycheck-cask
 ;;   :ensure t
 ;;   :init (add-hook 'flycheck-mode-hook 'flycheck-cask-setup))
@@ -208,9 +213,7 @@
   (rainbow-delimiters-mode 1))
 
 (use-package rainbow-identifiers
-  :ensure t
-  :config
-  (add-hook 'prog-mode-hook 'rainbow-identifiers-mode))
+  :ensure t)
 
 (use-package hydra
   :ensure t
@@ -242,6 +245,10 @@
   :ensure t
   :config
   (ace-popup-menu-mode 1))
+
+(use-package ess
+  :ensure t
+  :init (require 'ess-site))
 
 ;; (use-package ess-site
 ;;   :ensure t
@@ -315,6 +322,7 @@
    "tr" 'rainbow-delimiters-mode
    "ti" 'rainbow-identifiers-mode
    "tw" 'toggle-truncate-lines
+   "tf" 'font-lock-mode
 
    "w" '(:ignore t :which-key "Window tools")
    "ww" 'hydra-windows/body
@@ -374,12 +382,6 @@
 	(hydra-lispy-magic/body)
 	(lispy-right-nostring 1))))
 
-  (define-key lispy-mode-map ")"
-    (lambda () (interactive)
-      (progn
-	(hydra-lispy-magic/body)
-	(lispy-right-nostring 1))))
-
   (define-key evil-motion-state-map "ö"
     'evil-end-of-line)
 
@@ -407,13 +409,15 @@
 	  (hydra-python-template/body)
 	(self-insert-command 1)))))
 
-
 (load "~/.emacs.d/org-defaults.el")
 
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
 
 (when window-system (set-frame-size (selected-frame) 160 50)) ; set window size
+
+(define-key lispy-mode-map (kbd "C-d")
+  'lispy-delete)
 
 (provide 'init)
 ;;; init.el ends here
