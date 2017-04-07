@@ -411,6 +411,15 @@
   (define-key comint-mode-map (kbd "<down>")
     'comint-next-matching-input-from-input)
 
+  (define-key evil-insert-state-map (kbd "C")
+    'self-insert-command)
+
+  (define-key evil-insert-state-map (kbd "C-d")
+    'evil-scroll-down)
+  
+  (define-key evil-insert-state-map (kbd "C-b")
+    'evil-scroll-page-up)
+  
   ;; (eval-after-load 'comint
   ;;   '(progn
   ;;      ;; originally on C-c M-r and C-c M-s
