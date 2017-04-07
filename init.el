@@ -387,17 +387,38 @@
 	(hydra-lispy-magic/body)
 	(lispy-right-nostring 1))))
 
-  (define-key evil-motion-state-map "ö"
+  (define-key evil-motion-state-map (kbd "ö")
     'evil-end-of-line)
 
-  (define-key evil-normal-state-map "."
+  (define-key evil-normal-state-map (kbd ".")
     'evil-avy-goto-line)
 
-  (define-key evil-normal-state-map ","
+  (define-key evil-normal-state-map (kbd ",")
     'evil-avy-goto-char)
 
-  (define-key evil-insert-state-map "C-k"
+  (define-key evil-insert-state-map (kbd "C-k")
     'kill-line)
+
+  (define-key evil-insert-state-map (kbd "C-w")
+    'evil-window-map)
+
+  (define-key lispy-mode-map (kbd "C-d")
+    'lispy-delete)
+
+  (define-key comint-mode-map (kbd "<up>")
+    'comint-previous-matching-input-from-input)
+
+  (define-key comint-mode-map (kbd "<down>")
+    'comint-next-matching-input-from-input)
+
+  ;; (eval-after-load 'comint
+  ;;   '(progn
+  ;;      ;; originally on C-c M-r and C-c M-s
+  ;;      (define-key comint-mode-map (kbd "M-p") #'comint-previous-matching-input-from-input)
+  ;;      (define-key comint-mode-map (kbd "M-n") #'comint-next-matching-input-from-input)
+  ;;      ;; originally on M-p and M-n
+  ;;      (define-key comint-mode-map (kbd "C-c M-r") #'comint-previous-input)
+  ;;      (define-key comint-mode-map (kbd "C-c M-s") #'comint-next-input)))
 
   (define-key org-mode-map "<"
     (lambda () (interactive)
@@ -424,17 +445,6 @@
 
 (when window-system (set-frame-size (selected-frame) 160 50)) ; set window size
 
-(define-key lispy-mode-map (kbd "C-d")
-  'lispy-delete)
-
-(eval-after-load 'comint
-  '(progn
-     ;; originally on C-c M-r and C-c M-s
-     (define-key comint-mode-map (kbd "M-p") #'comint-previous-matching-input-from-input)
-     (define-key comint-mode-map (kbd "M-n") #'comint-next-matching-input-from-input)
-     ;; originally on M-p and M-n
-     (define-key comint-mode-map (kbd "C-c M-r") #'comint-previous-input)
-     (define-key comint-mode-map (kbd "C-c M-s") #'comint-next-input)))
 
 (provide 'init)
 ;;; init.el ends here
