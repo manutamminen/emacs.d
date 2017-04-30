@@ -37,7 +37,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (ob-ipython lispyville ivy-rich counsel-projectile projectile flycheck-cask evil-surround evil-org exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
+    (dumb-jump ob-ipython lispyville ivy-rich counsel-projectile projectile flycheck-cask evil-surround evil-org exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -145,10 +145,6 @@
 					  flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list
 					  flycheck-pylintrc "~/.pylintrc"))))))
 
-;; (use-package flycheck-cask
-;;   :ensure t
-;;   :init (add-hook 'flycheck-mode-hook 'flycheck-cask-setup))
-
 (use-package elpy
   :ensure t
   :defer 2
@@ -182,7 +178,7 @@
 (use-package projectile
   :ensure t
   :config
-  (projectile-global-mode)
+  (projectile-mode)
   (setq projectile-completion-system 'ivy))
 
 (use-package counsel-projectile
@@ -196,6 +192,10 @@
   (ivy-set-display-transformer 'ivy-switch-buffer 'ivy-rich-switch-buffer-transformer)
   (setq ivy-virtual-abbreviate 'full
 	ivy-rich-switch-buffer-align-virtual-buffer t))
+
+(use-package dumb-jump
+  :config (setq dumb-jump-selector 'ivy)
+  :ensure t)
 
 (use-package ace-window
   :ensure t)
@@ -251,14 +251,6 @@
   :ensure t
   :init (require 'ess-site))
 
-;; (use-package ess-site
-;;   :ensure t
-;;   :init
-;;   (add-to-list 'Info-default-directory-list "~/elisp/ess-16.10/doc/info/")
-;;   :load-path "~/elisp/ess-16.10/lisp/"
-;;   :defer 5
-;;   :config)
-
 (use-package general
   :ensure t
   :config
@@ -285,6 +277,10 @@
    "c" '(:ignore t :which-key "Flycheck")
    "cb" 'flycheck-buffer
    "cl" 'flycheck-list-errors
+
+   "d" '(:ignore t :which-key "Dumb-jump")
+   "dd" 'dumb-jump-go
+   "do" 'dumb-jump-go-other-window
 
    "e" '(:ignore t :which-key "Evaluation")
    "ee" 'univ-eval
