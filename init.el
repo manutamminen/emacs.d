@@ -182,7 +182,8 @@
 (use-package projectile
   :ensure t
   :config
-  (projectile-mode 1))
+  (projectile-global-mode)
+  (setq projectile-completion-system 'ivy))
 
 (use-package counsel-projectile
   :ensure t
@@ -309,6 +310,10 @@
    "ot" 'org-todo
    "or" 'org-archive-subtree
 
+   "p" '(:ignore t :which-key "Projectile tools")
+   "pp" 'counsel-projectile-switch-project
+   "pf" 'counsel-projectile-find-file
+
    "q" '(:ignore t :which-key "Quit!")
    "qq" 'evil-quit
 
@@ -341,7 +346,10 @@
    "wm" 'delete-other-windows
    "wc" 'evil-window-delete
    "wv" 'evil-window-vsplit
-   "ws" 'evil-window-split)
+   "ws" 'evil-window-split
+
+   "z" '(:ignore t :which-key "Font scaling")
+   "zz" 'hydra-font/body)
 
   (general-nmap
    :prefix "SPC"
@@ -416,19 +424,13 @@
 
   (define-key evil-insert-state-map (kbd "C-d")
     'evil-scroll-down)
+
+  (define-key inferior-ess-mode-map (kbd "C-d")
+    'evil-scroll-down)
   
   (define-key evil-insert-state-map (kbd "C-b")
     'evil-scroll-page-up)
   
-  ;; (eval-after-load 'comint
-  ;;   '(progn
-  ;;      ;; originally on C-c M-r and C-c M-s
-  ;;      (define-key comint-mode-map (kbd "M-p") #'comint-previous-matching-input-from-input)
-  ;;      (define-key comint-mode-map (kbd "M-n") #'comint-next-matching-input-from-input)
-  ;;      ;; originally on M-p and M-n
-  ;;      (define-key comint-mode-map (kbd "C-c M-r") #'comint-previous-input)
-  ;;      (define-key comint-mode-map (kbd "C-c M-s") #'comint-next-input)))
-
   (define-key org-mode-map "<"
     (lambda () (interactive)
       (if (looking-back "^")

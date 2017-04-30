@@ -63,6 +63,10 @@ Python completions
   ("-" (lambda () (interactive) (split-window-below) (windmove-down)) "Horizontal split")
   ("q" nil "cancel"))
 
+(defhydra hydra-font ()
+  ("+" text-scale-increase)
+  ("-" text-scale-decrease))
+
 (defhydra hydra-lispy-magic ()
   "
 Modified lispy bindings
