@@ -75,5 +75,8 @@ Modified lispy bindings
   ("e" univ-eval "Evaluate function")
   ("p" univ-eval-line-last-sexp "Evaluate last sexp"))
 
+(defhydra dumb-hydra ()
+  ("n" dumb-jump-go "Next occurrence"))
+
 (provide 'hydras)
 ;;; hydras.el ends here

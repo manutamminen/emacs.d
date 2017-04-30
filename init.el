@@ -279,7 +279,8 @@
    "cl" 'flycheck-list-errors
 
    "d" '(:ignore t :which-key "Dumb-jump")
-   "dd" 'dumb-jump-go
+   "dd" 'dumb-hydra/body
+   "dj" 'dumb-jump-go
    "do" 'dumb-jump-go-other-window
 
    "e" '(:ignore t :which-key "Evaluation")
