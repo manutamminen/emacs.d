@@ -19,6 +19,14 @@
 (setq ivy-use-virtual-buffers t)
 (setq ivy-count-format "(%d/%d) ")
 
+;; Fix mousewheen scrolling
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
+(setq mouse-wheel-progressive-speed nil)
+
+(fset 'yes-or-no-p 'y-or-n-p)
+
+(global-prettify-symbols-mode 1)
+
 (global-set-key (kbd "M-x") 'counsel-M-x)
 
 (defface org-block-begin-line

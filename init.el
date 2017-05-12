@@ -37,7 +37,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (dumb-jump ob-ipython lispyville ivy-rich counsel-projectile projectile flycheck-cask evil-surround evil-org exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
+    (worf better-shell dumb-jump ob-ipython lispyville counsel-projectile projectile flycheck-cask evil-surround evil-org exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -186,12 +186,12 @@
   :config
   (counsel-projectile-on))
 
-(use-package ivy-rich
-  :ensure t
-  :config
-  (ivy-set-display-transformer 'ivy-switch-buffer 'ivy-rich-switch-buffer-transformer)
-  (setq ivy-virtual-abbreviate 'full
-	ivy-rich-switch-buffer-align-virtual-buffer t))
+;; (use-package ivy-rich
+;;   :ensure t
+;;   :config
+;;   (ivy-set-display-transformer 'ivy-switch-buffer 'ivy-rich-switch-buffer-transformer)
+;;   (setq ivy-virtual-abbreviate 'full
+;; 	ivy-rich-switch-buffer-align-virtual-buffer t))
 
 (use-package dumb-jump
   :config (setq dumb-jump-selector 'ivy)
@@ -251,6 +251,29 @@
   :ensure t
   :init (require 'ess-site))
 
+(use-package better-shell
+  :ensure t)
+
+(use-package worf
+  :ensure t
+  :diminish worf-mode
+  :bind (:map org-mode-map ("C-c h" . worf-goto)))
+
+(use-package bm
+  :ensure t
+  :bind (("C-c =" . bm-toggle)
+         ("C-c [" . bm-previous)
+         ("C-c ]" . bm-next)))
+
+(use-package base16-theme
+  :ensure t
+  :config
+  (load-theme 'base16-materia))
+
+;; (if (eq system-type 'darwin)
+;;     (set-face-attribute 'default nil :font "Hack-14")
+;;   (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 110))
+
 (use-package general
   :ensure t
   :config
@@ -269,6 +292,8 @@
    "ar" 'ranger
    "ac" 'calc
    "ad" 'dired
+   "as" 'better-shell-shell
+   "ar" 'better-shell-remote-open
 
    "b" '(:ignore t :which-key "Buffer tools")
    "bd" 'kill-this-buffer
@@ -300,6 +325,7 @@
    "ob" 'org-iswitchb
    "oc" 'org-capture
    "oa" 'org-agenda
+   "og" 'worf-goto
    "os" 'org-schedule
    "om" 'org-columns
    "ol" 'org-store-link
