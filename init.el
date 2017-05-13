@@ -271,10 +271,13 @@
   :config
   (load-theme 'base16-materia))
 
+;; Set font to Hack
 ;; (if (eq system-type 'darwin)
 ;;     (set-face-attribute 'default nil :font "Hack-14")
 ;;   (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 110))
 
+;; Reference: https://github.com/hlissner/.emacs.d/blob/master/core/core-modeline.el
+;; and https://buildfunthings.com/emacs/emacs-config.html
 (use-package powerline
   :ensure t
   :config
@@ -322,14 +325,14 @@
   e.g. (doom-fix-unicode \"DejaVu Sans\" ?⚠ ?★ ?λ)"
     (declare (indent 1))
     (mapc (lambda (x) (set-fontset-font
-		       t (cons x x)
-		       (cond ((fontp font)
-			      font)
-			     ((listp font)
-			      (font-spec :family (car font) :size (nth 1 font)))
-			     ((stringp font)
-			      (font-spec :family font))
-			     (t (error "FONT is an invalid type: %s" font)))))
+		  t (cons x x)
+		  (cond ((fontp font)
+			 font)
+			((listp font)
+			 (font-spec :family (car font) :size (nth 1 font)))
+			((stringp font)
+			 (font-spec :family font))
+			(t (error "FONT is an invalid type: %s" font)))))
 	  chars))
 
   ;; Make certain unicode glyphs bigger for the mode-line.
@@ -517,6 +520,10 @@
    "b" '(:ignore t :which-key "Buffer tools")
    "bd" 'kill-this-buffer
    "bb" 'ivy-switch-buffer
+   "bm" 'bm-toggle
+   "bn" 'bm-next
+   "bp" 'bm-previous
+   "bc" 'bm-remove-all-current-buffer
 
    "c" '(:ignore t :which-key "Flycheck")
    "cb" 'flycheck-buffer
