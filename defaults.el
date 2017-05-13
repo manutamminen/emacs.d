@@ -23,6 +23,12 @@
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
 (setq mouse-wheel-progressive-speed nil)
 
+(let ((display-table (or standard-display-table (make-display-table))))
+  (set-display-table-slot display-table 'vertical-border (make-glyph-code ?┃))
+  (setq standard-display-table display-table))
+
+(scroll-bar-mode -1)
+
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (global-prettify-symbols-mode 1)
