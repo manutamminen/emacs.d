@@ -32,6 +32,13 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (global-prettify-symbols-mode 1)
+(add-hook 'ess-mode-hook
+	  (lambda ()
+	    (push '("%>%" . ?⇒) prettify-symbols-alist)))
+(add-hook 'inferior-ess-mode-hook
+	  (lambda ()
+	    (push '("%>%" . ?⇒) prettify-symbols-alist)))
+
 
 (global-set-key (kbd "M-x") 'counsel-M-x)
 

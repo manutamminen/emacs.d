@@ -255,10 +255,7 @@
   :bind (:map org-mode-map ("C-c h" . worf-goto)))
 
 (use-package bm
-  :ensure t
-  :bind (("C-c =" . bm-toggle)
-         ("C-c [" . bm-previous)
-         ("C-c ]" . bm-next)))
+  :ensure t)
 
 (use-package base16-theme
   :ensure t
