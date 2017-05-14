@@ -1,3 +1,10 @@
+;;; defaults.el --- Default Emacs configuration.
+;;; Commentary:
+;;
+;; Initialize Emacs configuration with good defaults.
+;;
+;;; Code:
+
 (setq delete-old-versions -1 )		; delete excess backup versions silently
 (setq version-control t )		; use version control
 (setq vc-make-backup-files t )		; make backups file even when in version controlled dir
@@ -33,11 +40,11 @@
 
 (global-prettify-symbols-mode 1)
 (add-hook 'ess-mode-hook
-	  (lambda ()
-	    (push '("%>%" . ?⇒) prettify-symbols-alist)))
+	  (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
 (add-hook 'inferior-ess-mode-hook
-	  (lambda ()
-	    (push '("%>%" . ?⇒) prettify-symbols-alist)))
+	  (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
+(add-hook 'ess-mode-hook
+	  (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
 
 
 (global-set-key (kbd "M-x") 'counsel-M-x)
@@ -47,7 +54,7 @@
   "Face used for the line delimiting the begin of source blocks.")
 
 (defface org-block-background
-  '((t (:background "#f2f2f2")))
+  '((t (:background "#52527a")))
   "Face used for the source block background.")
 
 (defface org-block-end-line
@@ -122,3 +129,6 @@
                "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
               ("h" "Habit" entry (file "~/Dropbox/Muistettavaa/notes.org")
                "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
+
+(provide 'defaults)
+;;; defaults.el ends here
