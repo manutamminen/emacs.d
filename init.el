@@ -601,23 +601,6 @@
    "z" '(:ignore t :which-key "Font scaling")
    "zz" 'hydra-font/body)
 
-  (general-nmap
-   :prefix "SPC"
-   "." 'evil-avy-goto-line)
-
-  (general-vmap
-   :prefix "SPC"
-   "." 'evil-avy-goto-line)
-
-  (general-nmap
-   :prefix "SPC"
-   "," 'evil-avy-goto-char)
-
-  (general-nvmap
-   "'" (general-simulate-keys "C-c")
-   "M-'" 'evil-goto-mark
-   "M-b" 'ivy-switch-buffer)
-
   (general-define-key
    "C-c c" 'company-complete)
 
@@ -625,7 +608,7 @@
    :prefix "SPC"
    "TAB" 'mode-line-other-buffer)
 
-  (define-key evil-motion-state-map (kbd "ö") 'evil-end-of-line)
+  (define-key evil-normal-state-map (kbd "ö") 'evil-end-of-line)
   (define-key evil-normal-state-map (kbd ".") 'evil-avy-goto-line)
   (define-key evil-normal-state-map (kbd ",") 'evil-avy-goto-char)
   (define-key evil-insert-state-map (kbd "C-k") 'kill-line)
