@@ -625,19 +625,23 @@
    :prefix "SPC"
    "TAB" 'mode-line-other-buffer)
 
-  ;; (define-key inferior-ess-mode-map "<up>"
-  ;;   'comint-previous-matching-input-from-input)
-
-  ;; (define-key inferior-python-mode-map "<up>"
-  ;;   'comint-previous-matching-input-from-input)
-
-  ;; (define-key ess-mode-map "<tab>"
-  ;;   'then_R_operator)
-  (define-key evil-insert-state-map (kbd "C-k")
-    'kill-line)
-
-  (define-key ess-mode-map (kbd "C-%") 'then_R_operator)
-  (define-key inferior-ess-mode-map (kbd "C-%") 'then_R_operator)
+  (define-key evil-motion-state-map (kbd "ö") 'evil-end-of-line)
+  (define-key evil-normal-state-map (kbd ".") 'evil-avy-goto-line)
+  (define-key evil-normal-state-map (kbd ",") 'evil-avy-goto-char)
+  (define-key evil-insert-state-map (kbd "C-k") 'kill-line)
+  (define-key evil-insert-state-map (kbd "C-w") 'evil-window-map)
+  (define-key evil-insert-state-map (kbd "C") 'self-insert-command)
+  (define-key evil-insert-state-map (kbd "C-b") 'evil-scroll-page-up)
+  (define-key evil-insert-state-map (kbd "C-d") 'evil-scroll-down)
+  (evil-define-key '(insert normal) ess-mode-map (kbd "C-p") 'insert_then_R_operator_end_nl)
+  (evil-define-key '(insert normal) ess-mode-map (kbd "C-f") 'insert_lambda_function)
+  (evil-define-key '(insert normal) python-mode-map (kbd "C-f") 'insert_lambda_function)
+  (evil-define-key '(insert normal) lisp-interaction-mode-map (kbd "C-c C-c") 'eval-buffer)
+  (evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-c C-c") 'eval-buffer)
+  (define-key inferior-ess-mode-map (kbd "C-d") 'evil-scroll-down)
+  (define-key lispy-mode-map (kbd "C-d") 'lispy-delete)
+  (define-key comint-mode-map (kbd "<up>") 'comint-previous-matching-input-from-input)
+  (define-key comint-mode-map (kbd "<down>") 'comint-next-matching-input-from-input)
 
   (define-key lispy-mode-map ")"
     (lambda () (interactive)
@@ -645,75 +649,6 @@
 	(hydra-lispy-magic/body)
 	(lispy-right-nostring 1))))
 
-  (define-key evil-motion-state-map (kbd "ö")
-    'evil-end-of-line)
-
-  (define-key evil-normal-state-map (kbd ".")
-    'evil-avy-goto-line)
-
-  (define-key evil-normal-state-map (kbd ",")
-    'evil-avy-goto-char)
-
-  (define-key evil-insert-state-map (kbd "C-k")
-    'kill-line)
-
-  (define-key evil-insert-state-map (kbd "C-w")
-    'evil-window-map)
-
-  (define-key lispy-mode-map (kbd "C-d")
-    'lispy-delete)
-
-  (define-key comint-mode-map (kbd "<up>")
-    'comint-previous-matching-input-from-input)
-
-  (define-key comint-mode-map (kbd "<down>")
-    'comint-next-matching-input-from-input)
-
-  (define-key evil-insert-state-map (kbd "C")
-    'self-insert-command)
-
-  (define-key evil-insert-state-map (kbd "C-d")
-    'evil-scroll-down)
-
-  (define-key inferior-ess-mode-map (kbd "C-d")
-    'evil-scroll-down)
-  
-  (define-key evil-insert-state-map (kbd "C-b")
-    'evil-scroll-page-up)
-
-  (define-key global-map (kbd "C-p")
-    (lambda () (interactive)
-      (cond ((eq major-mode 'ess-mode) (insert_then_R_operator_end_nl))
-	    (t (previous-line)))))
-
-  ;; (define-key global-map (kbd "C-f")
-  ;;   (lambda () (interactive)
-  ;;     (cond ((eq major-mode 'ess-mode) (insert_lambda_function))
-  ;; 	    ((eq major-mode 'python-mode) (insert_lambda_function))
-  ;; 	    (t (forward-char)))))
-
-  (define-key evil-insert-state-map (kbd "C-p")
-    (lambda () (interactive)
-      (cond ((eq major-mode 'ess-mode) (insert_then_R_operator_end_nl))
-	    (t (evil-complete-previous)))))
-
-  (define-key evil-normal-state-map (kbd "C-p")
-    (lambda () (interactive)
-      (cond ((eq major-mode 'ess-mode) (insert_then_R_operator_end_nl))
-	    (t (evil-paste-pop)))))
-
-  (define-key evil-insert-state-map (kbd "C-f")
-    (lambda () (interactive)
-      (cond ((eq major-mode 'ess-mode) (insert_lambda_function))
-  	    ((eq major-mode 'python-mode) (insert_lambda_function))
-  	    (t (forward-char)))))
-
-  (define-key evil-normal-state-map (kbd "C-f")
-    (lambda () (interactive)
-      (cond ((eq major-mode 'ess-mode) (insert_lambda_function))
-  	    ((eq major-mode 'python-mode) (insert_lambda_function))
-	    (t (evil-scroll-page-down)))))
-  
   (define-key org-mode-map "<"
     (lambda () (interactive)
       (if (looking-back "^")
