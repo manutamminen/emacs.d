@@ -1,4 +1,4 @@
-;;; init.el --- Default Emacs configuration.
+;; init.el --- Default Emacs configuration.
 ;;; Commentary:
 ;;
 ;; Initialize Emacs configuration.
@@ -205,8 +205,7 @@
 
 (use-package rainbow-delimiters
   :ensure t
-  :config
-  (rainbow-delimiters-mode 1))
+  :config (rainbow-delimiters-mode 1))
 
 (use-package rainbow-identifiers
   :ensure t)
@@ -538,6 +537,11 @@
    "ff" 'counsel-find-file
    "fs" 'save-buffer
 
+   "j" '(:ignore t :which-key "Yasnippets etc")
+   "jp" 'insert_then_R_operator
+   "je" 'insert_then_R_operator_end_nl
+   "jf" 'insert_lambda_function
+   
    "m" '(:ignore t :which-key "Magit")
    "ms" 'magit-status
    "mp" 'magit-dispatch-popup
@@ -566,13 +570,15 @@
    "sa" 'swiper-all
 
    "t" '(:ignore t :which-key "Toggles")
+   "tc" 'font-lock-mode
+   "tf" 'toggle-frame-fullscreen
+   "ti" 'rainbow-identifiers-mode
    "tl" 'lispy-mode
    "to" 'evil-org-mode
+   "tp" 'prettify-symbols-mode
    "tr" 'rainbow-delimiters-mode
-   "ti" 'rainbow-identifiers-mode
    "tw" 'toggle-truncate-lines
-   "tf" 'font-lock-mode
-
+   
    "w" '(:ignore t :which-key "Window tools")
    "ww" 'hydra-windows/body
    "wl" 'windmove-right
@@ -674,6 +680,39 @@
   
   (define-key evil-insert-state-map (kbd "C-b")
     'evil-scroll-page-up)
+
+  (define-key global-map (kbd "C-p")
+    (lambda () (interactive)
+      (cond ((eq major-mode 'ess-mode) (insert_then_R_operator_end_nl))
+	    (t (previous-line)))))
+
+  ;; (define-key global-map (kbd "C-f")
+  ;;   (lambda () (interactive)
+  ;;     (cond ((eq major-mode 'ess-mode) (insert_lambda_function))
+  ;; 	    ((eq major-mode 'python-mode) (insert_lambda_function))
+  ;; 	    (t (forward-char)))))
+
+  (define-key evil-insert-state-map (kbd "C-p")
+    (lambda () (interactive)
+      (cond ((eq major-mode 'ess-mode) (insert_then_R_operator_end_nl))
+	    (t (evil-complete-previous)))))
+
+  (define-key evil-normal-state-map (kbd "C-p")
+    (lambda () (interactive)
+      (cond ((eq major-mode 'ess-mode) (insert_then_R_operator_end_nl))
+	    (t (evil-paste-pop)))))
+
+  (define-key evil-insert-state-map (kbd "C-f")
+    (lambda () (interactive)
+      (cond ((eq major-mode 'ess-mode) (insert_lambda_function))
+  	    ((eq major-mode 'python-mode) (insert_lambda_function))
+  	    (t (forward-char)))))
+
+  (define-key evil-normal-state-map (kbd "C-f")
+    (lambda () (interactive)
+      (cond ((eq major-mode 'ess-mode) (insert_lambda_function))
+  	    ((eq major-mode 'python-mode) (insert_lambda_function))
+	    (t (evil-scroll-page-down)))))
   
   (define-key org-mode-map "<"
     (lambda () (interactive)

@@ -1,7 +1,7 @@
 ;;; defaults.el --- Default Emacs configuration.
 ;;; Commentary:
 ;;
-;; Initialize Emacs configuration with good defaults.
+;; Initialize the Emacs configuration with good defaults.
 ;;
 ;;; Code:
 
@@ -16,7 +16,7 @@
 (setq coding-system-for-read 'utf-8 )	; use utf-8 by default
 (setq coding-system-for-write 'utf-8 )
 (setq sentence-end-double-space nil)	; sentence SHOULD end with only a point.
-(setq default-fill-column 80)		; toggle wrapping text at the 80th character
+(setq fill-column 80)		        ; toggle wrapping text at the 80th character
 
 (setq mac-option-key-is-meta nil)
 (setq mac-command-key-is-meta t)
@@ -38,12 +38,17 @@
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
+;; Prettify things for the specified modes
 (global-prettify-symbols-mode 1)
 (add-hook 'ess-mode-hook
 	  (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
 (add-hook 'inferior-ess-mode-hook
 	  (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
 (add-hook 'ess-mode-hook
+	  (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
+(add-hook 'org-mode-hook
+	  (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
+(add-hook 'org-mode-hook
 	  (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
 
 
