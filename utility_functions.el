@@ -106,11 +106,12 @@ BEG and END (region to sort)."
 (defun insert_then_R_operator_end_nl ()
   "R - %>% operator; place to line end and start new line."
   (interactive)
-  (cond ((eq major-mode 'ess-mode) (progn
-				     (evil-end-of-line)
-				     (evil-append 1)
-				     (insert " %>%")
-				     (lispy-newline-and-indent-plain)))
+  (cond ((contains major-mode '(ess-mode inferior-ess-mode))
+	 (progn
+	   (evil-end-of-line)
+	   (evil-append 1)
+	   (insert " %>% ")
+	   (cond ((eq major-mode 'ess-mode) (lispy-newline-and-indent-plain)))))
 	(t (message "Only valid in ESS mode"))))
 
 (defun insert_then_R_operator_nl ()
@@ -129,7 +130,7 @@ BEG and END (region to sort)."
   (interactive)
   (evil-forward-word-end)
   (cond ((eq major-mode 'python-mode) (get_right_lambda "lambda "))
-	((eq major-mode 'ess-mode) (get_right_lambde "function"))
+	((eq major-mode 'ess-mode) (get_right_lambda "function"))
 	(t (message "Not defined for this major mode"))))
 
 (provide 'utility_functions)

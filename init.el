@@ -265,12 +265,7 @@
   :ensure t
   :init (global-git-gutter-mode))
 
-;; Set font to Hack
-;; (if (eq system-type 'darwin)
-;;     (set-face-attribute 'default nil :font "Hack-14")
-;;   (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 110))
-
-;; Reference: https://github.com/hlissner/.emacs.d/blob/master/core/core-modeline.el
+;; Credit: https://github.com/hlissner/.emacs.d/blob/master/core/core-modeline.el
 ;; and https://buildfunthings.com/emacs/emacs-config.html
 (use-package powerline
   :ensure t
@@ -498,12 +493,6 @@
    :prefix "SPC"
    :non-normal-prefix "C-SPC"
 
-   ;; simple command
-   "/"   'counsel-ag
-   "SPC" '(avy-goto-word-or-subword-1  :which-key "go to char")
-
-   ;; Applications
-
    "a" '(:ignore t :which-key "Applications")
    "ar" 'ranger
    "ac" 'calc
@@ -617,6 +606,7 @@
   (define-key evil-insert-state-map (kbd "C-b") 'evil-scroll-page-up)
   (define-key evil-insert-state-map (kbd "C-d") 'evil-scroll-down)
   (evil-define-key '(insert normal) ess-mode-map (kbd "C-p") 'insert_then_R_operator_end_nl)
+  (evil-define-key '(insert normal) inferior-ess-mode-map (kbd "C-p") 'insert_then_R_operator_end_nl)
   (evil-define-key '(insert normal) ess-mode-map (kbd "C-f") 'insert_lambda_function)
   (evil-define-key '(insert normal) python-mode-map (kbd "C-f") 'insert_lambda_function)
   (evil-define-key '(insert normal) lisp-interaction-mode-map (kbd "C-c C-c") 'eval-buffer)
