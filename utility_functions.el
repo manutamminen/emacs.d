@@ -106,7 +106,7 @@ BEG and END (region to sort)."
 (defun insert_then_R_operator_end_nl ()
   "R - %>% operator; place to line end and start new line."
   (interactive)
-  (cond ((contains major-mode '(ess-mode inferior-ess-mode))
+  (cond ((member major-mode '(ess-mode inferior-ess-mode))
 	 (progn
 	   (evil-end-of-line)
 	   (evil-append 1)
@@ -126,12 +126,27 @@ BEG and END (region to sort)."
     (insert str)))
 
 (defun insert_lambda_function ()
-  "Insert lambda function definition in Python or R."
+  "Insert lambda function definition into Python or R."
   (interactive)
   (evil-forward-word-end)
   (cond ((eq major-mode 'python-mode) (get_right_lambda "lambda "))
 	((eq major-mode 'ess-mode) (get_right_lambda "function"))
 	(t (message "Not defined for this major mode"))))
+
+(defun wrap-selected-region (&optional beg end)
+  "Evaluate the selected region in Python shell. BEG and END: selection start and end."
+  (interactive)
+  (let ((beg (cond (beg beg)
+                   ((region-active-p)
+                    (region-beginning))
+                   (t (line-beginning-position))))
+        (end (cond (end end)
+                   ((region-active-p)
+                    (copy-marker (region-end)))
+                   (t (line-end-position)))))
+    (save-excursion
+      (set-window-point beg)
+      (insert "JEP"))))
 
 (provide 'utility_functions)
 ;;; utility_functions.el ends here

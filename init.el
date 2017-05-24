@@ -590,8 +590,10 @@
    "z" '(:ignore t :which-key "Font scaling")
    "zz" 'hydra-font/body)
 
-  (general-define-key
-   "C-c c" 'company-complete)
+  ;; (general-define-key
+  ;;  "C-c c" 'company-complete)
+
+  (general-define-key (kbd "<tab>") 'company-indent-or-complete-common)
 
   (general-nmap
    :prefix "SPC"
@@ -607,10 +609,18 @@
   (define-key evil-insert-state-map (kbd "C-d") 'evil-scroll-down)
   (evil-define-key '(insert normal) ess-mode-map (kbd "C-p") 'insert_then_R_operator_end_nl)
   (evil-define-key '(insert normal) inferior-ess-mode-map (kbd "C-p") 'insert_then_R_operator_end_nl)
+  (evil-define-key '(insert normal) inferior-ess-mode-map (kbd "C-e") 'end-of-line)
+  (evil-define-key '(insert normal) inferior-ess-mode-map (kbd "C-<left>") 'left-word)
+  (evil-define-key '(insert normal) inferior-ess-mode-map (kbd "C-<right>") 'right-word)
+  ;; (evil-define-key '(insert normal) inferior-ess-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
   (evil-define-key '(insert normal) ess-mode-map (kbd "C-f") 'insert_lambda_function)
+  ;; (evil-define-key '(insert normal) ess-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
+  (evil-define-key '(insert) org-mode-map (kbd "<tab>") 'org-cycle)
   (evil-define-key '(insert normal) python-mode-map (kbd "C-f") 'insert_lambda_function)
   (evil-define-key '(insert normal) lisp-interaction-mode-map (kbd "C-c C-c") 'eval-buffer)
   (evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-c C-c") 'eval-buffer)
+  (evil-define-key '(insert normal) ess-help-mode-map (kbd "C-d") 'evil-scroll-down)
+  (evil-define-key '(insert normal) ess-help-mode-map (kbd "C-b") 'evil-scroll-up)
   (define-key inferior-ess-mode-map (kbd "C-d") 'evil-scroll-down)
   (define-key lispy-mode-map (kbd "C-d") 'lispy-delete)
   (define-key comint-mode-map (kbd "<up>") 'comint-previous-matching-input-from-input)
