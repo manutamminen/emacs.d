@@ -40,7 +40,7 @@
     ("d9dab332207600e49400d798ed05f38372ec32132b3f7d2ba697e59088021555" default)))
  '(package-selected-packages
    (quote
-    (htmlize org-plus-contrib git-gutter powerline mode-icons worf better-shell dumb-jump ob-ipython lispyville counsel-projectile projectile flycheck-cask evil-surround exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
+    (slime smartparens htmlize org-plus-contrib git-gutter powerline mode-icons worf better-shell dumb-jump ob-ipython lispyville counsel-projectile projectile flycheck-cask evil-surround exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
 
 (use-package general
   :ensure t
@@ -260,6 +260,20 @@
   :ensure t
   :config
   (load-theme 'base16-materia))
+
+(use-package eyebrowse
+  :ensure t
+  :config
+  (setq eyebrowse-keymap-prefix nil)
+  (eyebrowse-mode 1))
+
+(use-package smartparens
+  :ensure t
+  :config
+  (smartparens-mode t))
+
+(use-package slime
+  :ensure t)
 
 (use-package git-gutter
   :ensure t
@@ -497,7 +511,7 @@
    "ar" 'ranger
    "ac" 'calc
    "ad" 'dired
-   "as" 'better-shell-shell
+   "as" 'eshell
    "ar" 'better-shell-remote-open
 
    "b" '(:ignore t :which-key "Buffer tools")
@@ -570,6 +584,7 @@
    
    "w" '(:ignore t :which-key "Window tools")
    "ww" 'hydra-windows/body
+   "we" 'hydra-eyebrowse/body
    "wl" 'windmove-right
    "wh" 'windmove-left
    "wk" 'windmove-up
@@ -616,6 +631,8 @@
   (evil-define-key '(insert normal) ess-mode-map (kbd "C-f") 'insert_lambda_function)
   ;; (evil-define-key '(insert normal) ess-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
   (evil-define-key '(insert) org-mode-map (kbd "<tab>") 'org-cycle)
+  (evil-define-key '(insert) magit-status-mode-map (kbd "<tab>") 'magit-section-toggle)
+  (evil-define-key '(insert) eshell-mode-map (kbd "<tab>") 'completion-at-point)
   (evil-define-key '(insert normal) python-mode-map (kbd "C-f") 'insert_lambda_function)
   (evil-define-key '(insert normal) lisp-interaction-mode-map (kbd "C-c C-c") 'eval-buffer)
   (evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-c C-c") 'eval-buffer)
@@ -660,3 +677,9 @@
 
 (provide 'init)
 ;;; init.el ends here
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

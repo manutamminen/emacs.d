@@ -64,6 +64,9 @@ Python completions
   ("q" nil "cancel"))
 
 (defhydra hydra-font ()
+  "
+Font scaling
+"
   ("+" text-scale-increase)
   ("-" text-scale-decrease))
 
@@ -76,7 +79,29 @@ Modified lispy bindings
   ("p" univ-eval-line-last-sexp "Evaluate last sexp"))
 
 (defhydra dumb-hydra ()
+  "
+Jump to definitions etc
+"
   ("n" dumb-jump-go "Next occurrence"))
+
+(defhydra hydra-eyebrowse ()
+  "
+Window config management
+"
+  ("s" eyebrowse-create-window-config "Save window config")
+  ("n" eyebrowse-next-window-config "Next window config")
+  ("p" eyebrowse-previous-window-config "Previous window config")
+  ("c" eyebrowse-close-window-config "Close window config")
+  ("0" eyebrowse-switch-to-window-config-0 "Switch to config 0")
+  ("1" eyebrowse-switch-to-window-config-1 "Switch to config 1")
+  ("2" eyebrowse-switch-to-window-config-2 "Switch to config 2")
+  ("3" eyebrowse-switch-to-window-config-3 "Switch to config 3")
+  ("4" eyebrowse-switch-to-window-config-4 "Switch to config 4")
+  ("5" eyebrowse-switch-to-window-config-5 "Switch to config 5")
+  ("6" eyebrowse-switch-to-window-config-6 "Switch to config 6")
+  ("7" eyebrowse-switch-to-window-config-7 "Switch to config 7")
+  ("8" eyebrowse-switch-to-window-config-8 "Switch to config 8")
+  ("9" eyebrowse-switch-to-window-config-9 "Switch to config 9"))
 
 (provide 'hydras)
 ;;; hydras.el ends here
