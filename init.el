@@ -83,14 +83,8 @@
     (use-package evil-escape
       :ensure t)
 
-    ;; (use-package evil-lispy
-    ;;   :ensure t)
-
     (use-package lispyville
       :ensure t)
-
-    ;; (use-package evil-org
-    ;;   :ensure t)
 
     (use-package evil-surround
       :ensure t)
@@ -128,15 +122,12 @@
   (progn
     (setq flycheck-display-errors-function nil)
     (add-hook 'after-init-hook #'global-flycheck-mode)
-    ;; (add-hook 'python-mode-hook #'flycheck-python-setup)
     (add-hook 'python-mode-hook (lambda ()
 				  (progn
 				    (flycheck-mode 1)
 				    #'flycheck-python-setup
-				    ;; (semantic-mode 1)
 				    (setq flycheck-checker 'python-pylint
 					  flycheck-checker-error-threshold 900
-					  ;; flycheck-highlighting-mode 'lines
 					  flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list
 					  flycheck-pylintrc "~/.pylintrc"))))))
 
@@ -145,14 +136,12 @@
   :defer 2
   :config
   (progn
-    ;; Use Flycheck instead of Flymake
     (when (require 'flycheck nil t)
       (remove-hook 'elpy-modules 'elpy-module-flymake)
       (remove-hook 'elpy-modules 'elpy-module-yasnippet)
       (remove-hook 'elpy-mode-hook 'elpy-module-highlight-indentation)
       (add-hook 'elpy-mode-hook 'flycheck-mode))
     (elpy-enable)
-    ;; jedi is great
     (setq elpy-rpc-backend "jedi")))
 
 (use-package ob-ipython
@@ -165,7 +154,6 @@
 
 (use-package yasnippet
   :ensure t
-  :defer t
   :config
   (yas-reload-all)
   (yas-global-mode 1))
@@ -180,13 +168,6 @@
   :ensure t
   :config
   (counsel-projectile-on))
-
-;; (use-package ivy-rich
-;;   :ensure t
-;;   :config
-;;   (ivy-set-display-transformer 'ivy-switch-buffer 'ivy-rich-switch-buffer-transformer)
-;;   (setq ivy-virtual-abbreviate 'full
-;; 	ivy-rich-switch-buffer-align-virtual-buffer t))
 
 (use-package dumb-jump
   :config (setq dumb-jump-selector 'ivy)
@@ -266,11 +247,6 @@
   :config
   (setq eyebrowse-keymap-prefix nil)
   (eyebrowse-mode 1))
-
-(use-package smartparens
-  :ensure t
-  :config
-  (smartparens-mode t))
 
 (use-package slime
   :ensure t)
@@ -581,6 +557,7 @@
    "tp" 'prettify-symbols-mode
    "tr" 'rainbow-delimiters-mode
    "tw" 'toggle-truncate-lines
+   "tn" 'xah-toggle-read-novel-mode
    
    "w" '(:ignore t :which-key "Window tools")
    "ww" 'hydra-windows/body
@@ -605,67 +582,59 @@
    "z" '(:ignore t :which-key "Font scaling")
    "zz" 'hydra-font/body)
 
-  ;; (general-define-key
-  ;;  "C-c c" 'company-complete)
-
-  (general-define-key (kbd "<tab>") 'company-indent-or-complete-common)
-
   (general-nmap
    :prefix "SPC"
-   "TAB" 'mode-line-other-buffer)
+   "TAB" 'mode-line-other-buffer))
 
-  (define-key evil-normal-state-map (kbd "ö") 'evil-end-of-line)
-  (define-key evil-normal-state-map (kbd ".") 'evil-avy-goto-line)
-  (define-key evil-normal-state-map (kbd ",") 'evil-avy-goto-char)
-  (define-key evil-insert-state-map (kbd "C-k") 'kill-line)
-  (define-key evil-insert-state-map (kbd "C-w") 'evil-window-map)
-  (define-key evil-insert-state-map (kbd "C") 'self-insert-command)
-  (define-key evil-insert-state-map (kbd "C-b") 'evil-scroll-page-up)
-  (define-key evil-insert-state-map (kbd "C-d") 'evil-scroll-down)
-  (evil-define-key '(insert normal) ess-mode-map (kbd "C-p") 'insert_then_R_operator_end_nl)
-  (evil-define-key '(insert normal) inferior-ess-mode-map (kbd "C-p") 'insert_then_R_operator_end_nl)
-  (evil-define-key '(insert normal) inferior-ess-mode-map (kbd "C-e") 'end-of-line)
-  (evil-define-key '(insert normal) inferior-ess-mode-map (kbd "C-<left>") 'left-word)
-  (evil-define-key '(insert normal) inferior-ess-mode-map (kbd "C-<right>") 'right-word)
-  ;; (evil-define-key '(insert normal) inferior-ess-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
-  (evil-define-key '(insert normal) ess-mode-map (kbd "C-f") 'insert_lambda_function)
-  ;; (evil-define-key '(insert normal) ess-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
-  (evil-define-key '(insert) org-mode-map (kbd "<tab>") 'org-cycle)
-  (evil-define-key '(insert) magit-status-mode-map (kbd "<tab>") 'magit-section-toggle)
-  (evil-define-key '(insert) eshell-mode-map (kbd "<tab>") 'completion-at-point)
-  (evil-define-key '(insert normal) python-mode-map (kbd "C-f") 'insert_lambda_function)
-  (evil-define-key '(insert normal) lisp-interaction-mode-map (kbd "C-c C-c") 'eval-buffer)
-  (evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-c C-c") 'eval-buffer)
-  (evil-define-key '(insert normal) ess-help-mode-map (kbd "C-d") 'evil-scroll-down)
-  (evil-define-key '(insert normal) ess-help-mode-map (kbd "C-b") 'evil-scroll-up)
-  (define-key inferior-ess-mode-map (kbd "C-d") 'evil-scroll-down)
-  (define-key lispy-mode-map (kbd "C-d") 'lispy-delete)
-  (define-key comint-mode-map (kbd "<up>") 'comint-previous-matching-input-from-input)
-  (define-key comint-mode-map (kbd "<down>") 'comint-next-matching-input-from-input)
-
-  (define-key lispy-mode-map ")"
-    (lambda () (interactive)
-      (progn
-	(hydra-lispy-magic/body)
-	(lispy-right-nostring 1))))
-
-  (define-key org-mode-map "<"
-    (lambda () (interactive)
-      (if (looking-back "^")
-	  (hydra-org-template/body)
-	(self-insert-command 1))))
-
-  (define-key org-mode-map ">"
-    (lambda () (interactive)
-      (if (looking-back "^")
-	  (hydra-org-mol-template/body)
-	(self-insert-command 1))))
-
-  (define-key python-mode-map "<"
-    (lambda () (interactive)
-      (if (looking-back "^")
-	  (hydra-python-template/body)
-	(self-insert-command 1)))))
+(global-set-key (kbd "M-x") 'counsel-M-x)
+(define-key evil-normal-state-map (kbd "ö") 'evil-end-of-line)
+(define-key evil-normal-state-map (kbd ".") 'evil-avy-goto-line)
+(define-key evil-normal-state-map (kbd ",") 'evil-avy-goto-char)
+(define-key evil-insert-state-map (kbd "C-k") 'kill-line)
+(define-key evil-insert-state-map (kbd "C-w") 'evil-window-map)
+(define-key evil-insert-state-map (kbd "C") 'self-insert-command)
+(define-key evil-insert-state-map (kbd "C-b") 'evil-scroll-page-up)
+(define-key evil-insert-state-map (kbd "C-d") 'evil-scroll-down)
+(evil-define-key '(insert normal) ess-mode-map (kbd "C-p") 'insert_then_R_operator_end_nl)
+(evil-define-key '(insert normal) inferior-ess-mode-map (kbd "C-p") 'insert_then_R_operator_end_nl)
+(evil-define-key '(insert normal) inferior-ess-mode-map (kbd "C-e") 'end-of-line)
+(evil-define-key '(insert normal) inferior-ess-mode-map (kbd "C-<left>") 'left-word)
+(evil-define-key '(insert normal) inferior-ess-mode-map (kbd "C-<right>") 'right-word)
+(evil-define-key '(insert normal) inferior-ess-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
+(evil-define-key '(insert normal) ess-mode-map (kbd "C-f") 'insert_lambda_function)
+(evil-define-key '(insert normal) ess-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
+(evil-define-key '(insert normal) python-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
+(evil-define-key '(insert normal) python-mode-map (kbd "C-f") 'insert_lambda_function)
+(evil-define-key '(insert normal) lisp-interaction-mode-map (kbd "C-c C-c") 'univ-eval)
+(evil-define-key '(insert normal) lisp-interaction-mode-map (kbd "C-c C-l") 'eval-last-sexp)
+(evil-define-key '(insert normal) lisp-interaction-mode-map (kbd "C-c C-f") 'eval-defun)
+(evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-c C-c") 'eval-buffer)
+(evil-define-key '(insert normal) ess-help-mode-map (kbd "C-d") 'evil-scroll-down)
+(evil-define-key '(insert normal) ess-help-mode-map (kbd "C-b") 'evil-scroll-up)
+(define-key inferior-ess-mode-map (kbd "C-d") 'evil-scroll-down)
+(define-key lispy-mode-map (kbd "C-d") 'lispy-delete)
+(define-key comint-mode-map (kbd "<up>") 'comint-previous-matching-input-from-input)
+(define-key comint-mode-map (kbd "<down>") 'comint-next-matching-input-from-input)
+(define-key lispy-mode-map ")"
+  (lambda () (interactive)
+    (progn
+      (hydra-lispy-magic/body)
+      (lispy-right-nostring 1))))
+(define-key org-mode-map "<"
+  (lambda () (interactive)
+    (if (looking-back "^")
+	(hydra-org-template/body)
+      (self-insert-command 1))))
+(define-key org-mode-map ">"
+  (lambda () (interactive)
+    (if (looking-back "^")
+	(hydra-org-mol-template/body)
+      (self-insert-command 1))))
+(define-key python-mode-map "<"
+  (lambda () (interactive)
+    (if (looking-back "^")
+	(hydra-python-template/body)
+      (self-insert-command 1))))
 
 (load "~/.emacs.d/org-defaults.el")
 
@@ -677,9 +646,3 @@
 
 (provide 'init)
 ;;; init.el ends here
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

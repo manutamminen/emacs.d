@@ -17,7 +17,7 @@
 (setq coding-system-for-write 'utf-8 )
 (setq sentence-end-double-space nil)	; sentence SHOULD end with only a point.
 (setq fill-column 80)		        ; toggle wrapping text at the 80th character
-
+(setq initial-scratch-message "")
 (setq mac-option-key-is-meta nil)
 (setq mac-command-key-is-meta t)
 (setq mac-command-modifier 'meta)
@@ -50,9 +50,6 @@
 	  (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
 (add-hook 'org-mode-hook
 	  (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
-
-
-(global-set-key (kbd "M-x") 'counsel-M-x)
 
 (defface org-block-begin-line
   '((t (:underline "#A7A6AA" :foreground "#008ED1" :background "#EAEAFF")))

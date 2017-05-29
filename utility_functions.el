@@ -148,5 +148,32 @@ BEG and END (region to sort)."
       (set-window-point beg)
       (insert "JEP"))))
 
+(defun xah-toggle-read-novel-mode ()
+  "Setup current buffer to be suitable for reading long novel/article text.
+
+• Line wrap at word boundaries.
+• Set a right margin.
+• line spacing is increased.
+• variable width font is used.
+
+Call again to toggle back.
+URL `http://ergoemacs.org/emacs/emacs_novel_reading_mode.html'
+Version 2017-02-27"
+  (interactive)
+  (if (null (get this-command 'state-on-p))
+      (progn
+        (set-window-margins nil 0 9)
+        (variable-pitch-mode 1)
+        (setq line-spacing 0.4)
+        (setq word-wrap t)
+        (put this-command 'state-on-p t))
+    (progn
+      (set-window-margins nil 0 0)
+      (variable-pitch-mode 0)
+      (setq line-spacing nil)
+      (setq word-wrap nil)
+      (put this-command 'state-on-p nil)))
+  (redraw-frame (selected-frame)))
+
 (provide 'utility_functions)
 ;;; utility_functions.el ends here
