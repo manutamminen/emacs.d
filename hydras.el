@@ -61,7 +61,7 @@ Python completions
   ("s" save-buffer "Save current buffer")
   ("i" (lambda () (interactive) (split-window-right) (windmove-right)) "Vertical split")
   ("-" (lambda () (interactive) (split-window-below) (windmove-down)) "Horizontal split")
-  ("q" nil "cancel"))
+  ("q" quit-window "Close current window"))
 
 (defhydra hydra-font ()
   "

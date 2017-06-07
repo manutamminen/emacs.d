@@ -40,7 +40,7 @@
     ("d9dab332207600e49400d798ed05f38372ec32132b3f7d2ba697e59088021555" default)))
  '(package-selected-packages
    (quote
-    (slime smartparens htmlize org-plus-contrib git-gutter powerline mode-icons worf better-shell dumb-jump ob-ipython lispyville counsel-projectile projectile flycheck-cask evil-surround exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
+    (w3m shackle slime smartparens htmlize org-plus-contrib git-gutter powerline mode-icons worf better-shell dumb-jump ob-ipython lispyville counsel-projectile projectile flycheck-cask evil-surround exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
 
 (use-package general
   :ensure t
@@ -254,6 +254,23 @@
 (use-package git-gutter
   :ensure t
   :init (global-git-gutter-mode))
+
+(use-package shackle
+  :ensure t
+  :init
+  (setq shackle-rules '(("*alchemist test report*" :select nil :size 0.3 :align 'below)))
+  :config
+  (shackle-mode t))
+
+(use-package exec-path-from-shell
+  :ensure t)
+
+(use-package w3m
+  :ensure t
+  :commands (w3m-browse-url w3m-session-crash-recovery-remove)
+  :init
+  (eval-when-compile
+    (autoload 'w3m-search-escape-query-string "w3m-search")))
 
 ;; Credit: https://github.com/hlissner/.emacs.d/blob/master/core/core-modeline.el
 ;; and https://buildfunthings.com/emacs/emacs-config.html
@@ -545,6 +562,7 @@
    "qq" 'evil-quit
 
    "s" '(:ignore t :which-key "Search tools")
+   "sd" 'xref-find-definitions
    "ss" 'swiper
    "sa" 'swiper-all
 
@@ -590,8 +608,10 @@
 (define-key evil-normal-state-map (kbd "ö") 'evil-end-of-line)
 (define-key evil-normal-state-map (kbd ".") 'evil-avy-goto-line)
 (define-key evil-normal-state-map (kbd ",") 'evil-avy-goto-char)
-(define-key evil-insert-state-map (kbd "C-k") 'kill-line)
 (define-key evil-insert-state-map (kbd "C-w") 'evil-window-map)
+;; (define-key evil-normal-state-map (kbd "C-w") 'hydra-windows/body)
+(define-key evil-insert-state-map (kbd "C-k") 'kill-line)
+;; (define-key evil-insert-state-map (kbd "C-w") 'hydra-windows/body)
 (define-key evil-insert-state-map (kbd "C") 'self-insert-command)
 (define-key evil-insert-state-map (kbd "C-b") 'evil-scroll-page-up)
 (define-key evil-insert-state-map (kbd "C-d") 'evil-scroll-down)
@@ -608,6 +628,9 @@
 (evil-define-key '(insert normal) lisp-interaction-mode-map (kbd "C-c C-c") 'univ-eval)
 (evil-define-key '(insert normal) lisp-interaction-mode-map (kbd "C-c C-l") 'eval-last-sexp)
 (evil-define-key '(insert normal) lisp-interaction-mode-map (kbd "C-c C-f") 'eval-defun)
+(evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-c C-c") 'univ-eval)
+(evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-c C-l") 'eval-last-sexp)
+(evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-c C-f") 'eval-defun)
 (evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-c C-c") 'eval-buffer)
 (evil-define-key '(insert normal) ess-help-mode-map (kbd "C-d") 'evil-scroll-down)
 (evil-define-key '(insert normal) ess-help-mode-map (kbd "C-b") 'evil-scroll-up)
@@ -646,3 +669,11 @@
 
 (provide 'init)
 ;;; init.el ends here
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+040 583 3824
