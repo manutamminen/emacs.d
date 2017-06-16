@@ -166,14 +166,25 @@ Version 2017-02-27"
         (variable-pitch-mode 1)
         (setq line-spacing 0.4)
         (setq word-wrap t)
-        (put this-command 'state-on-p t))
+        (put this-command 'state-on-p t)
+	(define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+	(define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+	(define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+	(define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+	(setq-default evil-cross-lines t))
     (progn
       (set-window-margins nil 0 0)
       (variable-pitch-mode 0)
       (setq line-spacing nil)
       (setq word-wrap nil)
-      (put this-command 'state-on-p nil)))
+      (put this-command 'state-on-p nil)
+      (define-key evil-normal-state-map (kbd "<remap> <evil-next-visual-line>") 'evil-next-line)
+      (define-key evil-normal-state-map (kbd "<remap> <evil-previous-visual-line>") 'evil-previousline)
+      (define-key evil-motion-state-map (kbd "<remap> <evil-next-visual-line>") 'evil-next-line)
+      (define-key evil-motion-state-map (kbd "<remap> <evil-previous-visual-line>") 'evil-previous-line)
+      (setq-default evil-cross-lines nil)))
   (redraw-frame (selected-frame)))
+
 
 (provide 'utility_functions)
 ;;; utility_functions.el ends here

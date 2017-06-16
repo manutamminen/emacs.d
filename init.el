@@ -532,6 +532,7 @@
    "f" '(:ignore t :which-key "File operations")
    "ff" 'counsel-find-file
    "fs" 'save-buffer
+   "fr" 'recentf-open-files
 
    "j" '(:ignore t :which-key "Yasnippets etc")
    "jp" 'insert_then_R_operator
@@ -622,6 +623,7 @@
 (evil-define-key '(insert normal) inferior-ess-mode-map (kbd "C-<right>") 'right-word)
 (evil-define-key '(insert normal) inferior-ess-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
 (evil-define-key '(insert normal) ess-mode-map (kbd "C-f") 'insert_lambda_function)
+(evil-define-key '(insert normal) ess-mode-map (kbd "C-e") 'end-of-line)
 (evil-define-key '(insert normal) ess-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
 (evil-define-key '(insert normal) python-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
 (evil-define-key '(insert normal) python-mode-map (kbd "C-f") 'insert_lambda_function)
