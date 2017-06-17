@@ -132,5 +132,20 @@
               ("h" "Habit" entry (file "~/Dropbox/Muistettavaa/notes.org")
                "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
 
+(setq eshell-prompt-function
+      (lambda ()
+	(concat
+	 (propertize "┌─[" 'face `(:foreground "grey"))
+	 (propertize (user-login-name) 'face `(:foreground "white"))
+	 (propertize "@" 'face `(:foreground "white"))
+	 (propertize (system-name) 'face `(:foreground "white"))
+	 (propertize "]──[" 'face `(:foreground "grey"))
+	 (propertize (format-time-string "%H:%M" (current-time)) 'face `(:foreground "white"))
+	 (propertize "]──[" 'face `(:foreground "grey"))
+	 (propertize (concat (eshell/pwd)) 'face `(:foreground "white"))
+	 (propertize "]\n" 'face `(:foreground "white"))
+	 (propertize "└─>" 'face `(:foreground "grey"))
+	 (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "grey")))))
+
 (provide 'defaults)
 ;;; defaults.el ends here
