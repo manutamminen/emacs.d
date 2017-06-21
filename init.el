@@ -637,6 +637,8 @@
 (evil-define-key '(insert normal) ess-help-mode-map (kbd "C-d") 'evil-scroll-down)
 (evil-define-key '(insert normal) ess-help-mode-map (kbd "C-b") 'evil-scroll-up)
 (evil-define-key '(insert normal) org-mode-map (kbd "C-e") 'end-of-line)
+(evil-define-key '(insert normal) cider-stacktrace-mode-map (kbd "q") 'cider-popup-buffer-quit-function)
+(evil-define-key '(insert normal) cider-repl-mode-map (kbd "<down>") 'cider-repl-next-input)
 (define-key inferior-ess-mode-map (kbd "C-d") 'evil-scroll-down)
 (define-key comint-mode-map (kbd "<up>") 'comint-previous-matching-input-from-input)
 (define-key comint-mode-map (kbd "<down>") 'comint-next-matching-input-from-input)
