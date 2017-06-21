@@ -181,6 +181,11 @@ Version 2017-02-27"
       (setq-default evil-cross-lines nil)))
   (redraw-frame (selected-frame)))
 
+;; Auto-rename new eww buffers
+(defun xah-rename-eww-hook ()
+  "Rename eww browser's buffer so sites open in new page."
+  (rename-buffer "eww" t))
+(add-hook 'eww-mode-hook #'xah-rename-eww-hook)
 
 (provide 'utility_functions)
 ;;; utility_functions.el ends here

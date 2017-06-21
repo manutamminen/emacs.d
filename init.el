@@ -40,7 +40,7 @@
     ("d9dab332207600e49400d798ed05f38372ec32132b3f7d2ba697e59088021555" default)))
  '(package-selected-packages
    (quote
-    (w3m shackle slime smartparens htmlize org-plus-contrib git-gutter powerline mode-icons worf better-shell dumb-jump ob-ipython lispyville counsel-projectile projectile flycheck-cask evil-surround exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
+    (evil-lispy w3m shackle slime smartparens htmlize org-plus-contrib git-gutter powerline mode-icons worf better-shell dumb-jump ob-ipython lispyville counsel-projectile projectile flycheck-cask evil-surround exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
 
 (use-package general
   :ensure t
@@ -87,6 +87,9 @@
       :ensure t)
 
     (use-package evil-surround
+      :ensure t)
+
+    (use-package evil-lispy
       :ensure t)
 
     (use-package evil-magit
@@ -496,10 +499,9 @@
   :ensure t
   :config
   (general-define-key
-   :states '(normal visual insert emacs)
+   :states '(normal visual emacs)
    :prefix "SPC"
-   :non-normal-prefix "C-SPC"
-
+   
    "a" '(:ignore t :which-key "Applications")
    "ar" 'ranger
    "ac" 'calc
@@ -532,7 +534,7 @@
    "f" '(:ignore t :which-key "File operations")
    "ff" 'counsel-find-file
    "fs" 'save-buffer
-   "fr" 'recentf-open-files
+   "fr" 'ivy-recentf
 
    "j" '(:ignore t :which-key "Yasnippets etc")
    "jp" 'insert_then_R_operator
@@ -610,9 +612,7 @@
 (define-key evil-normal-state-map (kbd ".") 'evil-avy-goto-line)
 (define-key evil-normal-state-map (kbd ",") 'evil-avy-goto-char)
 (define-key evil-insert-state-map (kbd "C-w") 'evil-window-map)
-;; (define-key evil-normal-state-map (kbd "C-w") 'hydra-windows/body)
 (define-key evil-insert-state-map (kbd "C-k") 'kill-line)
-;; (define-key evil-insert-state-map (kbd "C-w") 'hydra-windows/body)
 (define-key evil-insert-state-map (kbd "C") 'self-insert-command)
 (define-key evil-insert-state-map (kbd "C-b") 'evil-scroll-page-up)
 (define-key evil-insert-state-map (kbd "C-d") 'evil-scroll-down)
@@ -636,16 +636,17 @@
 (evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-c C-c") 'eval-buffer)
 (evil-define-key '(insert normal) ess-help-mode-map (kbd "C-d") 'evil-scroll-down)
 (evil-define-key '(insert normal) ess-help-mode-map (kbd "C-b") 'evil-scroll-up)
+(evil-define-key '(insert normal) org-mode-map (kbd "C-e") 'end-of-line)
 (define-key inferior-ess-mode-map (kbd "C-d") 'evil-scroll-down)
-(define-key lispy-mode-map (kbd "C-d") 'lispy-delete)
 (define-key comint-mode-map (kbd "<up>") 'comint-previous-matching-input-from-input)
 (define-key comint-mode-map (kbd "<down>") 'comint-next-matching-input-from-input)
-(define-key lispy-mode-map ")"
+(define-key evil-lispy-mode-map (kbd "C-d") 'lispy-delete)
+(define-key evil-lispy-mode-map (kbd "C-e")
   (lambda () (interactive)
     (progn
       (hydra-lispy-magic/body)
       (lispy-right-nostring 1))))
-(define-key org-mode-map "<"
+(define-key org-mode-map (kbd "<")
   (lambda () (interactive)
     (if (looking-back "^")
 	(hydra-org-template/body)
@@ -655,11 +656,26 @@
     (if (looking-back "^")
 	(hydra-org-mol-template/body)
       (self-insert-command 1))))
-(define-key python-mode-map "<"
+(define-key python-mode-map (kbd "<")
   (lambda () (interactive)
     (if (looking-back "^")
 	(hydra-python-template/body)
       (self-insert-command 1))))
+(define-key clojure-mode-map (kbd "M-r")
+  (lambda () (interactive)
+    "Empty the Clojure namespace"
+    (cider-interactive-eval
+     "(require 'clojure.tools.namespace.repl)
+      (clojure.tools.namespace.repl/refresh)")))
+(define-key clojure-mode-map (kbd "M-t")
+  (lambda ()
+    "Run tests in Clojure mode"
+    (interactive "P")
+    (save-buffer)
+    (cider-load-current-buffer)
+    (cider-interactive-eval "(speclj.core/run-specs)")
+    (when arg 
+      (cider-switch-to-relevant-repl-buffer nil))))
 
 (load "~/.emacs.d/org-defaults.el")
 
@@ -668,14 +684,5 @@
 
 (when window-system (set-frame-size (selected-frame) 160 50)) ; set window size
 
-
 (provide 'init)
 ;;; init.el ends here
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-
-040 583 3824
