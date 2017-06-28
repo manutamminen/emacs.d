@@ -10,19 +10,17 @@
 
 (require 'package)
 
-(setq package-enable-at-startup nil) ; tells emacs not to load any packages before starting up
-;; the following lines tell emacs where on the internet to look up
-;; for new packages.
+(setq package-enable-at-startup nil)
 (setq package-archives '(("org"       . "http://orgmode.org/elpa/")
 			 ("gnu"       . "http://elpa.gnu.org/packages/")
 			 ("melpa"     . "https://melpa.org/packages/")
 			 ("marmalade" . "http://marmalade-repo.org/packages/")))
-(package-initialize) ; guess what this one does ?
+(package-initialize)
 
 ;; Bootstrap `use-package'
-(unless (package-installed-p 'use-package) ; unless it is already installed
-  (package-refresh-contents) ; updage packages archive
-  (package-install 'use-package)) ; and install the most recent version of use-package
+(unless (package-installed-p 'use-package) ;; unless it is already installed
+  (package-refresh-contents) ;; updage packages archive
+  (package-install 'use-package)) ;; and install the most recent version of use-package
 
 ;; Enable use-package
 (eval-when-compile
@@ -40,7 +38,7 @@
     ("d9dab332207600e49400d798ed05f38372ec32132b3f7d2ba697e59088021555" default)))
  '(package-selected-packages
    (quote
-    (evil-lispy w3m shackle slime smartparens htmlize org-plus-contrib git-gutter powerline mode-icons worf better-shell dumb-jump ob-ipython lispyville counsel-projectile projectile flycheck-cask evil-surround exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
+    (flatui-theme all-the-icons evil-lispy w3m shackle slime smartparens htmlize org-plus-contrib git-gutter powerline mode-icons worf better-shell dumb-jump ob-ipython lispyville counsel-projectile projectile flycheck-cask evil-surround exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
 
 (use-package general
   :ensure t
@@ -274,6 +272,19 @@
   :init
   (eval-when-compile
     (autoload 'w3m-search-escape-query-string "w3m-search")))
+
+(use-package all-the-icons
+  :ensure t)
+
+(use-package flatui-theme
+  :ensure t
+  :init (progn
+	  (load-theme 'flatui t)))
+
+(use-package mode-icons
+  :ensure t
+  :config
+  (mode-icons-mode t))
 
 ;; Credit: https://github.com/hlissner/.emacs.d/blob/master/core/core-modeline.el
 ;; and https://buildfunthings.com/emacs/emacs-config.html
@@ -534,7 +545,7 @@
    "f" '(:ignore t :which-key "File operations")
    "ff" 'counsel-find-file
    "fs" 'save-buffer
-   "fr" 'ivy-recentf
+   "fr" 'counsel-recentf
 
    "j" '(:ignore t :which-key "Yasnippets etc")
    "jp" 'insert_then_R_operator
@@ -639,6 +650,7 @@
 (evil-define-key '(insert normal) org-mode-map (kbd "C-e") 'end-of-line)
 (evil-define-key '(insert normal) cider-stacktrace-mode-map (kbd "q") 'cider-popup-buffer-quit-function)
 (evil-define-key '(insert normal) cider-repl-mode-map (kbd "<down>") 'cider-repl-next-input)
+(evil-define-key '(insert normal) eshell-mode-map (kbd "C-v") 'evil-paste-after)
 (define-key inferior-ess-mode-map (kbd "C-d") 'evil-scroll-down)
 (define-key comint-mode-map (kbd "<up>") 'comint-previous-matching-input-from-input)
 (define-key comint-mode-map (kbd "<down>") 'comint-next-matching-input-from-input)
@@ -688,3 +700,9 @@
 
 (provide 'init)
 ;;; init.el ends here
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
