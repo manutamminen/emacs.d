@@ -121,16 +121,16 @@ BEG and END (region to sort)."
   (insert "%>%")
   (reindent-then-newline-and-indent))
 
-(defun get_right_lambda (str)
+(defun insert_right_lambda (str)
   (progn
     (insert str)))
 
-(defun insert_lambda_function ()
+(defun insert_lambda_function (start end)
   "Insert lambda function definition into Python or R."
-  (interactive)
+  (interactive "r")
   (evil-forward-word-end)
-  (cond ((eq major-mode 'python-mode) (get_right_lambda "lambda "))
-	((eq major-mode 'ess-mode) (get_right_lambda "function"))
+  (cond ((eq major-mode 'python-mode) (insert_right_lambda "lambda "))
+	((eq major-mode 'ess-mode) (insert_right_lambda "function"))
 	(t (message "Not defined for this major mode"))))
 
 (defun wrap-selected-region (&optional beg end)

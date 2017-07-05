@@ -291,11 +291,12 @@
 (use-package powerline
   :ensure t
   :config
-  (defvar mode-line-height 30 "A little bit taller, a little bit baller.")
+  (defvar mode-line-height 20)
 
-  (defvar mode-line-bar          (eval-when-compile (pl/percent-xpm mode-line-height 100 0 100 0 3 "#909fab" nil)))
-  (defvar mode-line-eldoc-bar    (eval-when-compile (pl/percent-xpm mode-line-height 100 0 100 0 3 "#B3EF00" nil)))
-  (defvar mode-line-inactive-bar (eval-when-compile (pl/percent-xpm mode-line-height 100 0 100 0 3 "#9091AB" nil)))
+  (defvar mode-line-bar          (eval-when-compile (pl/percent-xpm mode-line-height 100 0 100 0 3 "#FFFFFF" nil)))
+  ;; (defvar mode-line-bar          (eval-when-compile (pl/percent-xpm mode-line-height 100 0 100 0 3 "#909fab" nil)))
+  ;; (defvar mode-line-eldoc-bar    (eval-when-compile (pl/percent-xpm mode-line-height 100 0 100 0 3 "#B3EF00" nil)))
+  ;; (defvar mode-line-inactive-bar (eval-when-compile (pl/percent-xpm mode-line-height 100 0 100 0 3 "#9091AB" nil)))
 
   ;; Custom faces
   (defface mode-line-is-modified nil
@@ -335,14 +336,14 @@
   e.g. (doom-fix-unicode \"DejaVu Sans\" ?⚠ ?★ ?λ)"
     (declare (indent 1))
     (mapc (lambda (x) (set-fontset-font
-		  t (cons x x)
-		  (cond ((fontp font)
-			 font)
-			((listp font)
-			 (font-spec :family (car font) :size (nth 1 font)))
-			((stringp font)
-			 (font-spec :family font))
-			(t (error "FONT is an invalid type: %s" font)))))
+		       t (cons x x)
+		       (cond ((fontp font)
+			      font)
+			     ((listp font)
+			      (font-spec :family (car font) :size (nth 1 font)))
+			     ((stringp font)
+			      (font-spec :family font))
+			     (t (error "FONT is an invalid type: %s" font)))))
 	  chars))
 
   ;; Make certain unicode glyphs bigger for the mode-line.
@@ -655,7 +656,7 @@
 (define-key comint-mode-map (kbd "<up>") 'comint-previous-matching-input-from-input)
 (define-key comint-mode-map (kbd "<down>") 'comint-next-matching-input-from-input)
 (define-key evil-lispy-mode-map (kbd "C-d") 'lispy-delete)
-(define-key evil-lispy-mode-map (kbd "C-e")
+(define-key lispy-mode-map (kbd ")")
   (lambda () (interactive)
     (progn
       (hydra-lispy-magic/body)
@@ -675,6 +676,13 @@
     (if (looking-back "^")
 	(hydra-python-template/body)
       (self-insert-command 1))))
+
+;; (evil-define-key '(insert) emacs-lisp-mode-map (kbd "\"")
+;;   (lambda () (interactive)
+;;     (if (looking-at "\"")
+;; 	(evil-forward-char)
+;;       (org-self-insert-command "\""))))
+
 (define-key clojure-mode-map (kbd "M-r")
   (lambda () (interactive)
     "Empty the Clojure namespace"
