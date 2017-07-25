@@ -36,6 +36,8 @@
 
 (scroll-bar-mode -1)
 
+(setq inferior-R-program-name "/usr/local/bin/R")
+
 (fset 'yes-or-no-p 'y-or-n-p)
 
 ;; Prettify things for the specified modes

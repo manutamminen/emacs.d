@@ -36,10 +36,13 @@
  '(custom-safe-themes
    (quote
     ("d9dab332207600e49400d798ed05f38372ec32132b3f7d2ba697e59088021555" default)))
+ '(inferior-ess-r-program-name "/usr/local/bin/R")
  '(package-selected-packages
    (quote
-    (flatui-theme all-the-icons evil-lispy w3m shackle slime smartparens htmlize org-plus-contrib git-gutter powerline mode-icons worf better-shell dumb-jump ob-ipython lispyville counsel-projectile projectile flycheck-cask evil-surround exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
+    (suggest\.el suggest flatui-theme all-the-icons evil-lispy w3m shackle slime smartparens htmlize org-plus-contrib git-gutter powerline mode-icons worf better-shell dumb-jump ob-ipython lispyville counsel-projectile projectile flycheck-cask evil-surround exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
 
+
+(global-set-key (kbd "C-c o") 'ivy-occur)
 (use-package general
   :ensure t
   :config
@@ -81,8 +84,8 @@
     (use-package evil-escape
       :ensure t)
 
-    (use-package lispyville
-      :ensure t)
+    ;; (use-package lispyville
+    ;;   :ensure t)
 
     (use-package evil-surround
       :ensure t)
@@ -177,6 +180,10 @@
 (use-package ace-window
   :ensure t)
 
+(use-package ace-link
+  :ensure t
+  :config (ace-link-setup-default))
+
 (use-package cider
   :ensure t
   :config
@@ -252,6 +259,9 @@
 (use-package slime
   :ensure t)
 
+(use-package multiple-cursors
+  :ensure t)
+
 (use-package git-gutter
   :ensure t
   :init (global-git-gutter-mode))
@@ -266,6 +276,61 @@
 (use-package exec-path-from-shell
   :ensure t)
 
+(use-package bm
+  :ensure t
+  :demand t
+
+  :init
+  ;; restore on load (even before you require bm)
+  (setq bm-restore-repository-on-load t)
+
+  :config
+  ;; Allow cross-buffer 'next'
+  (setq bm-cycle-all-buffers t)  
+  ;; where to store persistant files
+  (setq bm-repository-file "~/.emacs.d/bm-repository")
+  ;; save bookmarks
+  (setq-default bm-buffer-persistence t)
+
+  ;; Loading the repository from file when on start up.
+  (add-hook' after-init-hook 'bm-repository-load)
+
+  ;; Restoring bookmarks when on file find.
+  (add-hook 'find-file-hooks 'bm-buffer-restore)
+
+
+  ;; Saving bookmarks
+  (add-hook 'kill-buffer-hook #'bm-buffer-save)
+  ;; Saving the repository to file when on exit.
+  ;; kill-buffer-hook is not called when Emacs is killed, so we
+  ;; must save all bookmarks first.
+  (defun modi/bm-save-all-bm-to-repository ()
+    (bm-buffer-save-all)
+    (bm-repository-save))
+  (add-hook 'kill-emacs-hook #'modi/bm-save-all-bm-to-repository)
+  (add-hook 'after-save-hook #'bm-buffer-save)
+  ;; The `after-save-hook' is not necessary to use to achieve persistence,
+  ;; but it makes the bookmark data in repository more in sync with the file
+  ;; state.
+
+
+  ;; Restoring bookmarks
+  (add-hook 'find-file-hooks   #'bm-buffer-restore)
+  (add-hook 'after-revert-hook #'bm-buffer-restore)
+  ;; The `after-revert-hook' is not necessary to use to achieve persistence,
+  ;; but it makes the bookmark data in repository more in sync with the file
+  ;; state. This hook might cause trouble when using packages
+  ;; that automatically reverts the buffer (like vc after a check-in).
+  ;; This can easily be avoided if the package provides a hook that is
+  ;; called before the buffer is reverted (like `vc-before-checkin-hook').
+  ;; Then new bookmarks can be saved before the buffer is reverted.
+  ;; Make sure bookmarks is saved before check-in (and revert-buffer)
+  (add-hook 'vc-before-checkin-hook #'bm-buffer-save))
+
+;; :bind (("<f2>" . bm-next)
+;;        ("S-<f2>" . bm-previous)
+;;        ("C-<f2>" . bm-toggle))
+
 (use-package w3m
   :ensure t
   :commands (w3m-browse-url w3m-session-crash-recovery-remove)
@@ -276,10 +341,11 @@
 (use-package all-the-icons
   :ensure t)
 
-(use-package flatui-theme
-  :ensure t
-  :init (progn
-	  (load-theme 'flatui t)))
+(use-package macrostep
+  :ensure t)
+
+(use-package suggest
+  :ensure t)
 
 (use-package mode-icons
   :ensure t
@@ -336,14 +402,14 @@
   e.g. (doom-fix-unicode \"DejaVu Sans\" ?⚠ ?★ ?λ)"
     (declare (indent 1))
     (mapc (lambda (x) (set-fontset-font
-		       t (cons x x)
-		       (cond ((fontp font)
-			      font)
-			     ((listp font)
-			      (font-spec :family (car font) :size (nth 1 font)))
-			     ((stringp font)
-			      (font-spec :family font))
-			     (t (error "FONT is an invalid type: %s" font)))))
+		  t (cons x x)
+		  (cond ((fontp font)
+			 font)
+			((listp font)
+			 (font-spec :family (car font) :size (nth 1 font)))
+			((stringp font)
+			 (font-spec :family font))
+			(t (error "FONT is an invalid type: %s" font)))))
 	  chars))
 
   ;; Make certain unicode glyphs bigger for the mode-line.
@@ -519,6 +585,7 @@
    "ac" 'calc
    "ad" 'dired
    "as" 'eshell
+   "au" 'suggest
    "ar" 'better-shell-remote-open
 
    "b" '(:ignore t :which-key "Buffer tools")
@@ -620,6 +687,7 @@
    "TAB" 'mode-line-other-buffer))
 
 (global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-c o") 'ivy-occur)
 (define-key evil-normal-state-map (kbd "ö") 'evil-end-of-line)
 (define-key evil-normal-state-map (kbd ".") 'evil-avy-goto-line)
 (define-key evil-normal-state-map (kbd ",") 'evil-avy-goto-char)
@@ -652,10 +720,16 @@
 (evil-define-key '(insert normal) cider-stacktrace-mode-map (kbd "q") 'cider-popup-buffer-quit-function)
 (evil-define-key '(insert normal) cider-repl-mode-map (kbd "<down>") 'cider-repl-next-input)
 (evil-define-key '(insert normal) eshell-mode-map (kbd "C-v") 'evil-paste-after)
+(evil-define-key '(insert normal) suggest-mode-map (kbd "C-c C-c") 'suggest-update)
 (define-key inferior-ess-mode-map (kbd "C-d") 'evil-scroll-down)
 (define-key comint-mode-map (kbd "<up>") 'comint-previous-matching-input-from-input)
 (define-key comint-mode-map (kbd "<down>") 'comint-next-matching-input-from-input)
-(define-key evil-lispy-mode-map (kbd "C-d") 'lispy-delete)
+(define-key org-mode-map (kbd "M-c") 'org-ctrl-c-ctrl-c)
+(define-key org-mode-map (kbd "M-j") 'org-babel-next-src-block)
+(define-key org-mode-map (kbd "M-k") 'org-babel-previous-src-block)
+(define-key org-mode-map (kbd "M-l") 'org-edit-src-code)
+(define-key org-src-mode-map (kbd "M-l") 'org-edit-src-exit)
+(define-key emacs-lisp-mode-map (kbd "C-c m") 'macrostep-expand)
 (define-key lispy-mode-map (kbd ")")
   (lambda () (interactive)
     (progn
@@ -676,13 +750,6 @@
     (if (looking-back "^")
 	(hydra-python-template/body)
       (self-insert-command 1))))
-
-;; (evil-define-key '(insert) emacs-lisp-mode-map (kbd "\"")
-;;   (lambda () (interactive)
-;;     (if (looking-at "\"")
-;; 	(evil-forward-char)
-;;       (org-self-insert-command "\""))))
-
 (define-key clojure-mode-map (kbd "M-r")
   (lambda () (interactive)
     "Empty the Clojure namespace"
@@ -706,11 +773,12 @@
 
 (when window-system (set-frame-size (selected-frame) 160 50)) ; set window size
 
-(provide 'init)
-;;; init.el ends here
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(provide 'init)
+;;; init.el ends here
