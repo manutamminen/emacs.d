@@ -39,7 +39,7 @@
  '(inferior-ess-r-program-name "/usr/local/bin/R")
  '(package-selected-packages
    (quote
-    (suggest\.el suggest flatui-theme all-the-icons evil-lispy w3m shackle slime smartparens htmlize org-plus-contrib git-gutter powerline mode-icons worf better-shell dumb-jump ob-ipython lispyville counsel-projectile projectile flycheck-cask evil-surround exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
+    (company-web eval-in-repl org-bullets multiple-cursors suggest\.el suggest flatui-theme all-the-icons evil-lispy w3m shackle slime smartparens htmlize org-plus-contrib git-gutter powerline mode-icons worf better-shell dumb-jump ob-ipython lispyville counsel-projectile projectile flycheck-cask evil-surround exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
 
 
 (global-set-key (kbd "C-c o") 'ivy-occur)
@@ -70,8 +70,7 @@
 		  lisp-interaction-mode-hook
 		  lisp-mode-hook
 		  clojure-mode-hook))
-    (add-hook hook (lambda () (lispy-mode 1)))
-    (add-hook 'lispy-mode-hook #'lispyville-mode)))
+    (add-hook hook (lambda () (lispy-mode 1)))))
 
 (use-package magit
   :ensure t
@@ -344,8 +343,20 @@
 (use-package macrostep
   :ensure t)
 
+(use-package eval-in-repl
+  :ensure t
+  :config
+;;; ielm support (for emacs lisp)
+  (setq eir-ielm-eval-in-current-buffer t)
+  (setq eir-repl-placement 'right)
+  (require 'eval-in-repl-ielm)
+  (require 'eval-in-repl-cider)
+  (require 'eval-in-repl-python))
+
 (use-package suggest
   :ensure t)
+
+(load "~/.emacs.d/init-company.el")
 
 (use-package mode-icons
   :ensure t
@@ -609,6 +620,9 @@
    "ee" 'univ-eval
    "el" 'univ-eval-line-last-sexp
    "eb" 'univ-eval-buffer
+   "es" 'asb-ess-R-object-popup-str
+   "eh" 'asb-ess-R-object-popup-head
+   "ei" 'asb-ess-R-object-popup-interactive
 
    "f" '(:ignore t :which-key "File operations")
    "ff" 'counsel-find-file
@@ -707,10 +721,10 @@
 (evil-define-key '(insert normal) ess-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
 (evil-define-key '(insert normal) python-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
 (evil-define-key '(insert normal) python-mode-map (kbd "C-f") 'insert_lambda_function)
-(evil-define-key '(insert normal) lisp-interaction-mode-map (kbd "C-c C-c") 'univ-eval)
+;; (evil-define-key '(insert normal) lisp-interaction-mode-map (kbd "C-c C-c") 'univ-eval)
 (evil-define-key '(insert normal) lisp-interaction-mode-map (kbd "C-c C-l") 'eval-last-sexp)
 (evil-define-key '(insert normal) lisp-interaction-mode-map (kbd "C-c C-f") 'eval-defun)
-(evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-c C-c") 'univ-eval)
+;; (evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-c C-c") 'univ-eval)
 (evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-c C-l") 'eval-last-sexp)
 (evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-c C-f") 'eval-defun)
 (evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-c C-c") 'eval-buffer)
@@ -721,6 +735,13 @@
 (evil-define-key '(insert normal) cider-repl-mode-map (kbd "<down>") 'cider-repl-next-input)
 (evil-define-key '(insert normal) eshell-mode-map (kbd "C-v") 'evil-paste-after)
 (evil-define-key '(insert normal) suggest-mode-map (kbd "C-c C-c") 'suggest-update)
+(evil-define-key '(insert normal) python-mode-map (kbd "C-c C-c") 'eir-eval-in-python)
+(evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-c C-c") 'eir-eval-in-ielm)
+(evil-define-key '(insert normal) lisp-interaction-mode-map (kbd "C-c C-c") 'eir-eval-in-ielm)
+(evil-define-key '(insert normal) Info-mode-map (kbd "C-c C-c") 'eir-eval-in-ielm)
+(evil-define-key '(insert normal) clojure-mode-map (kbd "C-c C-c") 'eir-eval-in-cider)
+(evil-define-key '(insert normal) inferior-python-mode-map (kbd "C-e") 'end-of-line)
+(evil-define-key '(insert normal) python-mode-map (kbd "C-e") 'end-of-line)
 (define-key inferior-ess-mode-map (kbd "C-d") 'evil-scroll-down)
 (define-key comint-mode-map (kbd "<up>") 'comint-previous-matching-input-from-input)
 (define-key comint-mode-map (kbd "<down>") 'comint-next-matching-input-from-input)

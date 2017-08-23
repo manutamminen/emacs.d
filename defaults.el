@@ -37,8 +37,14 @@
 (scroll-bar-mode -1)
 
 (setq inferior-R-program-name "/usr/local/bin/R")
+(setq exec-path (append exec-path '("/Users/manutamminen/miniconda3/bin")))
+(setq python-shell-interpreter "/Users/manutamminen/miniconda3/bin/ipython"
+      python-shell-interpreter-args "--simple-prompt -i")
 
 (fset 'yes-or-no-p 'y-or-n-p)
+
+;; Make TRAMP respect remote path variables
+;; (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
 
 ;; Prettify things for the specified modes
 (global-prettify-symbols-mode 1)
@@ -71,8 +77,6 @@
 (setq tab-always-indent 'complete)
 
 (add-to-list 'exec-path "/Users/tamminma/bin")
-(add-to-list 'exec-path "/usr/local/Cellar/emacs/25.1/bin/")
-(setq with-editor-emacsclient-executable "/usr/local/Cellar/emacs/25.1/bin/emacsclient")
 
 ;; (setq org-capture-templates
 ;;       '(("t" "todo" entry (file org-default-notes-file)

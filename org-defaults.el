@@ -1,7 +1,4 @@
-(setq inferior-R-program-name "/Users/tamminma/miniconda3/bin/R")
 (setq org-confirm-babel-evaluate (not org-confirm-babel-evaluate))
-(setq exec-path (append exec-path '("/Users/tamminma/miniconda3/bin")))
-(setq python-shell-interpreter "/Users/tamminma/miniconda3/bin/ipython")
 (setq python-shell-prompt-detect-failure-warning nil)
 
 ;;; display/update images in the buffer after I evaluate
