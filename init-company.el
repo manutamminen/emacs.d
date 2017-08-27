@@ -67,6 +67,5 @@
 
 ;;(company-quickhelp-mode 1)
 
-
 (provide 'init-company)
 ;;; init-company.el ends here
