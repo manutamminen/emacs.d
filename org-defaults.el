@@ -5,12 +5,12 @@
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
 
 ;; Set the babel languages
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '(
-   (R . t)
-   (sh . t)
-   (ipython . t)))
+;; (org-babel-do-load-languages
+;;  'org-babel-load-languages
+;;  '(
+;;    (R . t)
+;;    (sh . t)
+;;    (ipython . t)))
 
 ;; This makes org remote blocks work at least on Euler
 (defun org-babel-temp-file (prefix &optional suffix)
