@@ -34,3 +34,14 @@ of `org-babel-temporary-directory'."
                     org-babel-temporary-directory)
                temporary-file-directory)))
       (make-temp-file prefix nil suffix))))
+
+(setq org-agenda-files '("~/Dropbox/Muistettavaa/"))
+
+(setq org-agenda-custom-commands
+      '(("c" "Simple agenda view"
+         ((tags "PRIORITY=\"A\""
+                ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                 (org-agenda-overriding-header "High-priority unfinished tasks:")))
+          (agenda "")
+          (alltodo "")))))
+

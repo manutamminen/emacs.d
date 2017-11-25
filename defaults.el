@@ -22,7 +22,13 @@
 (setq mac-command-key-is-meta t)
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier nil)
+(setq shell-file-name "/bin/bash")
 
+;; eshell settings
+(setq pcomplete-ignore-case t)
+;;(add-hook 'eshell-mode (company-mode -1))
+
+;; ivy settings
 (setq ivy-use-virtual-buffers t)
 (setq ivy-count-format "(%d/%d) ")
 
@@ -37,9 +43,12 @@
 (scroll-bar-mode -1)
 
 (setq inferior-R-program-name "/usr/local/bin/R")
-(setq exec-path (append exec-path '("/Users/manutamminen/miniconda3/bin")))
+;; (setq exec-path (append exec-path '("/Users/manutamminen/miniconda3/bin")))
+(setq exec-path (append exec-path '("/Users/manutamminen/miniconda3/bin"
+                                    "/Users/manutamminen/.local/bin")))
 (setq python-shell-interpreter "/Users/manutamminen/miniconda3/bin/ipython"
       python-shell-interpreter-args "--simple-prompt -i")
+(setq python-shell-enable-font-lock nil)
 
 (fset 'yes-or-no-p 'y-or-n-p)
 

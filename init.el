@@ -14,6 +14,7 @@
 (setq package-archives '(("org"       . "http://orgmode.org/elpa/")
 			 ("gnu"       . "http://elpa.gnu.org/packages/")
 			 ("melpa"     . "https://melpa.org/packages/")
+			 ("elpy" . "https://jorgenschaefer.github.io/packages/")
 			 ("marmalade" . "http://marmalade-repo.org/packages/")))
 (package-initialize)
 
@@ -39,7 +40,7 @@
  '(inferior-ess-r-program-name "/usr/local/bin/R")
  '(package-selected-packages
    (quote
-    (helpful company-statistics flycheck eyebrowse elfeed syntactic-close company-web eval-in-repl org-bullets multiple-cursors suggest\.el suggest flatui-theme all-the-icons evil-lispy w3m shackle slime smartparens htmlize org-plus-contrib git-gutter powerline mode-icons worf better-shell dumb-jump ob-ipython lispyville counsel-projectile projectile flycheck-cask evil-surround exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
+    (sx helpful company-statistics flycheck eyebrowse elfeed syntactic-close company-web eval-in-repl org-bullets multiple-cursors suggest\.el suggest flatui-theme all-the-icons evil-lispy w3m shackle slime htmlize org-plus-contrib git-gutter powerline mode-icons worf better-shell dumb-jump ob-ipython lispyville counsel-projectile projectile flycheck-cask evil-surround exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
 
 (use-package ace-window :ensure t)
 (use-package avy :ensure t)
@@ -67,6 +68,11 @@
 (use-package suggest :ensure t)
 (use-package helpful :ensure t)
 
+(use-package company
+  :ensure t
+  :config
+  (add-hook 'after-init-hook 'global-company-mode))
+
 (use-package ivy
   :ensure t
   :config
@@ -85,6 +91,10 @@
 (use-package magit
   :ensure t
   :defer t)
+
+(use-package smartparens
+  :ensure t
+  :init (smartparens-global-mode 1))
 
 (use-package evil
   :ensure t
@@ -114,23 +124,85 @@
   :config
   (which-key-mode 1))
 
+;; (use-package elpy
+;;   :ensure t
+;;   :defer 2
+;;   :config
+;;   (progn
+;;     (when (require 'flycheck nil t)
+;;       (remove-hook 'elpy-modules 'elpy-module-flymake)
+;;       (remove-hook 'elpy-modules 'elpy-module-yasnippet)
+;;       (remove-hook 'elpy-mode-hook 'elpy-module-highlight-indentation)
+;;       (add-hook 'elpy-mode-hook 'flycheck-mode))
+;;     (elpy-enable)
+;;     (setq elpy-rpc-backend "jedi")))
+
+
+(use-package pyenv-mode
+  :ensure t
+  :config
+  (defun projectile-pyenv-mode-set ()
+    "Set pyenv version matching project name."
+    (let ((project (projectile-project-name)))
+      (if (member project (pyenv-mode-versions))
+	  (pyenv-mode-set project)
+	(pyenv-mode-unset))))
+
+  (add-hook 'projectile-switch-project-hook 'projectile-pyenv-mode-set)
+  (add-hook 'python-mode-hook 'pyenv-mode))
+
+
+(use-package pyenv-mode-auto
+  :ensure t)
+
+
+(use-package python
+  :mode
+  ("\\.py\\'" . python-mode)
+  ("\\.wsgi$" . python-mode)
+  :interpreter ("python" . python-mode)
+  :init
+  (setq-default indent-tabs-mode nil)
+
+  :config
+  (setq python-indent-offset 4)
+  (add-hook 'python-mode-hook 'smartparens-mode))
+
+
+(use-package jedi
+  :ensure t
+  :init
+  (add-to-list 'company-backends 'company-jedi)
+  :config
+  (use-package company-jedi
+    :ensure t
+    :init
+    (add-hook 'python-mode-hook (lambda () (add-to-list 'company-backends 'company-jedi)))
+    (setq company-jedi-python-bin "python")))
+
+
 (use-package elpy
   :ensure t
-  :defer 2
+  :pin elpy
+  :init (with-eval-after-load 'python (elpy-enable))
   :config
-  (progn
-    (when (require 'flycheck nil t)
-      (remove-hook 'elpy-modules 'elpy-module-flymake)
-      (remove-hook 'elpy-modules 'elpy-module-yasnippet)
-      (remove-hook 'elpy-mode-hook 'elpy-module-highlight-indentation)
-      (add-hook 'elpy-mode-hook 'flycheck-mode))
-    (elpy-enable)
-    (setq elpy-rpc-backend "jedi")))
+  (elpy-enable)
+  ;; Enable elpy in a Python mode
+  (add-hook 'python-mode-hook 'elpy-mode)
+  (setq elpy-rpc-backend "jedi")
+  ;; Open the Python shell in a buffer after sending code to it
+  (add-hook 'inferior-python-mode-hook 'python-shell-switch-to-shell)
+  ;; Use IPython as the default shell, with a workaround to accommodate IPython 5
+  ;; https://emacs.stackexchange.com/questions/24453/weird-shell-output-when-using-ipython-5  (setq python-shell-interpreter "ipython")
+  (setq python-shell-interpreter-args "--simple-prompt -i")
+  ;; Enable pyvenv, which manages Python virtual environments
+  (pyvenv-mode 1)
+  ;; Tell Python debugger (pdb) to use the current virtual environment
+  ;; https://emacs.stackexchange.com/questions/17808/enable-python-pdb-on-emacs-with-virtualenv
+  (setq gud-pdb-command-name "python -m pdb "))
 
-(use-package company
-  :ensure t
-  :config
-  (add-hook 'after-init-hook 'global-company-mode))
+
+
 
 (use-package yasnippet
   :ensure t
@@ -237,6 +309,19 @@
   (progn
     ;; config stuff
     (org-indent-mode t)))
+
+(use-package sx
+  :ensure t
+  :config
+  (bind-keys :prefix "C-c s"
+             :prefix-map my-sx-map
+             :prefix-docstring "Global keymap for SX."
+             ("q" . sx-tab-all-questions)
+             ("i" . sx-inbox)
+             ("o" . sx-open-link)
+             ("u" . sx-tab-unanswered-my-tags)
+             ("a" . sx-ask)
+             ("s" . sx-search)))
 
 (use-package syntactic-close
   :ensure t

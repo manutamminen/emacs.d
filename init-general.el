@@ -11,6 +11,7 @@
    "ar" 'ranger
    "ac" 'calc
    "ad" 'dired
+   "af" 'elfeed
    "as" 'eshell
    "au" 'suggest
    "ar" 'better-shell-remote-open
@@ -141,6 +142,7 @@
 (evil-define-key '(insert normal) ess-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
 (evil-define-key '(insert normal) python-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
 (evil-define-key '(insert normal) python-mode-map (kbd "C-f") 'insert_lambda_function)
+(evil-define-key '(insert normal) python-mode-map (kbd "C-c o") 'iedit-mode)
 (evil-define-key '(insert normal) lisp-interaction-mode-map (kbd "C-c C-l") 'eval-last-sexp)
 (evil-define-key '(insert normal) lisp-interaction-mode-map (kbd "C-c C-f") 'eval-defun)
 (evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-c C-l") 'eval-last-sexp)
@@ -159,6 +161,8 @@
 (evil-define-key '(insert normal) clojure-mode-map (kbd "C-c C-c") 'eir-eval-in-cider)
 (evil-define-key '(insert normal) inferior-python-mode-map (kbd "C-e") 'end-of-line)
 (evil-define-key '(insert normal) python-mode-map (kbd "C-e") 'end-of-line)
+(evil-define-key '(insert normal) eshell-mode-map (kbd "C-a") 'beginning-of-line)
+(evil-define-key '(insert normal) eshell-mode-map (kbd "C-e") 'end-of-line)
 ;; (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)
 (define-key inferior-ess-mode-map (kbd "C-d") 'evil-scroll-down)
 (define-key comint-mode-map (kbd "<up>") 'comint-previous-matching-input-from-input)
