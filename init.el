@@ -26,7 +26,7 @@
 ;; Enable use-package
 (eval-when-compile
   (require 'use-package))
-(require 'diminish)
+;; (require 'diminish)
 (require 'bind-key)
 
 (custom-set-variables
@@ -40,7 +40,7 @@
  '(inferior-ess-r-program-name "/usr/local/bin/R")
  '(package-selected-packages
    (quote
-    (sx helpful company-statistics flycheck eyebrowse elfeed syntactic-close company-web eval-in-repl org-bullets multiple-cursors suggest\.el suggest flatui-theme all-the-icons evil-lispy w3m shackle slime htmlize org-plus-contrib git-gutter powerline mode-icons worf better-shell dumb-jump ob-ipython lispyville counsel-projectile projectile flycheck-cask evil-surround exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
+    (smartparens-config sx helpful company-statistics flycheck eyebrowse elfeed syntactic-close company-web eval-in-repl org-bullets multiple-cursors suggest\.el suggest flatui-theme all-the-icons evil-lispy w3m shackle slime htmlize org-plus-contrib git-gutter powerline mode-icons worf better-shell dumb-jump ob-ipython counsel-projectile projectile flycheck-cask evil-surround exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
 
 (use-package ace-window :ensure t)
 (use-package avy :ensure t)
@@ -60,7 +60,6 @@
 (use-package exec-path-from-shell :ensure t)
 (use-package better-shell :ensure t)
 (use-package bm :ensure t)
-(use-package slime :ensure t)
 (use-package multiple-cursors :ensure t)
 (use-package exec-path-from-shell :ensure t)
 (use-package all-the-icons :ensure t)
@@ -124,20 +123,6 @@
   :config
   (which-key-mode 1))
 
-;; (use-package elpy
-;;   :ensure t
-;;   :defer 2
-;;   :config
-;;   (progn
-;;     (when (require 'flycheck nil t)
-;;       (remove-hook 'elpy-modules 'elpy-module-flymake)
-;;       (remove-hook 'elpy-modules 'elpy-module-yasnippet)
-;;       (remove-hook 'elpy-mode-hook 'elpy-module-highlight-indentation)
-;;       (add-hook 'elpy-mode-hook 'flycheck-mode))
-;;     (elpy-enable)
-;;     (setq elpy-rpc-backend "jedi")))
-
-
 (use-package pyenv-mode
   :ensure t
   :config
@@ -151,10 +136,8 @@
   (add-hook 'projectile-switch-project-hook 'projectile-pyenv-mode-set)
   (add-hook 'python-mode-hook 'pyenv-mode))
 
-
 (use-package pyenv-mode-auto
   :ensure t)
-
 
 (use-package python
   :mode
@@ -168,7 +151,6 @@
   (setq python-indent-offset 4)
   (add-hook 'python-mode-hook 'smartparens-mode))
 
-
 (use-package jedi
   :ensure t
   :init
@@ -179,7 +161,6 @@
     :init
     (add-hook 'python-mode-hook (lambda () (add-to-list 'company-backends 'company-jedi)))
     (setq company-jedi-python-bin "python")))
-
 
 (use-package elpy
   :ensure t
@@ -201,9 +182,6 @@
   ;; https://emacs.stackexchange.com/questions/17808/enable-python-pdb-on-emacs-with-virtualenv
   (setq gud-pdb-command-name "python -m pdb "))
 
-
-
-
 (use-package yasnippet
   :ensure t
   :config
@@ -219,7 +197,7 @@
 (use-package counsel-projectile
   :ensure t
   :config
-  (counsel-projectile-on))
+  (counsel-projectile-mode))
 
 (use-package dumb-jump
   :config (setq dumb-jump-selector 'ivy)
@@ -257,9 +235,8 @@
   :config
   (ace-popup-menu-mode 1))
 
-(use-package ess
-  :ensure t
-  :init (require 'ess-site))
+(add-to-list 'load-path "/Users/manutamminen/.emacs.d/ESS-17.11/lisp/")
+(load "ess-site")
 
 (use-package worf
   :ensure t
@@ -307,7 +284,6 @@
   :ensure org-plus-contrib
   :config
   (progn
-    ;; config stuff
     (org-indent-mode t)))
 
 (use-package sx
@@ -327,12 +303,26 @@
   :ensure t
   :bind ("C-c x c" . syntactic-close))
 
+(use-package exec-path-from-shell
+  :ensure t
+  :custom
+  (exec-path-from-shell-check-startup-files nil)
+  :config
+  (push "HISTFILE" exec-path-from-shell-variables)
+  (exec-path-from-shell-initialize))
+
+(use-package slime
+  :ensure t
+  :init
+  (setq inferior-lisp-program "/usr/local/bin//sbcl"))
+
 (load "~/.emacs.d/init-flycheck.el")
 (load "~/.emacs.d/init-powerline.el")
 (load "~/.emacs.d/init-bm.el")
 (load "~/.emacs.d/init-company.el")
 (load "~/.emacs.d/init-general.el")
 (load "~/.emacs.d/init-elfeed.el")
+(load "~/.emacs.d/init-smartparens.el")
 (load "~/.emacs.d/org-defaults.el")
 
 (when (memq window-system '(mac ns))

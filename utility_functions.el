@@ -213,6 +213,26 @@ Run R-FUN for object at point, and display results in a popup."
                     (popup-tip bs)))))))
     (kill-buffer tmpbuf)))
 
+
+(defun ess-R-object-inspect (r-func)
+  "R-FUNC: The R function to use on the object.
+Run the R-FUN for the object at point and display the results in the R buffer"
+  (let* ((objname (current-word))
+         (r-process (get-process "R"))
+         (r-command (concat r-func "(" objname ")\n")))
+    (progn (ess-send-string r-process r-command)
+           (set-window-point
+            (get-buffer-window "*R*")
+            (point-max)))))
+
+(defun inspect-R-object-head ()
+  (interactive)
+  (ess-R-object-inspect "head"))
+
+(defun inspect-R-object-str ()
+  (interactive)
+  (ess-R-object-inspect "str"))
+
 (defun asb-ess-R-object-popup-str ()
   (interactive)
   (asb-ess-R-object-popup "str"))

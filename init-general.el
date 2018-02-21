@@ -37,8 +37,8 @@
    "ee" 'univ-eval
    "el" 'univ-eval-line-last-sexp
    "eb" 'univ-eval-buffer
-   "es" 'asb-ess-R-object-popup-str
-   "eh" 'asb-ess-R-object-popup-head
+   "es" 'inspect-R-object-str
+   "eh" 'inspect-R-object-head
    "ei" 'asb-ess-R-object-popup-interactive
 
    "f" '(:ignore t :which-key "File operations")
@@ -115,8 +115,8 @@
    "zz" 'hydra-font/body)
 
   (general-nmap
-   :prefix "SPC"
-   "TAB" 'mode-line-other-buffer))
+    :prefix "SPC"
+    "TAB" 'mode-line-other-buffer))
 
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-c o") 'ivy-occur)
@@ -173,6 +173,8 @@
 (define-key org-mode-map (kbd "M-l") 'org-edit-src-code)
 (define-key org-src-mode-map (kbd "M-l") 'org-edit-src-exit)
 (define-key emacs-lisp-mode-map (kbd "C-c m") 'macrostep-expand)
+(define-key yas-minor-mode-map (kbd "C-c k") 'yas-expand)
+(define-key global-map (kbd "C-c o") 'iedit-mode)
 (define-key lispy-mode-map (kbd ")")
   (lambda () (interactive)
     (progn
