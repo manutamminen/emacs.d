@@ -45,3 +45,11 @@ of `org-babel-temporary-directory'."
           (agenda "")
           (alltodo "")))))
 
+(setq org-capture-templates
+      '(("t" "Todo" entry (file+headline "~/Dropbox/Muistettavaa/todo.org" "To do:")
+         "* TODO %?\n  %i\n  %a")
+        ("j" "Journal" entry (file+datetree "~/org/journal.org")
+         "* %?\nEntered on %U\n  %i\n  %a")))
+
+(provide 'org-default)
+;;; org-defaults.el ends here
