@@ -36,7 +36,12 @@ of `org-babel-temporary-directory'."
                temporary-file-directory)))
       (make-temp-file prefix nil suffix))))
 
-(setq org-agenda-files '("~/Dropbox/Muistettavaa/"))
+(setq org-agenda-files '("~/Dropbox/Muistettavaa/todo.org"
+                         "~/Dropbox/Muistettavaa/inbox.org"
+                         "~/Dropbox/Muistettavaa/gtd.org"
+                         "~/Dropbox/Muistettavaa/notes.org"
+                         "~/Dropbox/Muistettavaa/someday.org"
+                         "~/Dropbox/Muistettavaa/tickler.org"))
 
 (setq org-agenda-custom-commands
       '(("c" "Simple agenda view"
@@ -47,10 +52,42 @@ of `org-babel-temporary-directory'."
           (alltodo "")))))
 
 (setq org-capture-templates
-      '(("t" "Todo" entry (file+headline "~/Dropbox/Muistettavaa/todo.org" "To do:")
-         "* TODO %?\n  %i\n  %a")
-        ("j" "Journal" entry (file+datetree "~/org/journal.org")
-         "* %?\nEntered on %U\n  %i\n  %a")))
+      '(("t" "Todo" entry (file+headline "~/Dropbox/Muistettavaa/todo.org" "To do")
+         "* TODO %?")
+        ("T" "Tickler" entry (file+headline "~/Dropbox/Muistettavaa/tickler.org" "Tickler")
+         "* %i%? \n %U")
+        ("n" "Note" entry (file+headline "~/Dropbox/Muistettavaa/notes.org" "Notes")
+         "* %i%? \n %U")
+        ("c" "Capture" entry (file+headline "~/Dropbox/Muistettavaa/todo.org" "To do")
+         "* TODO %?\n%i\nEntered on %U\n  %a")))
+
+(setq org-use-fast-todo-selection t)
+
+(setq org-todo-state-tags-triggers
+      (quote (("CANCELLED" ("CANCELLED" . t))
+              ("WAITING" ("WAITING" . t))
+              ("HOLD" ("WAITING") ("HOLD" . t))
+              (done ("WAITING") ("HOLD"))
+              ("TODO" ("WAITING") ("CANCELLED") ("HOLD"))
+              ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
+              ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
+
+(setq org-todo-keyword-faces
+      (quote (("TODO" :foreground "red" :weight bold)
+              ("NEXT" :foreground "blue" :weight bold)
+              ("DONE" :foreground "forest green" :weight bold)
+              ("WAITING" :foreground "orange" :weight bold)
+              ("HOLD" :foreground "magenta" :weight bold)
+              ("CANCELLED" :foreground "forest green" :weight bold)
+              ("MEETING" :foreground "forest green" :weight bold)
+              ("PHONE" :foreground "forest green" :weight bold))))
+
+(setq org-refile-targets '(("~/Dropbox/Muistettavaa/gtd.org" :maxlevel . 4)
+                           ("~/Dropbox/Muistettavaa/notes.org" :level . 1)
+                           ("~/Dropbox/Muistettavaa/someday.org" :level . 2)
+                           ("~/Dropbox/Muistettavaa/tickler.org" :maxlevel . 3)))
+
+(add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
 
 (provide 'org-default)
 ;;; org-defaults.el ends here

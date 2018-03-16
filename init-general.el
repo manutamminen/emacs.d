@@ -58,6 +58,8 @@
    "o" '(:ignore t :which-key "Org-mode tools")
    "ob" 'org-iswitchb
    "oc" 'org-capture
+   "od" 'org-deadline
+   "of" 'org-refile
    "oa" 'org-agenda
    "og" 'worf-goto
    "os" 'org-schedule
@@ -78,6 +80,7 @@
    "sd" 'xref-find-definitions
    "ss" 'swiper
    "sa" 'swiper-all
+   "sr" 'counsel-rg
 
    "t" '(:ignore t :which-key "Toggles")
    "tc" 'font-lock-mode

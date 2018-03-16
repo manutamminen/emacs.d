@@ -38,9 +38,12 @@
    (quote
     ("d9dab332207600e49400d798ed05f38372ec32132b3f7d2ba697e59088021555" default)))
  '(inferior-ess-r-program-name "/usr/local/bin/R")
+ '(org-agenda-files
+   (quote
+    ("~/Dropbox/Muistettavaa/notes.org" "~/Dropbox/Muistettavaa/todo.org" "~/Dropbox/Muistettavaa/inbox.org" "~/Dropbox/Muistettavaa/gtd.org" "~/Dropbox/Muistettavaa/someday.org" "~/Dropbox/Muistettavaa/tickler.org")))
  '(package-selected-packages
    (quote
-    (shell-pop idle-highlight smartparens-config sx helpful company-statistics flycheck eyebrowse elfeed syntactic-close company-web eval-in-repl org-bullets multiple-cursors suggest\.el suggest flatui-theme all-the-icons evil-lispy w3m shackle slime htmlize org-plus-contrib git-gutter powerline mode-icons worf better-shell dumb-jump ob-ipython counsel-projectile projectile flycheck-cask evil-surround exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
+    (org-gcal shell-pop idle-highlight smartparens-config sx helpful company-statistics flycheck eyebrowse elfeed syntactic-close company-web eval-in-repl org-bullets multiple-cursors suggest\.el suggest flatui-theme all-the-icons evil-lispy w3m shackle slime htmlize org-plus-contrib git-gutter powerline mode-icons worf better-shell dumb-jump ob-ipython counsel-projectile projectile flycheck-cask evil-surround exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
 
 (use-package ace-window :ensure t)
 (use-package avy :ensure t)
@@ -324,6 +327,7 @@
 (load "~/.emacs.d/init-elfeed.el")
 (load "~/.emacs.d/init-smartparens.el")
 (load "~/.emacs.d/org-defaults.el")
+;; (load "~/.emacs.d/init-gcal.el")
 
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
