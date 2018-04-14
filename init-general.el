@@ -15,6 +15,7 @@
    "as" 'eshell
    "au" 'suggest
    "ar" 'better-shell-remote-open
+   "ae" 'easy-hugo
 
    "b" '(:ignore t :which-key "Buffer tools")
    "bd" 'kill-this-buffer
@@ -68,6 +69,7 @@
    "oo" 'org-show-todo-tree
    "ot" 'org-todo
    "or" 'org-archive-subtree
+   "ow" 'hydra-clocking/body
 
    "p" '(:ignore t :which-key "Projectile tools")
    "pp" 'counsel-projectile-switch-project

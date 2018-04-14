@@ -3,9 +3,7 @@
 ;;; Useful hydra shortcuts
 ;;; Code:
 (defhydra hydra-org-mol-template (:color blue :hint nil)
-  "
-Lab protocols
-"
+  "Lab protocols"
   ("a" (y-expand "ampure_") "AMPure cleanup")
   ("p" (y-expand "pcr_") "PCR")
   ("c" (y-expand "cycle_") "PCR cycle")
@@ -17,9 +15,7 @@ Lab protocols
 
 
 (defhydra hydra-org-template (:color blue :hint nil)
-  "
-Code blocks
-"
+  "Code blocks"
   ("r" (y-expand "r_") "R block")
   ("h" (y-expand "shell") "shell script")
   ("p" (y-expand "python_script") "Python shell script")
@@ -31,9 +27,7 @@ Code blocks
   ("o" nil "quit"))
 
 (defhydra hydra-python-template (:color blue :hint nil)
-  "
-Python completions
-"
+  "Python completions"
   ("c" (y-expand "cls") "Class")
   ("f" (y-expand "f") "Function")
   ("d" (y-expand "d") "Documentation string")
@@ -41,6 +35,7 @@ Python completions
   ("o" nil "quit"))
 
 (defhydra hydra-windows ()
+  "Window operations"
   ("h" windmove-left nil)
   ("l" windmove-right nil)
   ("k" windmove-up nil)
@@ -64,30 +59,22 @@ Python completions
   ("q" quit-window "Close current window"))
 
 (defhydra hydra-font ()
-  "
-Font scaling
-"
+  "Font scaling"
   ("+" text-scale-increase)
   ("-" text-scale-decrease))
 
 (defhydra hydra-lispy-magic ()
-  "
-Modified lispy bindings
-"
+  "Modified lispy bindings"
   ("b" univ-eval-buffer "Evaluate buffer")
   ("e" univ-eval "Evaluate function")
   ("p" univ-eval-line-last-sexp "Evaluate last sexp"))
 
 (defhydra dumb-hydra ()
-  "
-Jump to definitions etc
-"
+  "Jump to definitions etc"
   ("n" dumb-jump-go "Next occurrence"))
 
 (defhydra hydra-eyebrowse ()
-  "
-Window config management
-"
+  "Window config management"
   ("s" eyebrowse-create-window-config "Save window config")
   ("n" eyebrowse-next-window-config "Next window config")
   ("p" eyebrowse-previous-window-config "Previous window config")
@@ -102,6 +89,12 @@ Window config management
   ("7" eyebrowse-switch-to-window-config-7 "Switch to config 7")
   ("8" eyebrowse-switch-to-window-config-8 "Switch to config 8")
   ("9" eyebrowse-switch-to-window-config-9 "Switch to config 9"))
+
+(defhydra hydra-org (:color blue :timeout 12 :columns 4)
+  "Org commands"
+  ("i" (lambda () (interactive) (org-clock-in '(4))) "Clock in")
+  ("o" org-clock-out "Clock out")
+  ("q" org-clock-cancel "Cancel a clock"))
 
 (provide 'hydras)
 ;;; hydras.el ends here
