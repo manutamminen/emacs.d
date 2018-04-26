@@ -219,11 +219,12 @@ Run R-FUN for object at point, and display results in a popup."
 Run the R-FUN for the object at point and display the results in the R buffer"
   (let* ((objname (current-word))
          (r-process (get-process "R"))
+         (r-buffer (process-buffer r-process))
          (r-command (concat r-func "(" objname ")\n")))
     (progn (ess-send-string r-process r-command)
            (set-window-point
-            (get-buffer-window "*R*")
-            (+ 1 (buffer-size (get-buffer "*R*")))))))
+            (get-buffer-window r-buffer)
+            (+ 1 (buffer-size (get-buffer r-buffer)))))))
 
 (defun inspect-R-object-head ()
   (interactive)
