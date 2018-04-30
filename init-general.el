@@ -29,10 +29,15 @@
    "cb" 'flycheck-buffer
    "cl" 'flycheck-list-errors
 
-   "d" '(:ignore t :which-key "Dumb-jump")
-   "dd" 'dumb-hydra/body
-   "dj" 'dumb-jump-go
-   "do" 'dumb-jump-go-other-window
+   ;; "d" '(:ignore t :which-key "Dumb-jump")
+   ;; "dd" 'dumb-hydra/body
+   ;; "dj" 'dumb-jump-go
+   ;; "do" 'dumb-jump-go-other-window
+
+   "d" '(:ignore t :which-key "DNA utilities")
+   "dr" 'reverse-seq
+   "dc" 'complement-seq
+   "dx" 'reverse-complement-seq
 
    "e" '(:ignore t :which-key "Evaluation")
    "ee" 'univ-eval
@@ -46,6 +51,7 @@
    "ff" 'counsel-find-file
    "fs" 'save-buffer
    "fr" 'counsel-recentf
+   "f." 'find-function-at-point
 
    "j" '(:ignore t :which-key "Yasnippets etc")
    "jp" 'insert_then_R_operator
