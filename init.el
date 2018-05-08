@@ -6,7 +6,6 @@
 ;;; Code:
 
 (load "~/.emacs.d/defaults.el")
-(load "~/.emacs.d/utility-functions.el")
 
 (require 'package)
 
@@ -43,7 +42,7 @@
     ("~/Dropbox/Muistettavaa/notes.org" "~/Dropbox/Muistettavaa/todo.org" "~/Dropbox/Muistettavaa/inbox.org" "~/Dropbox/Muistettavaa/gtd.org" "~/Dropbox/Muistettavaa/someday.org" "~/Dropbox/Muistettavaa/tickler.org")))
  '(package-selected-packages
    (quote
-    (elfeed-org easy-hugo org-gcal shell-pop idle-highlight smartparens-config sx helpful company-statistics flycheck eyebrowse elfeed syntactic-close company-web eval-in-repl org-bullets multiple-cursors suggest\.el suggest flatui-theme all-the-icons evil-lispy w3m shackle slime htmlize org-plus-contrib git-gutter powerline mode-icons worf better-shell dumb-jump ob-ipython counsel-projectile projectile flycheck-cask evil-surround exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
+    (org-mu4e evil-mu4e smartparens mu4e elfeed-org easy-hugo org-gcal shell-pop idle-highlight smartparens-config sx helpful company-statistics flycheck eyebrowse elfeed syntactic-close company-web eval-in-repl org-bullets multiple-cursors suggest\.el suggest flatui-theme all-the-icons evil-lispy w3m shackle slime htmlize org-plus-contrib git-gutter powerline mode-icons worf better-shell dumb-jump ob-ipython counsel-projectile projectile flycheck-cask evil-surround exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
 
 (use-package ace-window :ensure t)
 (use-package avy :ensure t)
@@ -114,7 +113,23 @@
     (use-package evil-magit
       :ensure t
       :config
-      (add-hook 'magit-mode-hook 'evil-local-mode)))
+      (add-hook 'magit-mode-hook 'evil-local-mode))
+
+    (loop for (mode . state) in '((inferior-emacs-lisp-mode . emacs)
+                                  (nrepl-mode . insert)
+                                  (pylookup-mode . emacs)
+                                  (comint-mode . normal)
+                                  (shell-mode . insert)
+                                  (git-commit-mode . insert)
+                                  (git-rebase-mode . emacs)
+                                  (term-mode . emacs)
+                                  (help-mode . insert)
+                                  (helpful-mode . insert)
+                                  (helm-grep-mode . emacs)
+                                  (grep-mode . emacs)
+                                  (magit-branch-manager-mode . emacs)
+                                  (dired-mode . emacs))
+          do (evil-set-initial-state mode state)))
 
   :config
   (evil-mode 1)
@@ -125,7 +140,6 @@
   :ensure t
   :config
   (which-key-mode 1))
-
 (use-package pyenv-mode
   :ensure t
   :config
@@ -321,6 +335,7 @@
 
 (use-package dna-mode :load-path "~/gits/dna-mode-el")
 
+(load "~/.emacs.d/utility-functions.el")
 (load "~/.emacs.d/init-flycheck.el")
 (load "~/.emacs.d/init-powerline.el")
 (load "~/.emacs.d/init-bm.el")
@@ -328,6 +343,7 @@
 (load "~/.emacs.d/init-general.el")
 (load "~/.emacs.d/init-elfeed.el")
 (load "~/.emacs.d/init-smartparens.el")
+(load "~/.emacs.d/init-mu4e.el")
 (load "~/.emacs.d/org-defaults.el")
 (load "~/.emacs.d/hugo.el")
 ;; (load "~/.emacs.d/init-gcal.el")

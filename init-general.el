@@ -12,6 +12,7 @@
    "ac" 'calc
    "ad" 'dired
    "af" 'elfeed
+   "am" 'mu4e
    "as" 'eshell
    "au" 'suggest
    "ar" 'better-shell-remote-open

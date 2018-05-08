@@ -52,6 +52,9 @@
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
+;; More around window configurations with C-c left and right.
+(winner-mode 1)
+
 ;; Make TRAMP respect remote path variables
 ;; (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
 
@@ -108,6 +111,10 @@
 
 (setq counsel-rg-base-command
       "rg -i -M 120 --no-heading --line-number --color never %s .")
+
+;; use org structures and tables in message mode
+(add-hook 'message-mode-hook 'turn-on-orgtbl)
+(add-hook 'message-mode-hook 'turn-on-orgstruct++)
 
 (provide 'defaults)
 ;;; defaults.el ends here

@@ -52,8 +52,8 @@ of `org-babel-temporary-directory'."
           (alltodo "")))))
 
 (setq org-capture-templates
-      '(("t" "Todo" entry (file+headline "~/Dropbox/Muistettavaa/todo.org" "To do")
-         "* TODO %?")
+      '(("t" "todo" entry (file+headline "~/Dropbox/Muistettavaa/todo.org" "To do")
+         "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")
         ("T" "Tickler" entry (file+headline "~/Dropbox/Muistettavaa/tickler.org" "Tickler")
          "* %i%? \n %U")
         ("n" "Note" entry (file+headline "~/Dropbox/Muistettavaa/notes.org" "Notes")
