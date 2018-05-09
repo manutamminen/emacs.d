@@ -24,6 +24,13 @@
 (setq mac-option-modifier nil)
 (setq shell-file-name "/bin/bash")
 
+;; encryption stuff
+(setq auth-source-debug t)
+(setf epa-pinentry-mode 'loopback)
+
+(setq auth-sources
+      '((:source "~/.emacs.d/.authinfo.gpg")))
+
 ;; eshell settings
 (setq pcomplete-ignore-case t)
 ;;(add-hook 'eshell-mode (company-mode -1))
@@ -111,10 +118,6 @@
 
 (setq counsel-rg-base-command
       "rg -i -M 120 --no-heading --line-number --color never %s .")
-
-;; use org structures and tables in message mode
-(add-hook 'message-mode-hook 'turn-on-orgtbl)
-(add-hook 'message-mode-hook 'turn-on-orgstruct++)
 
 (provide 'defaults)
 ;;; defaults.el ends here

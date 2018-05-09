@@ -118,6 +118,8 @@
     (loop for (mode . state) in '((inferior-emacs-lisp-mode . emacs)
                                   (nrepl-mode . insert)
                                   (pylookup-mode . emacs)
+                                  (epa-key-list-mode . insert)
+                                  (mu4e-view-mode . insert)
                                   (comint-mode . normal)
                                   (shell-mode . insert)
                                   (git-commit-mode . insert)
@@ -140,6 +142,7 @@
   :ensure t
   :config
   (which-key-mode 1))
+
 (use-package pyenv-mode
   :ensure t
   :config
@@ -340,10 +343,10 @@
 (load "~/.emacs.d/init-powerline.el")
 (load "~/.emacs.d/init-bm.el")
 (load "~/.emacs.d/init-company.el")
+(load "~/.emacs.d/init-mu4e.el")
 (load "~/.emacs.d/init-general.el")
 (load "~/.emacs.d/init-elfeed.el")
 (load "~/.emacs.d/init-smartparens.el")
-(load "~/.emacs.d/init-mu4e.el")
 (load "~/.emacs.d/org-defaults.el")
 (load "~/.emacs.d/hugo.el")
 ;; (load "~/.emacs.d/init-gcal.el")

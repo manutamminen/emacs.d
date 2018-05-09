@@ -6,6 +6,7 @@
   (general-define-key
    :states '(normal visual emacs)
    :prefix "SPC"
+   :non-normal-prefix "C-SPC"
    
    "a" '(:ignore t :which-key "Applications")
    "ar" 'ranger
@@ -59,7 +60,8 @@
    "je" 'insert_then_R_operator_end_nl
    "jf" 'insert_lambda_function
    
-   "m" '(:ignore t :which-key "Magit")
+   "m" '(:ignore t :which-key "Mail and Magit")
+   "mg" '(mu4e~headers-jump-to-maildir "Gmail/INBOX")
    "ms" 'magit-status
    "mp" 'magit-dispatch-popup
 
@@ -175,6 +177,7 @@
 (evil-define-key '(insert normal) python-mode-map (kbd "C-e") 'end-of-line)
 (evil-define-key '(insert normal) eshell-mode-map (kbd "C-a") 'beginning-of-line)
 (evil-define-key '(insert normal) eshell-mode-map (kbd "C-e") 'end-of-line)
+(evil-define-key '(motion) mu4e-headers-mode-map (kbd ".") 'evil-avy-goto-line)
 ;; (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)
 (define-key inferior-ess-mode-map (kbd "C-d") 'evil-scroll-down)
 (define-key comint-mode-map (kbd "<up>") 'comint-previous-matching-input-from-input)
@@ -186,6 +189,7 @@
 (define-key org-src-mode-map (kbd "M-l") 'org-edit-src-exit)
 (define-key emacs-lisp-mode-map (kbd "C-c m") 'macrostep-expand)
 (define-key yas-minor-mode-map (kbd "C-c k") 'yas-expand)
+(define-key mu4e-view-mode-map (kbd "C-c o c") 'org-capture)
 (define-key global-map (kbd "C-c o") 'iedit-mode)
 (define-key lispy-mode-map (kbd ")")
   (lambda () (interactive)
