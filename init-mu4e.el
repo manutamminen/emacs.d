@@ -31,32 +31,7 @@
              ("/Sent"  . ?s)
              ("/Trash" . ?t)))
 
-    ;; (setq mu4e-refile-folder
-    ;;       (lambda (msg)
-    ;;         (cond
-    ;;          ;; messages to the mu mailing list go to the /mu folder
-    ;;          ((mu4e-message-contact-field-matches msg :to
-    ;;                                               "mu-discuss@googlegroups.com")
-    ;;           "/mu")
-    ;;          ;; messages sent directly to me go to /archive
-    ;;          ;; also `mu4e-user-mail-address-p' can be used
-    ;;          ((mu4e-message-contact-field-matches msg :to "me@example.com")
-    ;;           "/private")
-    ;;          ;; messages with football or soccer in the subject go to /football
-    ;;          ((string-match "football\\|soccer"
-    ;;                         (mu4e-message-field msg :subject))
-    ;;           "/football")
-    ;;          ;; messages sent by me go to the sent folder
-    ;;          ((find-if
-    ;;            (lambda (addr)
-    ;;              (mu4e-message-contact-field-matches msg :from addr))
-    ;;            mu4e-user-mail-address-list)
-    ;;           mu4e-sent-folder)
-    ;;          ;; everything else goes to /archive
-    ;;          ;; important to have a catch-all at the end!
-    ;;          (t  "/archive"))))
-
-    ;; allow for updating mail using 'U' in the main view:
+    ;; Set the mail update functionality
     (setq mu4e-get-mail-command "offlineimap")
 
     ;; Other settings
@@ -91,31 +66,27 @@
                :name "a mavata@gmail.com"
                :enter-func (lambda () (mu4e-message "Enter mavata@gmail.com context"))
                :leave-func (lambda () (mu4e-message "Leave mavata@gmail.com context"))
-               ;; Match based on the contact-fields of the message (that we are replying to)
                :match-func (lambda (msg)
                              (when msg 
-                               (mu4e-message-contact-field-matches msg 
-                                                                   :to "mavata@gmail.com")))
-               :vars '( ( user-mail-address      . "mavata@gmail.com"  )
-                        ( user-full-name         . "Manu Tamminen" )
-                        ( smtpmail-smtp-server   . "smtp.gmail.com" )
-                        ( smtpmail-smtp-service  . 587)
-                        ( smtpmail-stream-type   . starttls)))
+                               (mu4e-message-contact-field-matches msg :to "mavata@gmail.com")))
+               :vars '((user-mail-address      . "mavata@gmail.com")
+                       (user-full-name         . "Manu Tamminen")
+                       (smtpmail-smtp-server   . "smtp.gmail.com")
+                       (smtpmail-smtp-service  . 587)
+                       (smtpmail-stream-type   . starttls)))
 
              ,(make-mu4e-context
                :name "i mavatam@utu.fi"
                :enter-func (lambda () (mu4e-message "Enter mavatam@utu.fi context"))
                :leave-func (lambda () (mu4e-message "Leave mavatam@utu.fi context"))
-               ;; we match based on the contact-fields of the message
                :match-func (lambda (msg)
                              (when msg 
-                               (mu4e-message-contact-field-matches msg 
-                                                                   :to "mavatam@utu.fi")))
-               :vars '( ( user-mail-address       . "mavatam@utu.fi" )
-                        ( user-full-name          . "Manu Tamminen" )
-                        ( smtpmail-smtp-server    . "mail.utu.fi" )
-                        ( smtpmail-stream-type    . starttls)
-                        ( smtpmail-smtp-service   . 587)))))
+                               (mu4e-message-contact-field-matches msg :to "mavatam@utu.fi")))
+               :vars '((user-mail-address       . "mavatam@utu.fi")
+                       (user-full-name          . "Manu Tamminen")
+                       (smtpmail-smtp-server    . "mail.utu.fi")
+                       (smtpmail-smtp-service   . 587)
+                       (smtpmail-stream-type    . starttls)))))
 
     ;; something about ourselves
     (setq mu4e-compose-signature
