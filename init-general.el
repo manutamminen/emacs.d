@@ -31,11 +31,6 @@
    "cb" 'flycheck-buffer
    "cl" 'flycheck-list-errors
 
-   ;; "d" '(:ignore t :which-key "Dumb-jump")
-   ;; "dd" 'dumb-hydra/body
-   ;; "dj" 'dumb-jump-go
-   ;; "do" 'dumb-jump-go-other-window
-
    "d" '(:ignore t :which-key "DNA utilities")
    "dr" 'reverse-seq
    "dc" 'complement-seq
@@ -60,10 +55,14 @@
    "je" 'insert_then_R_operator_end_nl
    "jf" 'insert_lambda_function
    
-   "m" '(:ignore t :which-key "Mail and Magit")
-   "mg" '(mu4e~headers-jump-to-maildir "Gmail/INBOX")
+   "m" '(:ignore t :which-key "Magit")
    "ms" 'magit-status
    "mp" 'magit-dispatch-popup
+
+   "n" '(:ignore t :which-key "Mail")
+   "ns" 'mu4e-headers-search
+   "nb" 'mu4e-headers-search-bookmark
+   "nm" 'mu4e~headers-jump-to-maildir
 
    "o" '(:ignore t :which-key "Org-mode tools")
    "ob" 'org-iswitchb
@@ -178,6 +177,7 @@
 (evil-define-key '(insert normal) eshell-mode-map (kbd "C-a") 'beginning-of-line)
 (evil-define-key '(insert normal) eshell-mode-map (kbd "C-e") 'end-of-line)
 (evil-define-key '(motion) mu4e-headers-mode-map (kbd ".") 'evil-avy-goto-line)
+(evil-define-key '(insert normal motion) mu4e-view-mode-map (kbd "o") 'mu4e-view-go-to-url)
 ;; (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)
 (define-key inferior-ess-mode-map (kbd "C-d") 'evil-scroll-down)
 (define-key comint-mode-map (kbd "<up>") 'comint-previous-matching-input-from-input)

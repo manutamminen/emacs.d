@@ -39,6 +39,12 @@
           mu4e-compose-format-flowed t
           mu4e-view-show-addresses t)
 
+    ;; Default folder for saving attachments
+    (setq mu4e-attachment-dir  "~/Downloads")
+
+    ;; Disable the quit confirmation prompt
+    (setq mu4e-confirm-quit nil)
+
     ;; Try to show images
     (setq mu4e-view-show-images t
           mu4e-show-images t
