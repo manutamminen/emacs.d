@@ -60,9 +60,10 @@
    "mp" 'magit-dispatch-popup
 
    "n" '(:ignore t :which-key "Mail")
-   "ns" 'mu4e-headers-search
    "nb" 'mu4e-headers-search-bookmark
-   "nm" 'mu4e~headers-jump-to-maildir
+   "nc" 'mu4e-compose-new
+   "nn" 'mu4e~headers-jump-to-maildir
+   "ns" 'mu4e-headers-search
 
    "o" '(:ignore t :which-key "Org-mode tools")
    "ob" 'org-iswitchb
@@ -178,6 +179,7 @@
 (evil-define-key '(insert normal) eshell-mode-map (kbd "C-e") 'end-of-line)
 (evil-define-key '(motion) mu4e-headers-mode-map (kbd ".") 'evil-avy-goto-line)
 (evil-define-key '(insert normal motion) mu4e-view-mode-map (kbd "o") 'mu4e-view-go-to-url)
+(evil-define-key '(insert normal motion) mu4e-view-mode-map (kbd "c") 'org-capture)
 ;; (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)
 (define-key inferior-ess-mode-map (kbd "C-d") 'evil-scroll-down)
 (define-key comint-mode-map (kbd "<up>") 'comint-previous-matching-input-from-input)
