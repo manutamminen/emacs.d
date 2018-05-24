@@ -127,6 +127,7 @@
                                   (term-mode . emacs)
                                   (help-mode . insert)
                                   (helpful-mode . insert)
+                                  (elfeed-search-mode . insert)
                                   (helm-grep-mode . emacs)
                                   (grep-mode . emacs)
                                   (magit-branch-manager-mode . emacs)

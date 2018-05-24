@@ -42,7 +42,7 @@
    "eb" 'univ-eval-buffer
    "es" 'inspect-R-object-str
    "eh" 'inspect-R-object-head
-   "ei" 'asb-ess-R-object-popup-interactive
+   "ei" 'indent-region
 
    "f" '(:ignore t :which-key "File operations")
    "ff" 'counsel-find-file
@@ -66,19 +66,21 @@
    "ns" 'mu4e-headers-search
 
    "o" '(:ignore t :which-key "Org-mode tools")
+   "oa" 'org-agenda
    "ob" 'org-iswitchb
    "oc" 'org-capture
    "od" 'org-deadline
    "of" 'org-refile
-   "oa" 'org-agenda
    "og" 'worf-goto
+   "oh" 'hydra-clocking/body
    "os" 'org-schedule
    "om" 'org-columns
+   "on" 'org-narrow-to-element
    "ol" 'org-store-link
    "oo" 'org-show-todo-tree
    "ot" 'org-todo
    "or" 'org-archive-subtree
-   "ow" 'hydra-clocking/body
+   "ow" 'widen
 
    "p" '(:ignore t :which-key "Projectile tools")
    "pp" 'counsel-projectile-switch-project
@@ -180,6 +182,7 @@
 (evil-define-key '(motion) mu4e-headers-mode-map (kbd ".") 'evil-avy-goto-line)
 (evil-define-key '(insert normal motion) mu4e-view-mode-map (kbd "o") 'mu4e-view-go-to-url)
 (evil-define-key '(insert normal motion) mu4e-view-mode-map (kbd "c") 'org-capture)
+(evil-define-key '(insert normal motion) elfeed-search-mode-map (kbd ".") 'evil-avy-goto-line)
 ;; (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)
 (define-key inferior-ess-mode-map (kbd "C-d") 'evil-scroll-down)
 (define-key comint-mode-map (kbd "<up>") 'comint-previous-matching-input-from-input)
