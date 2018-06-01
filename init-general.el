@@ -183,6 +183,7 @@
 (evil-define-key '(insert normal motion) mu4e-view-mode-map (kbd "o") 'mu4e-view-go-to-url)
 (evil-define-key '(insert normal motion) mu4e-view-mode-map (kbd "c") 'org-capture)
 (evil-define-key '(insert normal motion) elfeed-search-mode-map (kbd ".") 'evil-avy-goto-line)
+(evil-define-key '(insert normal motion) dired-mode-map (kbd ".") 'evil-avy-goto-line)
 ;; (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)
 (define-key inferior-ess-mode-map (kbd "C-d") 'evil-scroll-down)
 (define-key comint-mode-map (kbd "<up>") 'comint-previous-matching-input-from-input)

@@ -51,9 +51,9 @@
 
 (setq inferior-R-program-name "/usr/local/bin/R")
 ;; (setq exec-path (append exec-path '("/Users/manutamminen/miniconda3/bin")))
-(setq exec-path (append exec-path '("/Users/manutamminen/miniconda3/bin"
+(setq exec-path (append exec-path '("/Users/manutamminen/.pyenv/shims"
                                     "/Users/manutamminen/.local/bin")))
-(setq python-shell-interpreter "/Users/manutamminen/miniconda3/bin/ipython"
+(setq python-shell-interpreter "/Users/manutamminen/.pyenv/shims/ipython"
       python-shell-interpreter-args "--simple-prompt -i")
 (setq python-shell-enable-font-lock nil)
 

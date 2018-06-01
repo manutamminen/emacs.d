@@ -214,21 +214,51 @@ Run R-FUN for object at point, and display results in a popup."
     (kill-buffer tmpbuf)))
 
 
-(defun ess-R-object-inspect (r-func)
+(defun ess-R-object-inspect (r-func &optional arg)
   "R-FUNC: The R function to use on the object.
 Run the R-FUN for the object at point and display the results in the R buffer"
   (let* ((objname (current-word))
          (r-process (get-process "R"))
          (r-buffer (process-buffer r-process))
-         (r-command (concat r-func "(" objname ")\n")))
+         (r-command (concat r-func "(" objname "," arg ")\n")))
+    (progn (ess-send-string r-process r-command)
+           (set-window-point
+            (get-buffer-window r-buffer)
+            (+ 1 (buffer-size (get-buffer r-buffer)))))))
+
+
+(defun ess-R-object-inspect (r-func &optional arg)
+  "R-FUNC: The R function to use on the object.
+Run the R-FUN for the object at point and display the results in the R buffer"
+  (let* ((objname (current-word))
+         (r-process (get-process "R"))
+         (r-buffer (process-buffer r-process))
+         (r-command (if arg (concat r-func "(" objname "," arg ")\n")
+                      (concat r-func "(" objname ")\n"))))
+    (progn (ess-send-string r-process r-command)
+           (set-window-point
+            (get-buffer-window r-buffer)
+            (+ 1 (buffer-size (get-buffer r-buffer)))))))
+
+
+(defun ess-R-print-object-name ()
+  "R-FUNC: The R function to use on the object.
+Run the R-FUN for the object at point and display the results in the R buffer"
+  (let* ((objname (current-word))
+         (r-process (get-process "R"))
+         (r-buffer (process-buffer r-process))
+         (r-command (concat "print(\"" objname "\")\n")))
     (progn (ess-send-string r-process r-command)
            (set-window-point
             (get-buffer-window r-buffer)
             (+ 1 (buffer-size (get-buffer r-buffer)))))))
 
 (defun inspect-R-object-head ()
-  (interactive)
-  (ess-R-object-inspect "head"))
+  (interactive) 
+  (ess-R-print-object-name)
+  (ess-R-object-inspect "dim")
+  (ess-R-object-inspect "head" "3")
+  (ess-R-object-inspect "tail" "3"))
 
 (defun inspect-R-object-str ()
   (interactive)
@@ -249,38 +279,13 @@ Run the R-FUN for the object at point and display the results in the R buffer"
 
 ;; DNA utilities
 
-(defvar dna-complement-table (ht ("A"  "T")
-                                 ("T"  "A")
-                                 ("U"  "A")
-                                 ("G"  "C")
-                                 ("C"  "G")
-                                 ("Y"  "R")
-                                 ("R"  "Y")
-                                 ("S"  "S")
-                                 ("W"  "W")
-                                 ("K"  "M")
-                                 ("M"  "K")
-                                 ("B"  "V")
-                                 ("D"  "H")
-                                 ("H"  "D")
-                                 ("V"  "B")
-                                 ("N"  "N")
-                                 ("a"  "t")
-                                 ("t"  "a")
-                                 ("u"  "a")
-                                 ("g"  "c")
-                                 ("c"  "g")
-                                 ("y"  "r")
-                                 ("r"  "y")
-                                 ("s"  "s")
-                                 ("w"  "w")
-                                 ("k"  "m")
-                                 ("m"  "k")
-                                 ("b"  "v")
-                                 ("d"  "h")
-                                 ("h"  "d")
-                                 ("v"  "b")
-                                 ("n"  "n")))
+(defvar dna-complement-table (ht ("A"  "T") ("T"  "A") ("U"  "A") ("G"  "C") ("C"  "G")
+                                 ("Y"  "R") ("R"  "Y") ("S"  "S") ("W"  "W") ("K"  "M")
+                                 ("M"  "K") ("B"  "V") ("D"  "H") ("H"  "D") ("V"  "B")
+                                 ("N"  "N") ("a"  "t") ("t"  "a") ("u"  "a") ("g"  "c")
+                                 ("c"  "g") ("y"  "r") ("r"  "y") ("s"  "s") ("w"  "w")
+                                 ("k"  "m") ("m"  "k") ("b"  "v") ("d"  "h") ("h"  "d")
+                                 ("v"  "b") ("n"  "n")))
 
 (defun str-to-list (str)
   (let* ((str-list (split-string (key-description str)))
