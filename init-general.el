@@ -83,8 +83,9 @@
    "ow" 'widen
 
    "p" '(:ignore t :which-key "Projectile tools")
-   "pp" 'counsel-projectile-switch-project
    "pf" 'counsel-projectile-find-file
+   "pp" 'counsel-projectile-switch-project
+   "ps" 'projectile-ag
 
    "q" '(:ignore t :which-key "Quit!")
    "qq" 'evil-quit

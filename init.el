@@ -42,7 +42,7 @@
     ("~/Dropbox/Muistettavaa/notes.org" "~/Dropbox/Muistettavaa/todo.org" "~/Dropbox/Muistettavaa/inbox.org" "~/Dropbox/Muistettavaa/gtd.org" "~/Dropbox/Muistettavaa/someday.org" "~/Dropbox/Muistettavaa/tickler.org")))
  '(package-selected-packages
    (quote
-    (org-mu4e evil-mu4e smartparens mu4e elfeed-org easy-hugo org-gcal shell-pop idle-highlight smartparens-config sx helpful company-statistics flycheck eyebrowse elfeed syntactic-close company-web eval-in-repl org-bullets multiple-cursors suggest\.el suggest flatui-theme all-the-icons evil-lispy w3m shackle slime htmlize org-plus-contrib git-gutter powerline mode-icons worf better-shell dumb-jump ob-ipython counsel-projectile projectile flycheck-cask evil-surround exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
+    (ag typescript add-node-modules-path mocha indium json-snatcher prettier-js js2-refactor js2-mode org-mu4e evil-mu4e smartparens mu4e elfeed-org easy-hugo org-gcal shell-pop idle-highlight smartparens-config sx helpful company-statistics flycheck eyebrowse elfeed syntactic-close company-web eval-in-repl org-bullets multiple-cursors suggest\.el suggest flatui-theme all-the-icons evil-lispy w3m shackle slime htmlize org-plus-contrib git-gutter powerline mode-icons worf better-shell dumb-jump ob-ipython counsel-projectile projectile flycheck-cask evil-surround exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
 
 (use-package ace-window :ensure t)
 (use-package avy :ensure t)
@@ -59,15 +59,14 @@
 (use-package ivy-hydra :ensure t)
 (use-package buffer-move :ensure t)
 (use-package ranger :ensure t)
-(use-package exec-path-from-shell :ensure t)
 (use-package better-shell :ensure t)
 (use-package bm :ensure t)
 (use-package multiple-cursors :ensure t)
-(use-package exec-path-from-shell :ensure t)
 (use-package all-the-icons :ensure t)
 (use-package macrostep :ensure t)
 (use-package suggest :ensure t)
 (use-package helpful :ensure t)
+(use-package ag :ensure t)
 
 (use-package idle-highlight-mode :ensure t
   :config
@@ -128,6 +127,7 @@
                                   (help-mode . insert)
                                   (helpful-mode . insert)
                                   (elfeed-search-mode . insert)
+                                  (elfeed-show-mode . insert)
                                   (helm-grep-mode . emacs)
                                   (grep-mode . emacs)
                                   (magit-branch-manager-mode . emacs)
@@ -326,10 +326,7 @@
 
 (use-package exec-path-from-shell
   :ensure t
-  :custom
-  (exec-path-from-shell-check-startup-files nil)
   :config
-  (push "HISTFILE" exec-path-from-shell-variables)
   (exec-path-from-shell-initialize))
 
 (use-package slime
@@ -350,6 +347,7 @@
 (load "~/.emacs.d/init-smartparens.el")
 (load "~/.emacs.d/org-defaults.el")
 (load "~/.emacs.d/hugo.el")
+(load "~/.emacs.d/init-js.el")
 ;; (load "~/.emacs.d/init-gcal.el")
 
 (when (memq window-system '(mac ns))
