@@ -132,4 +132,11 @@
 ;; https://github.com/aaronjensen/eslintd-fix/tree/master
 ;; (use-package eslintd-fix)
 
+(use-package company-tern
+  :ensure t
+  :hook ((js2-mode . (lambda ()
+                       (tern-mode)
+                       (company-mode))))
+  :config (add-to-list 'company-backends 'company-tern))
+
 (provide 'setup-js)
