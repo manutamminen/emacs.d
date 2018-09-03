@@ -36,7 +36,7 @@
  '(custom-safe-themes
    (quote
     ("d9dab332207600e49400d798ed05f38372ec32132b3f7d2ba697e59088021555" default)))
- '(inferior-ess-r-program-name "/usr/local/bin/R")
+ '(inferior-ess-r-program-name "/Users/mavatam/miniconda3/bin/R")
  '(org-agenda-files
    (quote
     ("~/Dropbox/Muistettavaa/notes.org" "~/Dropbox/Muistettavaa/todo.org" "~/Dropbox/Muistettavaa/inbox.org" "~/Dropbox/Muistettavaa/gtd.org" "~/Dropbox/Muistettavaa/someday.org" "~/Dropbox/Muistettavaa/tickler.org")))
