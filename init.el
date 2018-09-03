@@ -5,6 +5,7 @@
 ;;
 ;;; Code:
 
+
 (load "~/.emacs.d/defaults.el")
 
 (require 'package)
