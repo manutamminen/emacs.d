@@ -67,6 +67,7 @@
 (use-package suggest :ensure t)
 (use-package helpful :ensure t)
 (use-package ag :ensure t)
+(use-package julia-mode :ensure t)
 
 (use-package idle-highlight-mode :ensure t
   :config
@@ -256,7 +257,7 @@
   :config
   (ace-popup-menu-mode 1))
 
-(add-to-list 'load-path "/Users/manutamminen/.emacs.d/ESS-17.11/lisp/")
+(add-to-list 'load-path "~/.emacs.d/ESS/lisp/")
 (load "ess-site")
 
 (use-package worf
@@ -334,7 +335,7 @@
   :init
   (setq inferior-lisp-program "/usr/local/bin//sbcl"))
 
-(use-package dna-mode :load-path "~/gits/dna-mode-el")
+(use-package dna-mode :load-path "~/gits/dna-mode")
 
 (load "~/.emacs.d/utility-functions.el")
 (load "~/.emacs.d/init-flycheck.el")
@@ -343,10 +344,10 @@
 (load "~/.emacs.d/init-company.el")
 (load "~/.emacs.d/init-mu4e.el")
 (load "~/.emacs.d/init-general.el")
-(load "~/.emacs.d/init-elfeed.el")
+;; (load "~/.emacs.d/init-elfeed.el")
 (load "~/.emacs.d/init-smartparens.el")
 (load "~/.emacs.d/org-defaults.el")
-(load "~/.emacs.d/hugo.el")
+;; (load "~/.emacs.d/hugo.el")
 (load "~/.emacs.d/init-js.el")
 ;; (load "~/.emacs.d/init-gcal.el")
 

@@ -6,7 +6,7 @@
 
 (use-package mu4e
 
-  :load-path "/usr/local/Cellar/mu/HEAD-35951da/share/emacs/site-lisp/mu/mu4e"
+  :load-path "/usr/local/share/emacs/site-lisp/mu4e"
 
   :init 
   (progn
