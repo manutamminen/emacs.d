@@ -1,6 +1,5 @@
 
 (use-package smartparens
-  :ensure t
   :bind (:map lisp-interaction-mode-map
               ("C-M-a" . sp-beginning-of-sexp)
               ("C-M-e" . sp-end-of-sexp)

@@ -4,7 +4,6 @@
         ".~jv" ".rbc" ".pyc" ".beam" ".aux" ".out" ".pdf" ".hbc"))
 
 (use-package company
-  :ensure t
   :diminish ""
   :init
   ;; (add-hook 'prog-mode-hook 'company-mode)
@@ -41,7 +40,6 @@
 
   ;; Python auto completion
   (use-package company-jedi
-    :ensure t
     :init
     (setq company-jedi-python-bin "python2")
     :config
@@ -49,13 +47,11 @@
 
   ;; HTML completion
   (use-package company-web
-    :ensure t
     :bind (("C-c w" . company-web-html))
     :config
     (add-to-list 'company-backends 'company-web-html))
 
   (use-package company-statistics
-    :ensure t
     :config
     (add-hook 'after-init-hook 'company-statistics-mode))
 

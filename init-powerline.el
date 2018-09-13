@@ -2,7 +2,6 @@
 ;; Credit: https://github.com/hlissner/.emacs.d/blob/master/core/core-modeline.el
 ;; and https://buildfunthings.com/emacs/emacs-config.html
 (use-package powerline
-  :ensure t
   :config
   (defvar mode-line-height 20)
 

@@ -1,6 +1,5 @@
 
 (use-package bm
-  :ensure t
   :demand t
 
   :init

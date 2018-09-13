@@ -1,5 +1,4 @@
 (use-package flycheck
-  :ensure t
   :config
   (progn
     (setq flycheck-display-errors-function nil)

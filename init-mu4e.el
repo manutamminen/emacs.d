@@ -100,7 +100,7 @@
            "Manu Tamminen\n"
            "http://manutamminen.info\n"))))
 
-(use-package evil-mu4e :ensure t)
+(use-package evil-mu4e)
 
 (require 'org-mu4e)
 

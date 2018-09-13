@@ -49,13 +49,19 @@
 
 (scroll-bar-mode -1)
 
+(setq org-agenda-files '("~/Dropbox/Muistettavaa/notes.org"
+                         "~/Dropbox/Muistettavaa/todo.org"
+                         "~/Dropbox/Muistettavaa/inbox.org"
+                         "~/Dropbox/Muistettavaa/gtd.org"
+                         "~/Dropbox/Muistettavaa/someday.org"
+                         "~/Dropbox/Muistettavaa/tickler.org"))
 (setq inferior-R-program-name "~/miniconda3/bin/R")
+(setq inferior-ess-program "~/miniconda3/bin/R")
+(setq inferior-ess-program-name "~/miniconda3/bin/R")
 (setq python-shell-interpreter "~/miniconda3/bin/ipython"
       python-shell-interpreter-args "--simple-prompt -i")
 (setq python-shell-enable-font-lock nil)
-;; (setq exec-path (append exec-path '("/Users/manutamminen/miniconda3/bin")))
-;; (setq exec-path (append exec-path '("~/.pyenv/shims"
-;;                                     "~/.local/bin")))
+(add-to-list 'exec-path "~/bin")
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -67,16 +73,6 @@
 
 ;; Prettify things for the specified modes
 (global-prettify-symbols-mode 1)
-(add-hook 'ess-mode-hook
-	  (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
-(add-hook 'inferior-ess-mode-hook
-	  (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
-(add-hook 'ess-mode-hook
-	  (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
-(add-hook 'org-mode-hook
-	  (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
-(add-hook 'org-mode-hook
-	  (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
 
 (defface org-block-begin-line
   '((t (:underline "#A7A6AA" :foreground "#008ED1" :background "#EAEAFF")))
@@ -94,8 +90,6 @@
 
 (setq org-src-fontify-natively t)
 (setq tab-always-indent 'complete)
-
-(add-to-list 'exec-path "/Users/tamminma/bin")
 
 (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
@@ -115,9 +109,6 @@
 	 (propertize "]\n" 'face `(:foreground "white"))
 	 (propertize "└─>" 'face `(:foreground "grey"))
 	 (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "grey")))))
-
-(setq counsel-rg-base-command
-      "rg -i -M 120 --no-heading --line-number --color never %s .")
 
 (provide 'defaults)
 ;;; defaults.el ends here

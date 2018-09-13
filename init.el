@@ -5,88 +5,74 @@
 ;;
 ;;; Code:
 
-
 (load "~/.emacs.d/defaults.el")
 
-(require 'package)
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(setq package-enable-at-startup nil)
-(setq package-archives '(("org"       . "http://orgmode.org/elpa/")
-			 ("gnu"       . "http://elpa.gnu.org/packages/")
-			 ("melpa"     . "https://melpa.org/packages/")
-			 ("elpy" . "https://jorgenschaefer.github.io/packages/")
-			 ("marmalade" . "http://marmalade-repo.org/packages/")))
-(package-initialize)
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default 1)
 
-;; Bootstrap `use-package'
-(unless (package-installed-p 'use-package) ;; unless it is already installed
-  (package-refresh-contents) ;; updage packages archive
-  (package-install 'use-package)) ;; and install the most recent version of use-package
+(use-package ace-window)
+(use-package avy)
+(use-package cl)
+(use-package dash)
+(use-package swiper)
+(use-package s)
+(use-package f)
+(use-package ht)
+(use-package ob-ipython)
+(use-package which-key)
+(use-package rainbow-identifiers)
+(use-package ivy-hydra)
+(use-package buffer-move)
+(use-package ranger)
+(use-package better-shell)
+(use-package bm)
+(use-package multiple-cursors)
+(use-package all-the-icons)
+(use-package macrostep)
+(use-package suggest)
+(use-package helpful)
+(use-package ag)
+(use-package julia-mode)
+(use-package prescient)
+(use-package ivy-prescient)
 
-;; Enable use-package
-(eval-when-compile
-  (require 'use-package))
-;; (require 'diminish)
-(require 'bind-key)
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("d9dab332207600e49400d798ed05f38372ec32132b3f7d2ba697e59088021555" default)))
- '(inferior-ess-r-program-name "/Users/mavatam/miniconda3/bin/R")
- '(org-agenda-files
-   (quote
-    ("~/Dropbox/Muistettavaa/notes.org" "~/Dropbox/Muistettavaa/todo.org" "~/Dropbox/Muistettavaa/inbox.org" "~/Dropbox/Muistettavaa/gtd.org" "~/Dropbox/Muistettavaa/someday.org" "~/Dropbox/Muistettavaa/tickler.org")))
- '(package-selected-packages
-   (quote
-    (company-tern ag typescript add-node-modules-path mocha indium json-snatcher prettier-js js2-refactor js2-mode org-mu4e evil-mu4e smartparens mu4e elfeed-org easy-hugo org-gcal shell-pop idle-highlight smartparens-config sx helpful company-statistics flycheck eyebrowse elfeed syntactic-close company-web eval-in-repl org-bullets multiple-cursors suggest\.el suggest flatui-theme all-the-icons evil-lispy w3m shackle slime htmlize org-plus-contrib git-gutter powerline mode-icons worf better-shell dumb-jump ob-ipython counsel-projectile projectile flycheck-cask evil-surround exec-path-from-shell elpy evil-magit ace-popup-menu sublimity rainbow-identifiers aggressive-indent magit ranger buffer-move ivy-hydra rainbow-delimiters lispy cider ace-window company-jedi jedi yasnippet auto-complete smooth-scroll ess-eldoc f s dash ess which-key avy evil-escape evil counsel ivy general use-package))))
-
-(use-package ace-window :ensure t)
-(use-package avy :ensure t)
-(use-package cl :ensure t)
-(use-package counsel :ensure t)
-(use-package dash :ensure t)
-(use-package swiper :ensure t)
-(use-package s :ensure t)
-(use-package f :ensure t)
-(use-package ht :ensure t)
-(use-package ob-ipython :ensure t)
-(use-package which-key :ensure t)
-(use-package rainbow-identifiers :ensure t)
-(use-package ivy-hydra :ensure t)
-(use-package buffer-move :ensure t)
-(use-package ranger :ensure t)
-(use-package better-shell :ensure t)
-(use-package bm :ensure t)
-(use-package multiple-cursors :ensure t)
-(use-package all-the-icons :ensure t)
-(use-package macrostep :ensure t)
-(use-package suggest :ensure t)
-(use-package helpful :ensure t)
-(use-package ag :ensure t)
-(use-package julia-mode :ensure t)
-
-(use-package idle-highlight-mode :ensure t
+(use-package counsel
   :config
-  (add-hook 'prog-mode-hook (lambda () (idle-highlight-mode t))))
+  (setq counsel-rg-base-command
+        "rg -i -M 120 --no-heading --line-number --color never %s ."))
+;; (use-package
+;;   '(blackout :host github :repo "raxod502/blackout"))
 
 (use-package company
-  :ensure t
-  :config
-  (add-hook 'after-init-hook 'global-company-mode))
+  :config (add-hook 'after-init-hook 'global-company-mode))
+
+(use-package idle-highlight-mode
+  :hook prog-mode)
 
 (use-package ivy
-  :ensure t
+  :config (ivy-mode 1))
+
+
+(use-package company-prescient
   :config
-  (ivy-mode 1))
+  (ivy-prescient-mode 1)
+  (company-prescient-mode 1)
+  (prescient-persist-mode 1))
 
 (use-package lispy
-  :ensure t
-  :defer t
   :init
   (dolist (hook '(emacs-lisp-mode-hook
 		  lisp-interaction-mode-hook
@@ -94,28 +80,17 @@
 		  clojure-mode-hook))
     (add-hook hook (lambda () (lispy-mode 1)))))
 
-(use-package magit
-  :ensure t
-  :defer t)
+(use-package magit)
 
 (use-package evil
-  :ensure t
   :init
   (progn
-    (use-package evil-escape
-      :ensure t)
-
-    (use-package evil-surround
-      :ensure t)
-
-    (use-package evil-lispy
-      :ensure t)
-
+    (use-package evil-surround)
+    (use-package evil-escape)
+    (use-package evil-lispy)
     (use-package evil-magit
-      :ensure t
       :config
       (add-hook 'magit-mode-hook 'evil-local-mode))
-
     (loop for (mode . state) in '((inferior-emacs-lisp-mode . emacs)
                                   (nrepl-mode . insert)
                                   (pylookup-mode . emacs)
@@ -135,19 +110,16 @@
                                   (magit-branch-manager-mode . emacs)
                                   (dired-mode . emacs))
           do (evil-set-initial-state mode state)))
-
   :config
   (evil-mode 1)
-  (evil-escape-mode 1)
-  (setq-default evil-escape-key-sequence "kj"))
+  (setq-default evil-escape-key-sequence "kj")
+  (evil-escape-mode 1))
 
 (use-package which-key
-  :ensure t
   :config
   (which-key-mode 1))
 
 (use-package pyenv-mode
-  :ensure t
   :config
   (defun projectile-pyenv-mode-set ()
     "Set pyenv version matching project name."
@@ -159,8 +131,7 @@
   (add-hook 'projectile-switch-project-hook 'projectile-pyenv-mode-set)
   (add-hook 'python-mode-hook 'pyenv-mode))
 
-(use-package pyenv-mode-auto
-  :ensure t)
+(use-package pyenv-mode-auto)
 
 (use-package python
   :mode
@@ -169,25 +140,20 @@
   :interpreter ("python" . python-mode)
   :init
   (setq-default indent-tabs-mode nil)
-
   :config
   (setq python-indent-offset 4)
   (add-hook 'python-mode-hook 'smartparens-mode))
 
 (use-package jedi
-  :ensure t
   :init
   (add-to-list 'company-backends 'company-jedi)
   :config
   (use-package company-jedi
-    :ensure t
     :init
     (add-hook 'python-mode-hook (lambda () (add-to-list 'company-backends 'company-jedi)))
     (setq company-jedi-python-bin "python")))
 
 (use-package elpy
-  :ensure t
-  :pin elpy
   :init (with-eval-after-load 'python (elpy-enable))
   :config
   (elpy-enable)
@@ -206,46 +172,42 @@
   (setq gud-pdb-command-name "python -m pdb "))
 
 (use-package yasnippet
-  :ensure t
   :config
   (yas-reload-all)
   (yas-global-mode 1))
 
 (use-package projectile
-  :ensure t
   :config
   (projectile-mode)
   (setq projectile-completion-system 'ivy))
 
 (use-package counsel-projectile
-  :ensure t
-  :config
-  (counsel-projectile-mode))
+  :config (counsel-projectile-mode 1))
 
 (use-package dumb-jump
-  :config (setq dumb-jump-selector 'ivy)
-  :ensure t)
+  :config (setq dumb-jump-selector 'ivy))
 
 (use-package ace-link
-  :ensure t
   :config (ace-link-setup-default))
 
-(use-package cider
-  :ensure t
-  :config
-  (add-hook 'cider-mode-hook #'eldoc-mode))
+;; (use-package cider
+;;  :hook eldoc-mode)
+
+(use-package cider)
 
 (use-package rainbow-delimiters
-  :ensure t
   :config (rainbow-delimiters-mode 1))
 
 (use-package hydra
-  :ensure t
-  :config
-  (load "~/.emacs.d/hydras.el"))
+  :config (load "~/.emacs.d/hydras.el"))
+
+;; (use-package aggressive-indent
+;;  :hook (emacs-lisp-mode
+;;         lisp-interaction-mode
+;;         lisp-mode
+;;         clojure-mode))
 
 (use-package aggressive-indent
-  :ensure t
   :init
   (dolist (hook '(emacs-lisp-mode-hook
 		  lisp-interaction-mode-hook
@@ -254,42 +216,39 @@
     (add-hook hook (lambda () (aggressive-indent-mode 1)))))
 
 (use-package ace-popup-menu
-  :ensure t
-  :config
-  (ace-popup-menu-mode 1))
+  :config (ace-popup-menu-mode 1))
 
 (add-to-list 'load-path "~/.emacs.d/ESS/lisp/")
 (load "ess-site")
+(add-hook 'ess-mode-hook
+	  (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
+(add-hook 'ess-mode-hook
+	  (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
+(add-hook 'inferior-ess-mode-hook
+	  (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
 
 (use-package worf
-  :ensure t
   :diminish worf-mode
   :bind (:map org-mode-map ("C-c h" . worf-goto)))
 
 (use-package base16-theme
-  :ensure t
-  :config
-  (load-theme 'base16-materia))
+  :config (load-theme 'base16-materia t))
 
 (use-package eyebrowse
-  :ensure t
   :config
   (setq eyebrowse-keymap-prefix nil)
   (eyebrowse-mode 1))
 
 (use-package git-gutter
-  :ensure t
-  :init (global-git-gutter-mode))
+  :init (global-git-gutter-mode 1))
 
 (use-package shackle
-  :ensure t
   :init
   (setq shackle-rules '(("*alchemist test report*" :select nil :size 0.3 :align 'below)))
   :config
   (shackle-mode t))
 
 (use-package eval-in-repl
-  :ensure t
   :config
   (setq eir-ielm-eval-in-current-buffer t)
   (setq eir-repl-placement 'right)
@@ -298,19 +257,47 @@
   (require 'eval-in-repl-python))
 
 (use-package mode-icons
-  :ensure t
-  :config
-  (mode-icons-mode t))
+  :config (mode-icons-mode 1))
 
-(use-package org
-  :mode (("\\.org$" . org-mode))
-  :ensure org-plus-contrib
-  :config
-  (progn
-    (org-indent-mode t)))
+(require 'subr-x)
+
+(use-package git)
+
+(defun org-git-version ()
+  "The Git version of org-mode.
+Inserted by installing org-mode or when a release is made."
+  (require 'git)
+  (let ((git-repo (expand-file-name
+                   "straight/repos/org/" user-emacs-directory)))
+    (string-trim
+     (git-run "describe"
+              "--match=release\*"
+              "--abbrev=6"
+              "HEAD"))))
+
+(defun org-release ()
+  "The release version of org-mode.
+Inserted by installing org-mode or when a release is made."
+  (require 'git)
+  (let ((git-repo (expand-file-name
+                   "straight/repos/org/" user-emacs-directory)))
+    (string-trim
+     (string-remove-prefix
+      "release_"
+      (git-run "describe"
+               "--match=release\*"
+               "--abbrev=0"
+               "HEAD")))))
+
+(provide 'org-version)
+
+(straight-use-package 'org) ; or org-plus-contrib if desired
+(add-hook 'org-mode-hook
+	  (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
+(add-hook 'org-mode-hook
+	  (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
 
 (use-package sx
-  :ensure t
   :config
   (bind-keys :prefix "C-c s"
              :prefix-map my-sx-map
@@ -323,18 +310,13 @@
              ("s" . sx-search)))
 
 (use-package syntactic-close
-  :ensure t
   :bind ("C-c x c" . syntactic-close))
 
 (use-package exec-path-from-shell
-  :ensure t
-  :config
-  (exec-path-from-shell-initialize))
+  :config (exec-path-from-shell-initialize))
 
 (use-package slime
-  :ensure t
-  :init
-  (setq inferior-lisp-program "/usr/local/bin//sbcl"))
+  :init (setq inferior-lisp-program "/usr/local/bin//sbcl"))
 
 (use-package dna-mode :load-path "~/gits/dna-mode")
 
@@ -349,7 +331,7 @@
 (load "~/.emacs.d/init-smartparens.el")
 (load "~/.emacs.d/org-defaults.el")
 ;; (load "~/.emacs.d/hugo.el")
-(load "~/.emacs.d/init-js.el")
+;; (load "~/.emacs.d/init-js.el")
 ;; (load "~/.emacs.d/init-gcal.el")
 
 (when (memq window-system '(mac ns))
@@ -357,12 +339,20 @@
 
 (when window-system (set-frame-size (selected-frame) 160 50)) ; set window size
 
+(provide 'init)
+;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("d9dab332207600e49400d798ed05f38372ec32132b3f7d2ba697e59088021555" default))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
-(provide 'init)
-;;; init.el ends here
+;; init.el --- Default Emacs configuration.

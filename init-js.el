@@ -1,11 +1,9 @@
 
 ;; Owes heavily to https://github.com/CSRaghunandan/.emacs.d/blob/master/setup-files/setup-js.el
 
-(use-package typescript
-  :ensure t)
+(use-package typescript-mode)
 
 (use-package js2-mode
-  :ensure t
   :mode
   (("\\.js$" . js2-mode))
 
@@ -29,7 +27,6 @@
 ;; js2-refactor: refactoring options for emacs
 ;; https://github.com/magnars/js2-refactor.el
 (use-package js2-refactor
-  :ensure t
   :after js2-mode
   :bind
   (:map js2-mode-map
@@ -80,14 +77,12 @@
 ;; prettier-emacs: minor-mode to prettify javascript files on save
 ;; https://github.com/prettier/prettier-emacs
 (use-package prettier-js
-  :ensure t
   :hook ((js2-mode . prettier-js-mode)
          (js2-jsx-mode . prettier-js-mode)))
 
 ;; json-snatcher: get the path of any JSON element easily
 ;; https://github.com/Sterlingg/json-snatcher
 (use-package json-snatcher
-  :ensure t
   :hook ((json-mode . js-mode-bindings))
   :config
   (defun js-mode-bindings ()
@@ -97,21 +92,11 @@
 
 ;; indium: javascript awesome development environment
 ;; https://github.com/NicolasPetton/indium
-(use-package indium
-  :ensure t
-  :after js2-mode
-  :bind (:map js2-mode-map
-              ("C-c C-l" . indium-eval-buffer))
-  :hook ((js2-mode . indium-interaction-mode))
-  :init (add-hook 'indium-update-script-source-hook
-                  (lambda (url)
-                    (indium-eval (format "window.dispatchEvent(new CustomEvent('patch', {detail: {url: '%s'}}))"
-                                         url)))))
+(use-package indium)
 
 ;; mocha: emacs mode for running mocha tests
 ;; https://github.com/scottaj/mocha.el
 (use-package mocha
-  :ensure t
   :after js2-mode
   :config
   (dolist (m (list js2-mode-map typescript-mode-map))
@@ -124,7 +109,6 @@
 ;; Adds the node_modules/.bin directory to the buffer exec_path. E.g. support project local eslint installations.
 ;; https://github.com/codesuki/add-node-modules-path/tree/master
 (use-package add-node-modules-path
-  :ensure t
   :hook ((js2-mode . add-node-modules-path)
          (js2-jsx-mode . add-node-modules-path)))
 
@@ -133,10 +117,25 @@
 ;; (use-package eslintd-fix)
 
 (use-package company-tern
-  :ensure t
   :hook ((js2-mode . (lambda ()
                        (tern-mode)
                        (company-mode))))
   :config (add-to-list 'company-backends 'company-tern))
+
+(defun setup-tide-mode ()
+  "Set up Tide mode."
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save-mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  (company-mode +1))
+
+(use-package tide
+  :after (typescript-mode company flycheck)
+  :hook ((typescript-mode . tide-setup)
+         (typescript-mode . tide-hl-identifier-mode)
+         (before-save . tide-format-before-save)))
 
 (provide 'setup-js)

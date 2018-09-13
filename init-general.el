@@ -1,6 +1,5 @@
 
 (use-package general
-  :ensure t
   :config
   (general-evil-setup 1)
   (general-define-key
@@ -14,6 +13,7 @@
    "ad" 'dired
    "af" 'elfeed
    "am" 'mu4e
+   "ap" 'package-list-packages
    "as" 'eshell
    "au" 'suggest
    "ar" 'better-shell-remote-open
