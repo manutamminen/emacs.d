@@ -133,20 +133,25 @@ BEG and END (region to sort)."
 	((eq major-mode 'ess-mode) (insert_right_lambda "function"))
 	(t (message "Not defined for this major mode"))))
 
-(defun wrap-selected-region (&optional beg end)
-  "Evaluate the selected region in Python shell. BEG and END: selection start and end."
+;; version of ivy-yank-word to yank from start of word
+;; credit goes here http://pragmaticemacs.com/emacs/search-or-swipe-for-the-current-word/
+;; bound to M-j in init-general.el
+(defun bjm/ivy-yank-whole-word ()
+  "Pull next word from buffer into search string."
   (interactive)
-  (let ((beg (cond (beg beg)
-                   ((region-active-p)
-                    (region-beginning))
-                   (t (line-beginning-position))))
-        (end (cond (end end)
-                   ((region-active-p)
-                    (copy-marker (region-end)))
-                   (t (line-end-position)))))
-    (save-excursion
-      (set-window-point beg)
-      (insert "JEP"))))
+  (let (amend)
+    (with-ivy-window
+      ;;move to last word boundary
+      (re-search-backward "\\b")
+      (let ((pt (point))
+            (le (line-end-position)))
+        (forward-word 1)
+        (if (> (point) le)
+            (goto-char pt)
+          (setq amend (buffer-substring-no-properties pt (point))))))
+    (when amend
+      (insert (replace-regexp-in-string "  +" " " amend)))))
+
 
 (defun xah-toggle-read-novel-mode ()
   "Setup current buffer to be suitable for reading long novel/article text.

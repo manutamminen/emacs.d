@@ -5,6 +5,10 @@
 ;;
 ;;; Code:
 
+(setq custom-file (concat user-emacs-directory "custom.el"))
+(when (file-exists-p custom-file)
+  (load custom-file))
+
 (load "~/.emacs.d/defaults.el")
 
 (defvar bootstrap-version)
@@ -312,6 +316,9 @@ Inserted by installing org-mode or when a release is made."
 (use-package syntactic-close
   :bind ("C-c x c" . syntactic-close))
 
+(use-package super-save
+  :config (super-save-mode t))
+
 (use-package exec-path-from-shell
   :config (exec-path-from-shell-initialize))
 
@@ -341,18 +348,3 @@ Inserted by installing org-mode or when a release is made."
 
 (provide 'init)
 ;;; init.el ends here
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("d9dab332207600e49400d798ed05f38372ec32132b3f7d2ba697e59088021555" default))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-;; init.el --- Default Emacs configuration.

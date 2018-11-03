@@ -201,6 +201,7 @@
 (define-key yas-minor-mode-map (kbd "C-c k") 'yas-expand)
 (define-key mu4e-view-mode-map (kbd "C-c o c") 'org-capture)
 (define-key global-map (kbd "C-c o") 'iedit-mode)
+(define-key ivy-minibuffer-map (kbd "M-j") 'bjm/ivy-yank-whole-word)
 (define-key lispy-mode-map (kbd ")")
   (lambda () (interactive)
     (progn
