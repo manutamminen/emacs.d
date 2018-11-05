@@ -352,5 +352,51 @@ Run the R-FUN for the object at point and display the results in the R buffer"
       (message "Not a DNA sequence!"))))
 
 
+;; Implement brace expansion-like functionality
+;; and develop into a degenerate nucleotide sequence
+;; expansion tool
+
+(defun prepare-expansion (string-to-expand)
+  (mapcar (lambda (x) (split-string x ","))
+          (split-string string-to-expand "[{}]")))
+
+(defun join-expansions (fst-element snd-element)
+  (loop for i in fst-element
+        append (loop for j in snd-element
+                     collect (concat i j))))
+
+(defun braceexpand (string)
+  (reduce 'join-expansions (prepare-expansion string)))
+
+(defun replace-degenerate (dna-string)
+  (s-replace-all '(("W" . "{A,T}")
+                   ("S" . "{C,G}")
+                   ("M" . "{A,C}")
+                   ("K" . "{G,T}")
+                   ("R" . "{A,G}")
+                   ("Y" . "{C,T}")
+                   ("B" . "{C,G,T}")
+                   ("D" . "{A,G,T}")
+                   ("H" . "{A,C,G}")
+                   ("V" . "{A,C,T}")
+                   ("N" . "{A,C,G,T}"))
+                 dna-string))
+
+(defun expand-dna (dna-string)
+  (braceexpand
+   (replace-degenerate dna-string)))
+
+(defun insert-expansion ()
+  (interactive)
+  (let* ((seq (thing-at-point 'word))
+         (starting-point (point)))
+    (if (is-dna-seq-p seq)
+        (let ((expanded (expand-dna (concat "\n" seq))))
+          (end-of-line)
+          (mapcar 'insert expanded)
+          (goto-char starting-point))
+      (message "Not a DNA sequence!"))))
+
+
 (provide 'utility-functions)
 ;;; utility-functions.el ends here

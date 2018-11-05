@@ -32,8 +32,9 @@
    "cl" 'flycheck-list-errors
 
    "d" '(:ignore t :which-key "DNA utilities")
-   "dr" 'reverse-seq
    "dc" 'complement-seq
+   "de" 'insert-expansion
+   "dr" 'reverse-seq
    "dx" 'reverse-complement-seq
 
    "e" '(:ignore t :which-key "Evaluation")
