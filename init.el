@@ -52,6 +52,7 @@
 (use-package julia-mode)
 (use-package prescient)
 (use-package ivy-prescient)
+(use-package poly-mode)
 
 (use-package counsel
   :config
@@ -334,7 +335,7 @@ Inserted by installing org-mode or when a release is made."
 (load "~/.emacs.d/init-company.el")
 (load "~/.emacs.d/init-mu4e.el")
 (load "~/.emacs.d/init-general.el")
-;; (load "~/.emacs.d/init-elfeed.el")
+(load "~/.emacs.d/init-elfeed.el")
 (load "~/.emacs.d/init-smartparens.el")
 (load "~/.emacs.d/org-defaults.el")
 ;; (load "~/.emacs.d/hugo.el")

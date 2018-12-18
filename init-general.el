@@ -36,6 +36,9 @@
    "de" 'insert-expansion
    "dr" 'reverse-seq
    "dx" 'reverse-complement-seq
+   "dC" 'complement-seq-next-line
+   "dR" 'reverse-seq-next-line
+   "dX" 'reverse-complement-seq-next-line
 
    "e" '(:ignore t :which-key "Evaluation")
    "ee" 'univ-eval
@@ -183,6 +186,8 @@
 (evil-define-key '(insert normal) eshell-mode-map (kbd "C-e") 'end-of-line)
 (evil-define-key '(insert normal) shell-mode-map (kbd "C-a") 'beginning-of-line)
 (evil-define-key '(insert normal) shell-mode-map (kbd "C-e") 'end-of-line)
+(evil-define-key '(insert normal) markdown-mode-map (kbd "C-a") 'beginning-of-line)
+(evil-define-key '(insert normal) markdown-mode-map (kbd "C-e") 'end-of-line)
 (evil-define-key '(motion) mu4e-headers-mode-map (kbd ".") 'evil-avy-goto-line)
 (evil-define-key '(motion) mu4e-view-mode-map (kbd ".") 'evil-avy-goto-line)
 (evil-define-key '(insert normal motion) mu4e-view-mode-map (kbd "o") 'mu4e-view-go-to-url)

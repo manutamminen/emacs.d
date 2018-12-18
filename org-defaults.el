@@ -1,6 +1,7 @@
 
 (setq org-confirm-babel-evaluate (not org-confirm-babel-evaluate))
 (setq python-shell-prompt-detect-failure-warning nil)
+(setq org-directory "~/Dropbox/Muistettavaa")
 
 ;;; display/update images in the buffer after I evaluate
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
@@ -8,8 +9,7 @@
 ;; Set the babel languages
 (org-babel-do-load-languages
  'org-babel-load-languages
- '(
-   (R . t)
+ '((R . t)
    (shell . t)
    (ipython . t)))
 
