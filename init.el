@@ -52,7 +52,10 @@
 (use-package julia-mode)
 (use-package prescient)
 (use-package ivy-prescient)
-(use-package poly-mode)
+
+(use-package rg
+  :straight (rg :host github :repo "dajva/rg.el")
+  :config (rg-enable-default-bindings))
 
 (use-package counsel
   :config
@@ -296,11 +299,17 @@ Inserted by installing org-mode or when a release is made."
 
 (provide 'org-version)
 
-(straight-use-package 'org) ; or org-plus-contrib if desired
-(add-hook 'org-mode-hook
-	  (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
-(add-hook 'org-mode-hook
-	  (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
+
+(use-package org
+  :hook ((org-mode . (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
+         (org-mode . (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
+         (org-mode . (lambda () (font-lock-mode 0)))
+         (org-mode . (lambda () (poly-org-mode)))))
+
+
+(use-package org-bullets
+  :straight (org-bullets :host github :repo "sabof/org-bullets")
+  :hook (org-mode . org-bullets-mode))
 
 (use-package sx
   :config
@@ -327,6 +336,17 @@ Inserted by installing org-mode or when a release is made."
   :init (setq inferior-lisp-program "/usr/local/bin//sbcl"))
 
 (use-package dna-mode :load-path "~/gits/dna-mode")
+
+(use-package polymode
+  :straight (polymode :host github :repo "polymode/polymode")
+  :config
+  (add-to-list 'auto-mode-alist '("\\.org" . poly-org-mode))
+  (add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
+  (add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode)))
+
+(use-package poly-R)
+(use-package poly-markdown)
+(use-package poly-org)
 
 (load "~/.emacs.d/utility-functions.el")
 (load "~/.emacs.d/init-flycheck.el")
