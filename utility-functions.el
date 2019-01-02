@@ -97,16 +97,16 @@ BEG and END (region to sort)."
 (defun insert_then_R_operator ()
   "R - %>% operator or 'then' pipe operator."
   (interactive)
-  (cond ((eq major-mode 'ess-mode) (progn
-				     (evil-forward-word-end)
-				     (evil-forward-char)
-				     (insert " %>% ")))
+  (cond ((member major-mode '(ess-r-mode inferior-ess-r-mode)) (progn
+				                                 (evil-forward-word-end)
+				                                 (evil-forward-char)
+				                                 (insert " %>% ")))
 	(t (message "Only valid in ESS mode"))))
 
 (defun insert_then_R_operator_end_nl ()
   "R - %>% operator; place to line end and start new line."
   (interactive)
-  (cond ((member major-mode '(ess-mode inferior-ess-mode))
+  (cond ((member major-mode '(ess-r-mode inferior-ess-r-mode))
 	 (progn
 	   (evil-end-of-line)
 	   (evil-append 1)

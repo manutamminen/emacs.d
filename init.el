@@ -65,14 +65,15 @@
 ;;   '(blackout :host github :repo "raxod502/blackout"))
 
 (use-package company
-  :config (add-hook 'after-init-hook 'global-company-mode))
+  :config
+  (add-hook 'after-init-hook 'global-company-mode))
 
 (use-package idle-highlight-mode
   :hook prog-mode)
 
 (use-package ivy
-  :config (ivy-mode 1))
-
+  :config
+  (ivy-mode 1))
 
 (use-package company-prescient
   :config
@@ -128,16 +129,15 @@
   (which-key-mode 1))
 
 (use-package pyenv-mode
+  :hook ((projectile-switch-project . (lambda () projectile-pyenv-mode-set))
+         (python-mode . pyenv-mode))
   :config
   (defun projectile-pyenv-mode-set ()
     "Set pyenv version matching project name."
     (let ((project (projectile-project-name)))
       (if (member project (pyenv-mode-versions))
 	  (pyenv-mode-set project)
-	(pyenv-mode-unset))))
-
-  (add-hook 'projectile-switch-project-hook 'projectile-pyenv-mode-set)
-  (add-hook 'python-mode-hook 'pyenv-mode))
+	(pyenv-mode-unset)))))
 
 (use-package pyenv-mode-auto)
 
@@ -190,30 +190,27 @@
   (setq projectile-completion-system 'ivy))
 
 (use-package counsel-projectile
-  :config (counsel-projectile-mode 1))
+  :config
+  (counsel-projectile-mode 1))
 
 (use-package dumb-jump
-  :config (setq dumb-jump-selector 'ivy))
+  :config
+  (setq dumb-jump-selector 'ivy))
 
 (use-package ace-link
-  :config (ace-link-setup-default))
-
-;; (use-package cider
-;;  :hook eldoc-mode)
+  :config
+  (ace-link-setup-default))
 
 (use-package cider)
 
 (use-package rainbow-delimiters
-  :config (rainbow-delimiters-mode 1))
+  :hook
+  ((lisp-interaction-mode . rainbow-delimiters-mode)
+   (emacs-lisp-mode . rainbow-delimiters-mode)))
 
 (use-package hydra
-  :config (load "~/.emacs.d/hydras.el"))
-
-;; (use-package aggressive-indent
-;;  :hook (emacs-lisp-mode
-;;         lisp-interaction-mode
-;;         lisp-mode
-;;         clojure-mode))
+  :config
+  (load "~/.emacs.d/hydras.el"))
 
 (use-package aggressive-indent
   :init
@@ -224,23 +221,35 @@
     (add-hook hook (lambda () (aggressive-indent-mode 1)))))
 
 (use-package ace-popup-menu
-  :config (ace-popup-menu-mode 1))
+  :config
+  (ace-popup-menu-mode 1))
 
-(add-to-list 'load-path "~/.emacs.d/ESS/lisp/")
-(load "ess-site")
-(add-hook 'ess-mode-hook
-	  (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
-(add-hook 'ess-mode-hook
-	  (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
-(add-hook 'inferior-ess-mode-hook
-	  (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
+(use-package ess
+  :init
+  (require 'ess-site) 
+  :hook
+  ((ess-mode . (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
+   (ess-mode . (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
+   (inferior-ess-mode . (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
+   (inferior-ess-mode . (lambda () (push '("function" . ?λ) prettify-symbols-alist)))))
+
+;; (add-to-list 'load-path "~/.emacs.d/ESS/lisp/")
+;; (load "ess-site")
+;; (add-hook 'ess-mode-hook
+;; 	  (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
+;; (add-hook 'ess-mode-hook
+;; 	  (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
+;; (add-hook 'inferior-ess-mode-hook
+;; 	  (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
 
 (use-package worf
   :diminish worf-mode
-  :bind (:map org-mode-map ("C-c h" . worf-goto)))
+  :bind
+  (:map org-mode-map ("C-c h" . worf-goto)))
 
 (use-package base16-theme
-  :config (load-theme 'base16-materia t))
+  :config
+  (load-theme 'base16-materia t))
 
 (use-package eyebrowse
   :config
@@ -248,7 +257,8 @@
   (eyebrowse-mode 1))
 
 (use-package git-gutter
-  :init (global-git-gutter-mode 1))
+  :init
+  (global-git-gutter-mode 1))
 
 (use-package shackle
   :init
@@ -265,7 +275,8 @@
   (require 'eval-in-repl-python))
 
 (use-package mode-icons
-  :config (mode-icons-mode 1))
+  :config
+  (mode-icons-mode 1))
 
 (require 'subr-x)
 
@@ -299,12 +310,11 @@ Inserted by installing org-mode or when a release is made."
 
 (provide 'org-version)
 
-
 (use-package org
   :hook ((org-mode . (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
          (org-mode . (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
          (org-mode . (lambda () (font-lock-mode 0)))
-         (org-mode . (lambda () (poly-org-mode)))))
+         (org-mode . poly-org-mode)))
 
 
 (use-package org-bullets

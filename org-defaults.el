@@ -72,15 +72,17 @@ of `org-babel-temporary-directory'."
               ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
               ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
 
-(setq org-todo-keywords '((sequence "☛ TODO(t)" "|")
-                          (sequence "✔ DONE(d)" "|")
-                          (sequence "⚑ WAITING(w)" "|")
-                          (sequence "|" "✘ CANCELED(c)")))
+(setq org-todo-keywords '((sequence "☛ TODO(t)" "✔ DONE(d)" "⚑ WAITING(w)" "|" "✘ CANCELED(c)")))
+
+
+;; (setq org-todo-keywords
+;;       (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+;;               (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
+
 
 (setq org-todo-keyword-faces
-      (quote (("TODO" :foreground "red" :weight bold)
-              ("NEXT" :foreground "blue" :weight bold)
-              ("DONE" :foreground "forest green" :weight bold)
+      (quote (("☛ TODO" :foreground "red" :weight bold)
+              ("✔ DONE" :foreground "forest green" :weight bold)
               ("WAITING" :foreground "orange" :weight bold)
               ("HOLD" :foreground "magenta" :weight bold)
               ("CANCELLED" :foreground "forest green" :weight bold)

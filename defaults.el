@@ -91,10 +91,6 @@
 (setq org-src-fontify-natively t)
 (setq tab-always-indent 'complete)
 
-(setq org-todo-keywords
-      (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-              (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
-
 (setq eshell-prompt-function
       (lambda ()
 	(concat
