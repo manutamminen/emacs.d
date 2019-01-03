@@ -233,15 +233,6 @@
    (inferior-ess-mode . (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
    (inferior-ess-mode . (lambda () (push '("function" . ?λ) prettify-symbols-alist)))))
 
-;; (add-to-list 'load-path "~/.emacs.d/ESS/lisp/")
-;; (load "ess-site")
-;; (add-hook 'ess-mode-hook
-;; 	  (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
-;; (add-hook 'ess-mode-hook
-;; 	  (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
-;; (add-hook 'inferior-ess-mode-hook
-;; 	  (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
-
 (use-package worf
   :diminish worf-mode
   :bind
@@ -264,7 +255,7 @@
   :init
   (setq shackle-rules '(("*alchemist test report*" :select nil :size 0.3 :align 'below)))
   :config
-  (shackle-mode t))
+  (shackle-mode 1))
 
 (use-package eval-in-repl
   :config
@@ -318,8 +309,10 @@ Inserted by installing org-mode or when a release is made."
 
 
 (use-package org-bullets
-  :straight (org-bullets :host github :repo "sabof/org-bullets")
-  :hook (org-mode . org-bullets-mode))
+  :straight
+  (org-bullets :host github :repo "sabof/org-bullets")
+  :hook
+  (org-mode . org-bullets-mode))
 
 (use-package sx
   :config
@@ -334,25 +327,31 @@ Inserted by installing org-mode or when a release is made."
              ("s" . sx-search)))
 
 (use-package syntactic-close
-  :bind ("C-c x c" . syntactic-close))
+  :bind
+  ("C-c x c" . syntactic-close))
 
 (use-package super-save
-  :config (super-save-mode t))
+  :config
+  (super-save-mode 1))
 
 (use-package exec-path-from-shell
-  :config (exec-path-from-shell-initialize))
+  :config
+  (exec-path-from-shell-initialize))
 
 (use-package slime
-  :init (setq inferior-lisp-program "/usr/local/bin//sbcl"))
+  :init
+  (setq inferior-lisp-program "/usr/local/bin//sbcl"))
 
-(use-package dna-mode :load-path "~/gits/dna-mode")
+(use-package dna-mode
+  :load-path "~/gits/dna-mode")
 
 (use-package polymode
-  :straight (polymode :host github :repo "polymode/polymode")
-  :config
-  (add-to-list 'auto-mode-alist '("\\.org" . poly-org-mode))
-  (add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
-  (add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode)))
+  :straight
+  (polymode :host github :repo "polymode/polymode")
+  :mode
+  ("\\.org'" . poly-org-mode)
+  ("\\.md" . poly-markdown-mode)
+  ("\\.Rmd" . poly-markdown+r-mode))
 
 (use-package poly-R)
 (use-package poly-markdown)
