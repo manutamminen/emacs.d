@@ -305,8 +305,8 @@ Inserted by installing org-mode or when a release is made."
   :hook ((org-mode . (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
          (org-mode . (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
          (org-mode . (lambda () (font-lock-mode 0)))
-         (org-mode . poly-org-mode)))
-
+         (org-mode . poly-org-mode)
+         (org-mode . org-indent-mode)))
 
 (use-package org-bullets
   :straight
