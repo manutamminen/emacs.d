@@ -33,7 +33,6 @@
 
 ;; eshell settings
 (setq pcomplete-ignore-case t)
-;;(add-hook 'eshell-mode (company-mode -1))
 
 ;; ivy settings
 (setq ivy-use-virtual-buffers t)

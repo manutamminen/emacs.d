@@ -29,7 +29,6 @@
 
 (use-package ace-window)
 (use-package avy)
-(use-package cl)
 (use-package dash)
 (use-package swiper)
 (use-package s)
@@ -52,6 +51,7 @@
 (use-package julia-mode)
 (use-package prescient)
 (use-package ivy-prescient)
+(use-package cl)
 
 (use-package rg
   :straight (rg :host github :repo "dajva/rg.el")
@@ -82,12 +82,11 @@
   (prescient-persist-mode 1))
 
 (use-package lispy
-  :init
-  (dolist (hook '(emacs-lisp-mode-hook
-		  lisp-interaction-mode-hook
-		  lisp-mode-hook
-		  clojure-mode-hook))
-    (add-hook hook (lambda () (lispy-mode 1)))))
+  :hook
+  ((emacs-lisp-mode
+    lisp-interaction-mode
+    lisp-mode
+    clojure-mode) . lispy-mode))
 
 (use-package magit)
 
@@ -143,8 +142,8 @@
 
 (use-package python
   :mode
-  ("\\.py\\'" . python-mode)
-  ("\\.wsgi$" . python-mode)
+  ("\\.py'" . python-mode)
+  ("\\.wsgi" . python-mode)
   :interpreter ("python" . python-mode)
   :init
   (setq-default indent-tabs-mode nil)
@@ -238,9 +237,11 @@
   :bind
   (:map org-mode-map ("C-c h" . worf-goto)))
 
-(use-package base16-theme
+(use-package doom-themes
   :config
-  (load-theme 'base16-materia t))
+  (setq doom-themes-enable-bold t)
+  (setq doom-themes-enable-italic t)
+  (load-theme 'doom-one t))
 
 (use-package eyebrowse
   :config
@@ -344,6 +345,9 @@ Inserted by installing org-mode or when a release is made."
 
 (use-package dna-mode
   :load-path "~/gits/dna-mode")
+
+(use-package doom-modeline
+  :hook (after-init . doom-modeline-mode))
 
 (use-package polymode
   :straight
