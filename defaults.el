@@ -105,5 +105,10 @@
 	 (propertize "└─>" 'face `(:foreground "grey"))
 	 (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "grey")))))
 
+(add-hook 'emacs-lisp-mode-hook 'linum-mode)
+(add-hook 'lisp-interaction-mode-hook 'linum-mode)
+(add-hook 'ess-r-mode-hook 'linum-mode)
+(add-hook 'python-mode-hook 'linum-mode)
+
 (provide 'defaults)
 ;;; defaults.el ends here
