@@ -52,10 +52,13 @@
 (use-package prescient)
 (use-package ivy-prescient)
 (use-package cl)
+(use-package winum)
 
 (use-package rg
-  :straight (rg :host github :repo "dajva/rg.el")
-  :config (rg-enable-default-bindings))
+  :straight
+  (rg :host github :repo "dajva/rg.el")
+  :config
+  (rg-enable-default-bindings))
 
 (use-package counsel
   :config
@@ -128,8 +131,9 @@
   (which-key-mode 1))
 
 (use-package pyenv-mode
-  :hook ((projectile-switch-project . (lambda () projectile-pyenv-mode-set))
-         (python-mode . pyenv-mode))
+  :hook
+  ((projectile-switch-project . (lambda () projectile-pyenv-mode-set))
+   (python-mode . pyenv-mode))
   :config
   (defun projectile-pyenv-mode-set ()
     "Set pyenv version matching project name."
@@ -144,7 +148,8 @@
   :mode
   ("\\.py'" . python-mode)
   ("\\.wsgi" . python-mode)
-  :interpreter ("python" . python-mode)
+  :interpreter
+  ("python" . python-mode)
   :init
   (setq-default indent-tabs-mode nil)
   :config
@@ -161,7 +166,8 @@
     (setq company-jedi-python-bin "python")))
 
 (use-package elpy
-  :init (with-eval-after-load 'python (elpy-enable))
+  :init
+  (with-eval-after-load 'python (elpy-enable))
   :config
   (elpy-enable)
   ;; Enable elpy in a Python mode
@@ -303,17 +309,24 @@ Inserted by installing org-mode or when a release is made."
 (provide 'org-version)
 
 (use-package org
-  :hook ((org-mode . (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
-         (org-mode . (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
-         (org-mode . (lambda () (font-lock-mode 0)))
-         (org-mode . poly-org-mode)
-         (org-mode . org-indent-mode)))
+  :hook
+  ((org-mode . (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
+   (org-mode . (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
+   (org-mode . (lambda () (font-lock-mode 0)))
+   (org-mode . poly-org-mode)
+   (org-mode . org-indent-mode)))
 
 (use-package org-bullets
   :straight
   (org-bullets :host github :repo "sabof/org-bullets")
   :hook
   (org-mode . org-bullets-mode))
+
+(use-package org-journal
+  :custom
+  (org-journal-dir "~/Dropbox/Muistettavaa/Journal/")
+  (org-journal-file-format "%Y%m%D")
+  (org-journal-date-format "%e %b %Y (%A)"))
 
 (use-package sx
   :config
@@ -347,7 +360,8 @@ Inserted by installing org-mode or when a release is made."
   :load-path "~/gits/dna-mode")
 
 (use-package doom-modeline
-  :hook (after-init . doom-modeline-mode))
+  :hook
+  (after-init . doom-modeline-mode))
 
 (use-package polymode
   :straight
