@@ -211,7 +211,9 @@
 (use-package rainbow-delimiters
   :hook
   ((lisp-interaction-mode . rainbow-delimiters-mode)
-   (emacs-lisp-mode . rainbow-delimiters-mode)))
+   (emacs-lisp-mode . rainbow-delimiters-mode)
+   (python-mode . rainbow-delimiters-mode)
+   (ess-r-mode . rainbow-delimiters-mode)))
 
 (use-package hydra
   :config

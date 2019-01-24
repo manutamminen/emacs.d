@@ -1,3 +1,9 @@
+;; init-general.el --- Default Emacs configuration.
+;;; Commentary:
+;;
+;; Custom Emacs keybindings
+;;
+;;; Code:
 
 (use-package general
   :config
@@ -182,7 +188,9 @@
 (evil-define-key '(insert normal) lisp-interaction-mode-map (kbd "C-c C-c") 'eir-eval-in-ielm)
 (evil-define-key '(insert normal) Info-mode-map (kbd "C-c C-c") 'eir-eval-in-ielm)
 (evil-define-key '(insert normal) clojure-mode-map (kbd "C-c C-c") 'eir-eval-in-cider)
+(evil-define-key '(insert normal) inferior-python-mode-map (kbd "C-a") 'beginning-of-line)
 (evil-define-key '(insert normal) inferior-python-mode-map (kbd "C-e") 'end-of-line)
+(evil-define-key '(insert normal) python-mode-map (kbd "C-a") 'beginning-of-line)
 (evil-define-key '(insert normal) python-mode-map (kbd "C-e") 'end-of-line)
 (evil-define-key '(insert normal) eshell-mode-map (kbd "C-a") 'beginning-of-line)
 (evil-define-key '(insert normal) eshell-mode-map (kbd "C-e") 'end-of-line)
