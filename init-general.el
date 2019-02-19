@@ -138,6 +138,10 @@
    "wv" 'evil-window-vsplit
    "ws" 'evil-window-split
 
+   "x" '(:ignore t :which-key "teXt tools")
+   "xb" 'comment-box
+   "xu" 'uncomment-region
+
    "z" '(:ignore t :which-key "Font scaling")
    "zz" 'hydra-font/body)
 
@@ -192,6 +196,8 @@
 (evil-define-key '(insert normal) inferior-python-mode-map (kbd "C-e") 'end-of-line)
 (evil-define-key '(insert normal) python-mode-map (kbd "C-a") 'beginning-of-line)
 (evil-define-key '(insert normal) python-mode-map (kbd "C-e") 'end-of-line)
+(evil-define-key '(insert normal) python-mode-map (kbd "M-<left>") 'left-word)
+(evil-define-key '(insert normal) python-mode-map (kbd "M-<right>") 'right-word)
 (evil-define-key '(insert normal) eshell-mode-map (kbd "C-a") 'beginning-of-line)
 (evil-define-key '(insert normal) eshell-mode-map (kbd "C-e") 'end-of-line)
 (evil-define-key '(insert normal) shell-mode-map (kbd "C-a") 'beginning-of-line)
