@@ -66,6 +66,7 @@
    "jf" 'insert_lambda_function
    
    "m" '(:ignore t :which-key "Magit")
+   "ml" 'magit-log-buffer-file
    "ms" 'magit-status
    "mp" 'magit-dispatch-popup
 
