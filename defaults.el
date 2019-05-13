@@ -110,5 +110,7 @@
 (add-hook 'ess-r-mode-hook 'linum-mode)
 (add-hook 'python-mode-hook 'linum-mode)
 
+(setq ess-eval-visibly 'nowait)
+
 (provide 'defaults)
 ;;; defaults.el ends here

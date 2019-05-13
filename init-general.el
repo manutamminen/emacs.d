@@ -53,6 +53,7 @@
    "es" 'inspect-R-object-str
    "eh" 'inspect-R-object-head
    "ei" 'indent-region
+   "e=" 'align-to-equals
 
    "f" '(:ignore t :which-key "File operations")
    "ff" 'counsel-find-file

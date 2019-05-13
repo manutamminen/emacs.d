@@ -441,6 +441,13 @@ Run the R-FUN for the object at point and display the results in the R buffer"
           (goto-char starting-point))
       (message "Not a DNA sequence!"))))
 
+;; Align at the equal characters
+
+(defun align-to-equals (begin end)
+  "Align region to equal signs"
+  (interactive "r")
+  (align-regexp begin end "\\(\\s-*\\)=" 1 1 ))
+
 
 (provide 'utility-functions)
 ;;; utility-functions.el ends here
