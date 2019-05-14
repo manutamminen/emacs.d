@@ -31,6 +31,10 @@
   (setq doom-themes-enable-italic t)
   (load-theme 'doom-one t))
 
+(use-package mode-icons
+  :config
+  (mode-icons-mode 1))
+
 (load "~/.emacs.d/defaults.el")
 
 (when window-system (set-frame-size (selected-frame) 195 60)) ; set window size
@@ -39,6 +43,176 @@
 (use-package f)
 (use-package ht)
 (use-package cl)
+
+(use-package ivy
+  :config
+  (ivy-mode 1))
+
+(use-package ivy-prescient)
+
+(use-package company-prescient
+  :config
+  (ivy-prescient-mode 1)
+  (company-prescient-mode 1)
+  (prescient-persist-mode 1))
+
+(use-package magit)
+
+(use-package evil
+  :init
+  (progn
+    (use-package evil-surround)
+    (use-package evil-escape)
+    (use-package evil-lispy)
+    (use-package evil-magit
+      :config
+      (add-hook 'magit-mode-hook 'evil-local-mode)))
+  (loop for (mode . state) in '((inferior-emacs-lisp-mode . emacs)
+                                (nrepl-mode . insert)
+                                (pylookup-mode . emacs)
+                                (epa-key-list-mode . insert)
+                                (comint-mode . normal)
+                                (shell-mode . insert)
+                                (git-commit-mode . insert)
+                                (git-rebase-mode . emacs)
+                                (term-mode . emacs)
+                                (mu4e-view-mode . insert)
+                                (help-mode . insert)
+                                (helpful-mode . insert)
+                                (elfeed-search-mode . insert)
+                                (elfeed-show-mode . insert)
+                                (helm-grep-mode . emacs)
+                                (grep-mode . emacs)
+                                (magit-branch-manager-mode . emacs)
+                                (dired-mode . emacs))
+        do (evil-set-initial-state mode state))
+  :config
+  (evil-mode 1)
+  (setq-default evil-escape-key-sequence "kj")
+  (evil-escape-mode 1))
+
+(use-package which-key
+  :config
+  (which-key-mode 1))
+
+(use-package yasnippet
+  :config
+  (yas-reload-all)
+  (yas-global-mode 1))
+
+(use-package rainbow-delimiters
+  :hook
+  ((lisp-interaction-mode . rainbow-delimiters-mode)
+   (emacs-lisp-mode . rainbow-delimiters-mode)
+   (python-mode . rainbow-delimiters-mode)
+   (ess-r-mode . rainbow-delimiters-mode)))
+
+(use-package hydra
+  :config
+  (load "~/.emacs.d/hydras.el"))
+
+(use-package ess
+  :init
+  (require 'ess-site) 
+  :hook
+  ((ess-mode . (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
+   (ess-mode . (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
+   (inferior-ess-mode . (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
+   (inferior-ess-mode . (lambda () (push '("function" . ?λ) prettify-symbols-alist)))))
+
+(require 'subr-x)
+
+(use-package git)
+
+(defun org-git-version ()
+  "The Git version of org-mode.
+Inserted by installing org-mode or when a release is made."
+  (require 'git)
+  (let ((git-repo (expand-file-name
+                   "straight/repos/org/" user-emacs-directory)))
+    (string-trim
+     (git-run "describe"
+              "--match=release\*"
+              "--abbrev=6"
+              "HEAD"))))
+
+(defun org-release ()
+  "The release version of org-mode.
+Inserted by installing org-mode or when a release is made."
+  (require 'git)
+  (let ((git-repo (expand-file-name
+                   "straight/repos/org/" user-emacs-directory)))
+    (string-trim
+     (string-remove-prefix
+      "release_"
+      (git-run "describe"
+               "--match=release\*"
+               "--abbrev=0"
+               "HEAD")))))
+
+(provide 'org-version)
+
+(use-package polymode
+  :straight
+  (polymode :host github :repo "polymode/polymode"))
+
+;; (use-package polymode
+;;   :straight
+;;   (polymode :host github :repo "polymode/polymode")
+;;   :mode
+;;   ("\\.org" . poly-org-mode)
+;;   ("\\.md" . poly-markdown-mode)
+;;   ("\\.Rmd" . poly-markdown+r-mode))
+
+(use-package poly-R)
+(use-package poly-markdown)
+(use-package poly-org)
+
+(use-package org
+  :hook
+  ((org-mode . (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
+   (org-mode . (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
+   (org-mode . (lambda () (font-lock-mode 0)))
+   (org-mode . poly-org-mode)
+   (org-mode . org-indent-mode))
+  :bind (:map org-mode-map
+         ("<" . (lambda () (interactive)
+                  (if (looking-back "^")
+                      (hydra-org-template/body)
+                    (self-insert-command 1))))
+         ("C-e" . end-of-line)))
+
+(require 'org)
+
+(use-package org-bullets
+  :straight
+  (org-bullets :host github :repo "sabof/org-bullets")
+  :hook
+  (org-mode . org-bullets-mode))
+
+(use-package org-journal
+  :custom
+  (org-journal-dir "~/Dropbox/Muistettavaa/Journal/")
+  (org-journal-file-format "%Y%m%D")
+  (org-journal-date-format "%e %b %Y (%A)"))
+
+(use-package worf
+  :diminish worf-mode
+  :bind (:map org-mode-map
+         ("C-c h" . worf-goto)))
+
+(use-package super-save
+  :config
+  (super-save-mode 1))
+
+(use-package exec-path-from-shell
+  :config
+  (exec-path-from-shell-initialize))
+
+(use-package doom-modeline
+  :hook
+  (after-init . doom-modeline-mode))
+
 
 (use-package ace-window :defer t)
 (use-package avy :defer t)
@@ -60,7 +234,6 @@
 (use-package ag :defer t)
 (use-package julia-mode :defer t)
 (use-package prescient :defer t)
-(use-package ivy-prescient :defer t)
 (use-package winum :defer t)
 
 (use-package rg
@@ -84,16 +257,6 @@
   :hook prog-mode
   :defer t)
 
-(use-package ivy
-  :config
-  (ivy-mode 1))
-
-(use-package company-prescient
-  :config
-  (ivy-prescient-mode 1)
-  (company-prescient-mode 1)
-  (prescient-persist-mode 1))
-
 (use-package cider
   :defer t)
 
@@ -109,45 +272,6 @@
     lisp-mode
     clojure-mode) . lispy-mode)
   :defer t)
-
-(use-package magit)
-
-(use-package evil
-  :init
-  (progn
-    (use-package evil-surround)
-    (use-package evil-escape)
-    (use-package evil-lispy)
-    (use-package evil-magit
-      :config
-      (add-hook 'magit-mode-hook 'evil-local-mode))
-    (loop for (mode . state) in '((inferior-emacs-lisp-mode . emacs)
-                                  (nrepl-mode . insert)
-                                  (pylookup-mode . emacs)
-                                  (epa-key-list-mode . insert)
-                                  (comint-mode . normal)
-                                  (shell-mode . insert)
-                                  (git-commit-mode . insert)
-                                  (git-rebase-mode . emacs)
-                                  (term-mode . emacs)
-                                  (mu4e-view-mode . insert)
-                                  (help-mode . insert)
-                                  (helpful-mode . insert)
-                                  (elfeed-search-mode . insert)
-                                  (elfeed-show-mode . insert)
-                                  (helm-grep-mode . emacs)
-                                  (grep-mode . emacs)
-                                  (magit-branch-manager-mode . emacs)
-                                  (dired-mode . emacs))
-          do (evil-set-initial-state mode state)))
-  :config
-  (evil-mode 1)
-  (setq-default evil-escape-key-sequence "kj")
-  (evil-escape-mode 1))
-
-(use-package which-key
-  :config
-  (which-key-mode 1))
 
 (use-package pyenv-mode
   :hook
@@ -188,7 +312,8 @@
                     (self-insert-command))))
          :map inferior-python-mode-map
          ("C-a" . beginning-of-line)
-         ("C-e" . end-of-line)))
+         ("C-e" . end-of-line))
+  :defer t)
 
 (use-package jedi
   :init
@@ -220,11 +345,6 @@
   (setq gud-pdb-command-name "python -m pdb ")
   :defer t)
 
-(use-package yasnippet
-  :config
-  (yas-reload-all)
-  (yas-global-mode 1))
-
 (use-package projectile
   :config
   (projectile-mode)
@@ -246,17 +366,6 @@
   (ace-link-setup-default)
   :defer t)
 
-(use-package rainbow-delimiters
-  :hook
-  ((lisp-interaction-mode . rainbow-delimiters-mode)
-   (emacs-lisp-mode . rainbow-delimiters-mode)
-   (python-mode . rainbow-delimiters-mode)
-   (ess-r-mode . rainbow-delimiters-mode)))
-
-(use-package hydra
-  :config
-  (load "~/.emacs.d/hydras.el"))
-
 (use-package aggressive-indent
   :init
   (dolist (hook '(emacs-lisp-mode-hook
@@ -269,16 +378,6 @@
 (use-package ace-popup-menu
   :config
   (ace-popup-menu-mode 1)
-  :defer t)
-
-(use-package ess
-  :init
-  (require 'ess-site) 
-  :hook
-  ((ess-mode . (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
-   (ess-mode . (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
-   (inferior-ess-mode . (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
-   (inferior-ess-mode . (lambda () (push '("function" . ?λ) prettify-symbols-alist))))
   :defer t)
 
 (use-package eyebrowse
@@ -308,75 +407,6 @@
   (require 'eval-in-repl-python)
   :defer t)
 
-(use-package mode-icons
-  :config
-  (mode-icons-mode 1))
-
-(require 'subr-x)
-
-(use-package git)
-
-(defun org-git-version ()
-  "The Git version of org-mode.
-Inserted by installing org-mode or when a release is made."
-  (require 'git)
-  (let ((git-repo (expand-file-name
-                   "straight/repos/org/" user-emacs-directory)))
-    (string-trim
-     (git-run "describe"
-              "--match=release\*"
-              "--abbrev=6"
-              "HEAD"))))
-
-(defun org-release ()
-  "The release version of org-mode.
-Inserted by installing org-mode or when a release is made."
-  (require 'git)
-  (let ((git-repo (expand-file-name
-                   "straight/repos/org/" user-emacs-directory)))
-    (string-trim
-     (string-remove-prefix
-      "release_"
-      (git-run "describe"
-               "--match=release\*"
-               "--abbrev=0"
-               "HEAD")))))
-
-(provide 'org-version)
-
-(use-package org
-  :hook
-  ((org-mode . (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
-   (org-mode . (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
-   (org-mode . (lambda () (font-lock-mode 0)))
-   (org-mode . poly-org-mode)
-   (org-mode . org-indent-mode))
-  :bind (:map org-mode-map
-         ("<" . (lambda () (interactive)
-                  (if (looking-back "^")
-                      (hydra-org-template/body)
-                    (self-insert-command 1))))
-         ("C-e" . end-of-line)))
-
-(require 'org)
-
-(use-package org-bullets
-  :straight
-  (org-bullets :host github :repo "sabof/org-bullets")
-  :hook
-  (org-mode . org-bullets-mode))
-
-(use-package org-journal
-  :custom
-  (org-journal-dir "~/Dropbox/Muistettavaa/Journal/")
-  (org-journal-file-format "%Y%m%D")
-  (org-journal-date-format "%e %b %Y (%A)"))
-
-(use-package worf
-  :diminish worf-mode
-  :bind (:map org-mode-map
-         ("C-c h" . worf-goto)))
-
 (use-package sx
   :config
   (bind-keys :prefix "C-c s"
@@ -395,15 +425,6 @@ Inserted by installing org-mode or when a release is made."
   ("C-c x c" . syntactic-close)
   :defer t)
 
-(use-package super-save
-  :config
-  (super-save-mode 1)
-  :defer t)
-
-(use-package exec-path-from-shell
-  :config
-  (exec-path-from-shell-initialize))
-
 (use-package slime
   :init
   (setq inferior-lisp-program "/usr/local/bin//sbcl")
@@ -411,22 +432,6 @@ Inserted by installing org-mode or when a release is made."
 
 (use-package dna-mode
   :load-path "~/gits/dna-mode")
-
-(use-package doom-modeline
-  :hook
-  (after-init . doom-modeline-mode))
-
-(use-package polymode
-  :straight
-  (polymode :host github :repo "polymode/polymode")
-  :mode
-  ("\\.org'" . poly-org-mode)
-  ("\\.md" . poly-markdown-mode)
-  ("\\.Rmd" . poly-markdown+r-mode))
-
-(use-package poly-R)
-(use-package poly-markdown)
-(use-package poly-org)
 
 (load "~/.emacs.d/utility-functions.el")
 (load "~/.emacs.d/init-flycheck.el")
