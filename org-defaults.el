@@ -98,5 +98,11 @@ of `org-babel-temporary-directory'."
 
 (setq org-edit-src-content-indentation 0)
 
+(add-hook 'org-mode-hook
+          'poly-org-mode)
+
+(add-hook 'org-mode-hook
+          'org-bullets-mode)
+
 (provide 'org-default)
 ;;; org-defaults.el ends here

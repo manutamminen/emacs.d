@@ -124,71 +124,28 @@
 
 (use-package git)
 
-(defun org-git-version ()
-  "The Git version of org-mode.
-Inserted by installing org-mode or when a release is made."
-  (require 'git)
-  (let ((git-repo (expand-file-name
-                   "straight/repos/org/" user-emacs-directory)))
-    (string-trim
-     (git-run "describe"
-              "--match=release\*"
-              "--abbrev=6"
-              "HEAD"))))
-
-(defun org-release ()
-  "The release version of org-mode.
-Inserted by installing org-mode or when a release is made."
-  (require 'git)
-  (let ((git-repo (expand-file-name
-                   "straight/repos/org/" user-emacs-directory)))
-    (string-trim
-     (string-remove-prefix
-      "release_"
-      (git-run "describe"
-               "--match=release\*"
-               "--abbrev=0"
-               "HEAD")))))
-
-(provide 'org-version)
-
-(use-package polymode
-  :straight
-  (polymode :host github :repo "polymode/polymode"))
-
-;; (use-package polymode
-;;   :straight
-;;   (polymode :host github :repo "polymode/polymode")
-;;   :mode
-;;   ("\\.org" . poly-org-mode)
-;;   ("\\.md" . poly-markdown-mode)
-;;   ("\\.Rmd" . poly-markdown+r-mode))
-
-(use-package poly-R)
-(use-package poly-markdown)
-(use-package poly-org)
-
 (use-package org
-  :hook
-  ((org-mode . (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
-   (org-mode . (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
-   (org-mode . (lambda () (font-lock-mode 0)))
-   (org-mode . poly-org-mode)
-   (org-mode . org-indent-mode))
+  :load-path "~/.emacs.d/org-mode/lisp"
   :bind (:map org-mode-map
          ("<" . (lambda () (interactive)
                   (if (looking-back "^")
                       (hydra-org-template/body)
                     (self-insert-command 1))))
-         ("C-e" . end-of-line)))
+         :map evil-insert-state-map
+         ("C-e" . end-of-line)
+         ("C-a" . beginning-of-line)))
 
-(require 'org)
+(use-package polymode
+  :straight
+  (polymode :host github :repo "polymode/polymode"))
+
+(use-package poly-R)
+(use-package poly-markdown)
+(use-package poly-org)
 
 (use-package org-bullets
   :straight
-  (org-bullets :host github :repo "sabof/org-bullets")
-  :hook
-  (org-mode . org-bullets-mode))
+  (org-bullets :host github :repo "sabof/org-bullets"))
 
 (use-package org-journal
   :custom
@@ -209,6 +166,8 @@ Inserted by installing org-mode or when a release is made."
   :config
   (exec-path-from-shell-initialize))
 
+(use-package all-the-icons)
+
 (use-package doom-modeline
   :hook
   (after-init . doom-modeline-mode))
@@ -227,7 +186,6 @@ Inserted by installing org-mode or when a release is made."
 (use-package better-shell :defer t)
 (use-package bm :defer t)
 (use-package multiple-cursors :defer t)
-(use-package all-the-icons :defer t)
 (use-package macrostep :defer t)
 (use-package suggest :defer t)
 (use-package helpful :defer t)
