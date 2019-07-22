@@ -524,5 +524,10 @@ Lisp function does not specify a special indentation."
 (add-hook 'emacs-lisp-mode-hook
           (lambda () (setq-local lisp-indent-function #'Fuco1/lisp-indent-function)))
 
+(defun surround-with-code (&optional arg)
+  (interactive "P")
+  (insert-pair arg "#+BEGIN_SRC sh\n" "#+END_SRC\n"))
+
+
 (provide 'utility-functions)
 ;;; utility-functions.el ends here

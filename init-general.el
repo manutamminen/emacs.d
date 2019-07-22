@@ -143,6 +143,7 @@
    "x" '(:ignore t :which-key "teXt tools")
    "xb" 'comment-box
    "xu" 'uncomment-region
+   "xs" 'surround-with-code
 
    "z" '(:ignore t :which-key "Font scaling")
    "zz" 'hydra-font/body)

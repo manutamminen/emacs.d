@@ -295,7 +295,10 @@
   (add-hook 'inferior-python-mode-hook 'python-shell-switch-to-shell)
   ;; Use IPython as the default shell, with a workaround to accommodate IPython 5
   ;; https://emacs.stackexchange.com/questions/24453/weird-shell-output-when-using-ipython-5  (setq python-shell-interpreter "ipython")
-  (setq python-shell-interpreter-args "--simple-prompt -i")
+  ;; (setq python-shell-interpreter-args "--simple-prompt -i")
+  (setq python-shell-interpreter "ipython"
+        python-shell-interpreter-args "--simple-prompt -c exec('__import__(\\'readline\\')') -i")
+
   ;; Enable pyvenv, which manages Python virtual environments
   (pyvenv-mode 1)
   ;; Tell Python debugger (pdb) to use the current virtual environment

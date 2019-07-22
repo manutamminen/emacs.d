@@ -61,6 +61,7 @@
       python-shell-interpreter-args "--simple-prompt -i")
 (setq python-shell-enable-font-lock nil)
 (add-to-list 'exec-path "~/bin")
+(setq inferior-julia-program-name "/Applications/Julia-1.1.app/Contents/Resources/julia/bin/julia")
 
 (fset 'yes-or-no-p 'y-or-n-p)
 

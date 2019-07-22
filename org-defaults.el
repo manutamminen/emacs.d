@@ -104,5 +104,8 @@ of `org-babel-temporary-directory'."
 (add-hook 'org-mode-hook
           'org-bullets-mode)
 
+(add-hook 'org-mode-hook
+          'org-indent-mode)
+
 (provide 'org-default)
 ;;; org-defaults.el ends here
