@@ -166,7 +166,7 @@
 (define-key evil-insert-state-map (kbd "C-b") 'evil-scroll-page-up)
 (define-key evil-insert-state-map (kbd "C-d") 'evil-scroll-down)
 (evil-define-key '(insert normal) ess-r-mode-map (kbd "C-p") 'insert_then_R_operator_end_nl)
-(evil-define-key '(insert normal) inferior-ess-r-mode-map (kbd "C-p") 'insert_then_R_operator_end_nl)
+(evil-define-key '(insert normal) inferior-ess-r-mode-map (kbd "C-p") 'insert_then_R_operator)
 (evil-define-key '(insert normal) inferior-ess-r-mode-map (kbd "C-e") 'end-of-line)
 (evil-define-key '(insert normal) inferior-ess-r-mode-map (kbd "C-<left>") 'left-word)
 (evil-define-key '(insert normal) inferior-ess-r-mode-map (kbd "C-<right>") 'right-word)

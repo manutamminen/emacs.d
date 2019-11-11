@@ -97,32 +97,47 @@ BEG and END (region to sort)."
 (defun insert_then_R_operator ()
   "R - %>% operator or 'then' pipe operator."
   (interactive)
-  (cond ((member major-mode '(ess-r-mode inferior-ess-r-mode)) (progn
-				                                 (evil-forward-word-end)
-				                                 (evil-forward-char)
-				                                 (insert " %>% ")))
+  (cond ((member major-mode '(ess-r-mode inferior-ess-r-mode))
+         (progn
+	   (evil-forward-word-end)
+	   (evil-forward-char)
+	   (insert " %>% ")))
 	(t (message "Only valid in ESS mode"))))
+
+(defun insert_then_R_operator ()
+  "R - %>% operator or 'then' pipe operator."
+  (interactive)
+  (let ((curr-line (thing-at-point 'line)))
+    (if (not (string-match-p " %>% " curr-line))
+	(progn
+	  (evil-end-of-line)
+	  (evil-append 1)
+	  (insert " %>% "))
+      (progn
+        (evil-beginning-of-line)
+        (while (re-search-forward " %>% " nil t)
+          (replace-match ""))))))
 
 (defun insert_then_R_operator_end_nl ()
   "R - %>% operator; place to line end and start new line."
   (interactive)
   (let ((curr-line (thing-at-point 'line)))
-    (if (not (string-match-p "%>%" curr-line))
-        (cond ((member major-mode '(ess-r-mode inferior-ess-r-mode))
-	       (save-excursion
-	         (evil-end-of-line)
-	         (evil-append 1)
-	         (insert " %>% ")
-	         (cond ((eq major-mode 'ess-mode)
-                        (lispy-newline-and-indent-plain)))))
-	      (t (message "Only valid in ESS mode"))))))
+    (if (not (string-match-p " %>% \n" curr-line))
+	(save-excursion
+	  (evil-end-of-line)
+	  (evil-append 1)
+	  (insert " %>% "))
+      (save-excursion
+        (evil-beginning-of-line)
+        (while (re-search-forward " %>% \n" nil t)
+          (replace-match "\n"))))))
 
-(defun insert_then_R_operator_nl ()
-  "R - %>% operator or 'then' pipe operator."
-  (interactive)
-  (just-one-space 1)
-  (insert "%>%")
-  (reindent-then-newline-and-indent))
+;; (defun insert_then_R_operator_nl ()
+;;   "R - %>% operator or 'then' pipe operator."
+;;   (interactive)
+;;   (just-one-space 1)
+;;   (insert "%>%")
+;;   (reindent-then-newline-and-indent))
 
 (defun insert_right_lambda (str)
   (progn
