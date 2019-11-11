@@ -94,15 +94,28 @@ BEG and END (region to sort)."
 	((eq major-mode 'ess-mode) (ess-eval-buffer nil))
 	(t (message "Not defined for this major mode"))))
 
-(defun insert_then_R_operator ()
-  "R - %>% operator or 'then' pipe operator."
+(defun revert-to-evil-state (state)
+  "Utility function for the pipe functions"
+  (cond ((equal state 'insert) (evil-insert-state 1))
+        ((equal state 'normal) (evil-normal-state 1))
+        (t (evil-normal-state 1))))
+
+(defun insert_then_R_operator_end_nl ()
+  "R - %>% operator; place to line end and start new line."
   (interactive)
-  (cond ((member major-mode '(ess-r-mode inferior-ess-r-mode))
-         (progn
-	   (evil-forward-word-end)
-	   (evil-forward-char)
-	   (insert " %>% ")))
-	(t (message "Only valid in ESS mode"))))
+  (let ((curr-line (thing-at-point 'line))
+        (curr-state evil-state))
+    (if (not (string-match-p " %>% \n" curr-line))
+	(save-excursion
+	  (evil-end-of-line)
+	  (evil-append 1)
+	  (insert " %>% ")
+          (revert-to-evil-state curr-state))
+      (save-excursion
+        (evil-beginning-of-line)
+        (while (re-search-forward " %>% \n" nil t)
+          (replace-match "\n"))
+        (revert-to-evil-state curr-state)))))
 
 (defun insert_then_R_operator ()
   "R - %>% operator or 'then' pipe operator."
@@ -117,27 +130,6 @@ BEG and END (region to sort)."
         (evil-beginning-of-line)
         (while (re-search-forward " %>% " nil t)
           (replace-match ""))))))
-
-(defun insert_then_R_operator_end_nl ()
-  "R - %>% operator; place to line end and start new line."
-  (interactive)
-  (let ((curr-line (thing-at-point 'line)))
-    (if (not (string-match-p " %>% \n" curr-line))
-	(save-excursion
-	  (evil-end-of-line)
-	  (evil-append 1)
-	  (insert " %>% "))
-      (save-excursion
-        (evil-beginning-of-line)
-        (while (re-search-forward " %>% \n" nil t)
-          (replace-match "\n"))))))
-
-;; (defun insert_then_R_operator_nl ()
-;;   "R - %>% operator or 'then' pipe operator."
-;;   (interactive)
-;;   (just-one-space 1)
-;;   (insert "%>%")
-;;   (reindent-then-newline-and-indent))
 
 (defun insert_right_lambda (str)
   (progn
