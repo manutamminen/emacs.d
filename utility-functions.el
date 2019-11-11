@@ -106,13 +106,16 @@ BEG and END (region to sort)."
 (defun insert_then_R_operator_end_nl ()
   "R - %>% operator; place to line end and start new line."
   (interactive)
-  (cond ((member major-mode '(ess-r-mode inferior-ess-r-mode))
-	 (progn
-	   (evil-end-of-line)
-	   (evil-append 1)
-	   (insert " %>% ")
-	   (cond ((eq major-mode 'ess-mode) (lispy-newline-and-indent-plain)))))
-	(t (message "Only valid in ESS mode"))))
+  (let ((curr-line (thing-at-point 'line)))
+    (if (not (string-match-p "%>%" curr-line))
+        (cond ((member major-mode '(ess-r-mode inferior-ess-r-mode))
+	       (save-excursion
+	         (evil-end-of-line)
+	         (evil-append 1)
+	         (insert " %>% ")
+	         (cond ((eq major-mode 'ess-mode)
+                        (lispy-newline-and-indent-plain)))))
+	      (t (message "Only valid in ESS mode"))))))
 
 (defun insert_then_R_operator_nl ()
   "R - %>% operator or 'then' pipe operator."

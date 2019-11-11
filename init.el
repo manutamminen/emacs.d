@@ -270,8 +270,7 @@
                     (self-insert-command))))
          :map inferior-python-mode-map
          ("C-a" . beginning-of-line)
-         ("C-e" . end-of-line))
-  :defer t)
+         ("C-e" . end-of-line)))
 
 (use-package jedi
   :init
@@ -303,8 +302,7 @@
   (pyvenv-mode 1)
   ;; Tell Python debugger (pdb) to use the current virtual environment
   ;; https://emacs.stackexchange.com/questions/17808/enable-python-pdb-on-emacs-with-virtualenv
-  (setq gud-pdb-command-name "python -m pdb ")
-  :defer t)
+  (setq gud-pdb-command-name "python -m pdb "))
 
 (use-package projectile
   :config
@@ -385,6 +383,10 @@
   :bind
   ("C-c x c" . syntactic-close)
   :defer t)
+
+(use-package electric-operator
+  :init
+  (add-hook 'ess-mode-hook #'electric-operator-mode))
 
 (use-package slime
   :init
