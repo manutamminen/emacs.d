@@ -120,16 +120,10 @@ BEG and END (region to sort)."
 (defun insert_then_R_operator ()
   "R - %>% operator or 'then' pipe operator."
   (interactive)
-  (let ((curr-line (thing-at-point 'line)))
-    (if (not (string-match-p " %>% " curr-line))
-	(progn
-	  (evil-end-of-line)
-	  (evil-append 1)
-	  (insert " %>% "))
-      (progn
-        (evil-beginning-of-line)
-        (while (re-search-forward " %>% " nil t)
-          (replace-match ""))))))
+  (progn
+    (evil-end-of-line)
+    (evil-append 1)
+    (insert " %>% ")))
 
 (defun insert_right_lambda (str)
   (progn

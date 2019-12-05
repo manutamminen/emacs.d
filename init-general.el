@@ -60,11 +60,6 @@
    "fs" 'save-buffer
    "fr" 'counsel-recentf
    "f." 'find-function-at-point
-
-   "j" '(:ignore t :which-key "Yasnippets etc")
-   "jp" 'insert_then_R_operator
-   "je" 'insert_then_R_operator_end_nl
-   "jf" 'insert_lambda_function
    
    "m" '(:ignore t :which-key "Magit")
    "ml" 'magit-log-buffer-file
