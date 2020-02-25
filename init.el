@@ -396,6 +396,20 @@
 (use-package dna-mode
   :load-path "~/gits/dna-mode")
 
+(use-package aweshell
+  :straight
+  (aweshell :host github :repo "manateelazycat/aweshell"))
+
+(use-package fish-completion
+  :config
+  (global-fish-completion-mode))
+
+;; (use-package eshell-git-prompt
+;;   :config
+;;   (eshell-git-prompt-use-theme 'git-radar))
+
+;; (org-bullets :host github :repo "sabof/org-bullets"))
+
 (load "~/.emacs.d/utility-functions.el")
 (load "~/.emacs.d/init-flycheck.el")
 (load "~/.emacs.d/init-powerline.el")

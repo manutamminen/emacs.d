@@ -96,7 +96,7 @@ BEG and END (region to sort)."
 
 (defun revert-to-evil-state (state)
   "Utility function for the pipe functions"
-  (cond ((equal state 'insert) (evil-insert-state 1))
+  (cond ((equal state 'insert) (evil-normal-state 1))
         ((equal state 'normal) (evil-normal-state 1))
         (t (evil-normal-state 1))))
 
