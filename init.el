@@ -404,6 +404,14 @@
   :config
   (global-fish-completion-mode))
 
+(use-package conda
+  :straight
+  (conda :host github :repo "necaris/conda.el")
+  :config
+  (conda-env-initialize-eshell)
+  (custom-set-variables
+   '(conda-anaconda-home "/Users/mavatam/miniconda3")))
+
 ;; (use-package eshell-git-prompt
 ;;   :config
 ;;   (eshell-git-prompt-use-theme 'git-radar))
