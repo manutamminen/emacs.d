@@ -412,6 +412,15 @@
   (custom-set-variables
    '(conda-anaconda-home "/Users/mavatam/miniconda3")))
 
+(use-package snakemake-mode
+  :straight
+  (snakemake-mode :host github :repo "kyleam/snakemake-mode"))
+
+(use-package ess-smart-equals
+  :init   (setq ess-smart-equals-extra-ops '(brace paren percent))
+  :after  (:any ess-r-mode inferior-ess-r-mode ess-r-transcript-mode)
+  :config (ess-smart-equals-activate))
+
 ;; (use-package eshell-git-prompt
 ;;   :config
 ;;   (eshell-git-prompt-use-theme 'git-radar))
