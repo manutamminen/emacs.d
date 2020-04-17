@@ -421,6 +421,10 @@
   :after  (:any ess-r-mode inferior-ess-r-mode ess-r-transcript-mode)
   :config (ess-smart-equals-activate))
 
+(use-package smart-backspace
+  :straight
+  (smart-backspace :host github :repo "itome/smart-backspace"))
+
 ;; (use-package eshell-git-prompt
 ;;   :config
 ;;   (eshell-git-prompt-use-theme 'git-radar))
