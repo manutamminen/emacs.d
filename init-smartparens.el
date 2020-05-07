@@ -18,8 +18,16 @@
   :config
   (smartparens-global-mode t)
   (show-smartparens-global-mode t)
-  ;; (smartparens-strict-mode t)
-  )
+  (smartparens-strict-mode t))
+
+;; (use-package adjust-parens
+;;   :config
+;;   (add-hook 'emacs-lisp-mode-hook #'adjust-parens-mode)
+;;   (add-hook 'clojure-mode-hook #'adjust-parens-mode))
+
+;; (use-package paredit)
+
+;; (use-package evil-paredit)
 
 ;; (require 'smartparens)
 ;; (require 'evil-smartparens)

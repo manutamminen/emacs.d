@@ -166,12 +166,9 @@
 (evil-define-key '(insert normal) inferior-ess-r-mode-map (kbd "C-<left>") 'left-word)
 (evil-define-key '(insert normal) inferior-ess-r-mode-map (kbd "C-<right>") 'right-word)
 (evil-define-key '(insert normal) inferior-ess-r-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
-(evil-define-key '(insert normal) inferior-ess-r-mode-map (kbd "_") 'ess-insert-assign)
 (evil-define-key '(insert normal) ess-r-mode-map (kbd "C-f") 'insert_lambda_function)
 (evil-define-key '(insert normal) ess-r-mode-map (kbd "C-e") 'end-of-line)
 (evil-define-key '(insert normal) ess-r-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
-;; (evil-define-key '(insert normal) ess-r-mode-map (kbd "_") 'ess-insert-assign)
-(evil-define-key '(insert normal) ess-r-mode-map (kbd "_") 'self-insert-command)
 (evil-define-key '(insert) ess-r-mode-map (kbd "<backspace>") 'smart-backspace)
 (evil-define-key '(insert normal) lisp-interaction-mode-map (kbd "C-c C-l") 'eval-last-sexp)
 (evil-define-key '(insert normal) lisp-interaction-mode-map (kbd "C-c C-f") 'eval-defun)
@@ -184,7 +181,7 @@
 (evil-define-key '(insert normal) cider-repl-mode-map (kbd "<down>") 'cider-repl-next-input)
 ;; (evil-define-key '(insert normal) eshell-mode-map (kbd "C-v") 'evil-paste-after)
 (evil-define-key '(insert normal) suggest-mode-map (kbd "C-c C-c") 'suggest-update)
-(evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-c C-c") 'eir-eval-in-ielm)
+;; (evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-c C-c") 'eir-eval-in-ielm)
 (evil-define-key '(insert normal) lisp-interaction-mode-map (kbd "C-c C-c") 'eir-eval-in-ielm)
 (evil-define-key '(insert normal) Info-mode-map (kbd "C-c C-c") 'eir-eval-in-ielm)
 (evil-define-key '(insert normal) eshell-mode-map (kbd "C-a") 'beginning-of-line)
@@ -227,6 +224,25 @@
 ;;     (if (looking-back "^")
 ;; 	(hydra-org-mol-template/body)
 ;;       (self-insert-command 1))))
+
+(evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-c C-c")
+  (lambda () (interactive)
+    (progn
+      (univ-eval)
+      (beginning-of-defun)
+      (special-lispy-different))))
+
+(evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-e")
+  (lambda () (interactive)
+    (progn
+      (beginning-of-defun)
+      (special-lispy-different))))
+
+(evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-a")
+  (lambda () (interactive)
+    (progn
+      (beginning-of-defun))))
+
 
 (provide 'init-general)
 ;;; init-general.el ends here

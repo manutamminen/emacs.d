@@ -29,7 +29,20 @@
   :config
   (setq doom-themes-enable-bold t)
   (setq doom-themes-enable-italic t)
-  (load-theme 'doom-one t))
+  ;; (load-theme 'doom-one t)
+  (load-theme 'doom-city-lights t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  
+  ;; Enable custom neotree theme (all-the-icons must be installed!)
+  (doom-themes-neotree-config)
+  ;; or for treemacs users
+  (setq doom-themes-treemacs-theme "doom-colors") ; use the colorful treemacs theme
+  (doom-themes-treemacs-config)
+  
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
 
 (use-package mode-icons
   :config
@@ -425,11 +438,11 @@
   :straight
   (smart-backspace :host github :repo "itome/smart-backspace"))
 
-;; (use-package eshell-git-prompt
-;;   :config
-;;   (eshell-git-prompt-use-theme 'git-radar))
+(use-package nerd-fonts
+  :straight
+  (nerd-fonts :host github :repo "twlz0ne/nerd-fonts.el"))
 
-;; (org-bullets :host github :repo "sabof/org-bullets"))
+(use-package tmux-pane)
 
 (load "~/.emacs.d/utility-functions.el")
 (load "~/.emacs.d/init-flycheck.el")

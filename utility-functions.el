@@ -532,6 +532,13 @@ Lisp function does not specify a special indentation."
   (interactive "P")
   (insert-pair arg "#+BEGIN_SRC sh\n" "#+END_SRC\n"))
 
+(defun eval-and-end ()
+  (interactive)
+  (progn
+    (univ-eval)
+    (beginning-of-defun)
+    (special-lispy-different)))
+
 
 (provide 'utility-functions)
 ;;; utility-functions.el ends here
