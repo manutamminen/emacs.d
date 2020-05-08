@@ -225,23 +225,29 @@
 ;; 	(hydra-org-mol-template/body)
 ;;       (self-insert-command 1))))
 
-(evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-c C-c")
+(evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-a")
   (lambda () (interactive)
-    (progn
-      (univ-eval)
-      (beginning-of-defun)
-      (special-lispy-different))))
+    (if (and (not (bolp))
+             (not (equalp (char-after (point)) ?\()))
+        (beginning-of-defun))))
 
 (evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-e")
   (lambda () (interactive)
     (progn
-      (beginning-of-defun)
+      (if (and (not (bolp))
+               (not (equalp (char-after (point)) ?\()))
+          (beginning-of-defun))
       (special-lispy-different))))
 
-(evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-a")
+(evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-c C-c")
   (lambda () (interactive)
     (progn
-      (beginning-of-defun))))
+      (univ-eval)
+      (progn
+        (if (and (not (bolp))
+                 (not (equalp (char-after (point)) ?\()))
+            (beginning-of-defun))
+        (special-lispy-different)))))
 
 
 (provide 'init-general)
