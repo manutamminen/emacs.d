@@ -243,11 +243,10 @@
   (lambda () (interactive)
     (progn
       (univ-eval)
-      (progn
-        (if (and (not (bolp))
-                 (not (equalp (char-after (point)) ?\()))
-            (beginning-of-defun))
-        (special-lispy-different)))))
+      (if (and (not (bolp))
+               (not (equalp (char-after (point)) ?\()))
+          (beginning-of-defun))
+      (special-lispy-different))))
 
 
 (provide 'init-general)
