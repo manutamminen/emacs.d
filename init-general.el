@@ -214,29 +214,23 @@
     (progn
       (hydra-lispy-magic/body)
       (lispy-right-nostring 1))))
-;; (define-key org-mode-map (kbd "<")
-;;   (lambda () (interactive)
-;;     (if (looking-back "^")
-;; 	(hydra-org-template/body)
-;;       (self-insert-command 1))))
-;; (define-key org-mode-map ">"
-;;   (lambda () (interactive)
-;;     (if (looking-back "^")
-;; 	(hydra-org-mol-template/body)
-;;       (self-insert-command 1))))
 
 (evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-a")
   (lambda () (interactive)
-    (if (and (not (bolp))
-             (not (equalp (char-after (point)) ?\()))
-        (beginning-of-defun))))
+    (cond ((and (not (bolp))
+                (not (equalp (char-after (point)) ?\()))
+           (beginning-of-defun))
+          ((looking-at-p "[[:space:]]*$")
+           (evil-backward-section-begin)))))
 
 (evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-e")
   (lambda () (interactive)
     (progn
-      (if (and (not (bolp))
-               (not (equalp (char-after (point)) ?\()))
-          (beginning-of-defun))
+      (cond ((and (not (bolp))
+                  (not (equalp (char-after (point)) ?\()))
+             (beginning-of-defun))
+            ((looking-at-p "[[:space:]]*$")
+             (evil-forward-section-begin)))
       (special-lispy-different))))
 
 (evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-c C-c")
@@ -247,7 +241,6 @@
                (not (equalp (char-after (point)) ?\()))
           (beginning-of-defun))
       (special-lispy-different))))
-
 
 (provide 'init-general)
 ;;; init-general.el ends here
