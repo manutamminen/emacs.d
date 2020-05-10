@@ -217,15 +217,18 @@
 
 (evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-a")
   (lambda () (interactive)
-    (cond ((and (not (bolp))
-                (not (equalp (char-after (point)) ?\()))
-           (beginning-of-defun))
-          ((looking-at-p "[[:space:]]*$")
-           (evil-backward-section-begin)))))
+    (progn
+      (evil-append 1)
+      (cond ((and (not (bolp))
+                  (not (equalp (char-after (point)) ?\()))
+             (beginning-of-defun))
+            ((looking-at-p "[[:space:]]*$")
+             (evil-backward-section-begin))))))
 
 (evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-e")
   (lambda () (interactive)
     (progn
+      (evil-append 1)
       (cond ((and (not (bolp))
                   (not (equalp (char-after (point)) ?\()))
              (beginning-of-defun))
@@ -236,6 +239,7 @@
 (evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-c C-c")
   (lambda () (interactive)
     (progn
+      (evil-append 1)
       (univ-eval)
       (if (and (not (bolp))
                (not (equalp (char-after (point)) ?\()))
