@@ -209,11 +209,11 @@
 (define-key yas-minor-mode-map (kbd "C-c k") 'yas-expand)
 (define-key global-map (kbd "C-c o") 'iedit-mode)
 (define-key ivy-minibuffer-map (kbd "M-j") 'bjm/ivy-yank-whole-word)
-(define-key lispy-mode-map (kbd ")")
-  (lambda () (interactive)
-    (progn
-      (hydra-lispy-magic/body)
-      (lispy-right-nostring 1))))
+;; (define-key lispy-mode-map (kbd ")")
+;;   (lambda () (interactive)
+;;     (progn
+;;       (hydra-lispy-magic/body)
+;;       (lispy-right-nostring 1))))
 
 (evil-define-key '(insert normal) emacs-lisp-mode-map (kbd "C-a")
   (lambda () (interactive)
@@ -245,6 +245,8 @@
                (not (equalp (char-after (point)) ?\()))
           (beginning-of-defun))
       (special-lispy-different))))
+
+;; (evil-define-key '(insert) emacs-lisp-mode-map (kbd "Backspace") 'lispy-delete-backward)
 
 (provide 'init-general)
 ;;; init-general.el ends here

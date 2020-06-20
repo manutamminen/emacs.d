@@ -228,13 +228,12 @@
   :hook prog-mode
   :defer t)
 
-(use-package cider
-  :defer t)
+(use-package cider)
 
-(use-package clojure-mode
-  :bind (:map clojure-mode-map
-         ("C-c C-c" . eir-eval-in-cider))
-  :defer t)
+;; (use-package clojure-mode
+;;   :bind (:map clojure-mode-map
+;;          ("C-c C-c" . eir-eval-in-cider))
+;;   :defer t)
 
 (use-package lispy
   :hook
@@ -343,9 +342,9 @@
   (dolist (hook '(emacs-lisp-mode-hook
 		  lisp-interaction-mode-hook
 		  lisp-mode-hook
-		  clojure-mode-hook))
-    (add-hook hook (lambda () (aggressive-indent-mode 1))))
-  :defer t)
+		  clojure-mode-hook
+                  ess-r-mode-hook))
+    (add-hook hook (lambda () (aggressive-indent-mode 1)))))
 
 (use-package ace-popup-menu
   :config
@@ -430,7 +429,7 @@
   (snakemake-mode :host github :repo "kyleam/snakemake-mode"))
 
 (use-package ess-smart-equals
-  :init   (setq ess-smart-equals-extra-ops '(brace paren percent))
+  ;; :init   (setq ess-smart-equals-extra-ops '(brace paren percent))
   :after  (:any ess-r-mode inferior-ess-r-mode ess-r-transcript-mode)
   :config (ess-smart-equals-activate))
 
@@ -442,8 +441,6 @@
   :straight
   (nerd-fonts :host github :repo "twlz0ne/nerd-fonts.el"))
 
-(use-package tmux-pane)
-
 (load "~/.emacs.d/utility-functions.el")
 (load "~/.emacs.d/init-flycheck.el")
 (load "~/.emacs.d/init-powerline.el")
@@ -451,7 +448,7 @@
 (load "~/.emacs.d/init-company.el")
 (load "~/.emacs.d/init-general.el")
 (load "~/.emacs.d/init-elfeed.el")
-(load "~/.emacs.d/init-smartparens.el")
+;; (load "~/.emacs.d/init-smartparens.el")
 (load "~/.emacs.d/org-defaults.el")
 ;; (load "~/.emacs.d/init-mu4e.el")
 ;; (load "~/.emacs.d/hugo.el")
