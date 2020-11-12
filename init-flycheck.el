@@ -1,4 +1,6 @@
 (use-package flycheck
+  :straight
+  (:host github :repo "flycheck/flycheck")
   :config
   (progn
     (setq flycheck-display-errors-function nil)

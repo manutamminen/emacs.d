@@ -398,7 +398,8 @@
 
 (use-package electric-operator
   :init
-  (add-hook 'ess-mode-hook #'electric-operator-mode))
+  (add-hook 'ess-mode-hook #'electric-operator-mode)
+  (add-hook 'python-mode-hook #'electric-operator-mode))
 
 (use-package slime
   :init
@@ -441,8 +442,42 @@
   :straight
   (nerd-fonts :host github :repo "twlz0ne/nerd-fonts.el"))
 
+(use-package python-black
+  :straight
+  (python-black :host github :repo "wbolster/emacs-python-black")
+  :demand t
+  :after python
+  :hook (python-mode . python-black-on-save-mode))
+
+;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+(setq lsp-keymap-prefix "C-c l")
+
+;; (use-package lsp-mode
+;;   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+;;          ;; (python-mode . lsp)
+;;          ;; (ess-r-mode . lsp)
+;;          ;; if you want which-key integration
+;;          (lsp-mode . lsp-enable-which-key-integration))
+;;   :commands lsp)
+
+;; ;; optionally
+;; (use-package lsp-ui :commands lsp-ui-mode)
+;; ;; if you are ivy user
+;; (use-package lsp-ivy
+;;   :straight
+;;   (:host github :repo "emacs-lsp/lsp-ivy")
+;;   :commands lsp-ivy-workspace-symbol)
+
+;; (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+
+;; ;; optionally if you want to use debugger
+;; (use-package dap-mode)
+;; (require 'dap-python)
+;; (use-package dap-LANGUAGE) to load the dap adapter for your language
+
+
 (load "~/.emacs.d/utility-functions.el")
-(load "~/.emacs.d/init-flycheck.el")
+;; (load "~/.emacs.d/init-flycheck.el")
 (load "~/.emacs.d/init-powerline.el")
 (load "~/.emacs.d/init-bm.el")
 (load "~/.emacs.d/init-company.el")
