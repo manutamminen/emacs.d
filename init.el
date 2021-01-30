@@ -61,6 +61,8 @@
   :config
   (ivy-mode 1))
 
+(use-package prescient)
+
 (use-package ivy-prescient)
 
 (use-package company-prescient
@@ -173,7 +175,7 @@
 
 (use-package super-save
   :config
-  (super-save-mode 1))
+  (super-save-mode +1))
 
 (use-package exec-path-from-shell
   :config
@@ -204,7 +206,6 @@
 (use-package helpful :defer t)
 (use-package ag :defer t)
 (use-package julia-mode :defer t)
-(use-package prescient :defer t)
 (use-package winum :defer t)
 
 (use-package rg
@@ -307,7 +308,7 @@
   ;; Use IPython as the default shell, with a workaround to accommodate IPython 5
   ;; https://emacs.stackexchange.com/questions/24453/weird-shell-output-when-using-ipython-5  (setq python-shell-interpreter "ipython")
   ;; (setq python-shell-interpreter-args "--simple-prompt -i")
-  (setq python-shell-interpreter "ipython"
+  (setq python-shell-interpreter "/Library/Frameworks/Python.framework/Versions/3.9/bin/ipython"
         python-shell-interpreter-args "--simple-prompt -c exec('__import__(\\'readline\\')') -i")
 
   ;; Enable pyvenv, which manages Python virtual environments
@@ -449,6 +450,15 @@
   :after python
   :hook (python-mode . python-black-on-save-mode))
 
+;; (use-package super-save
+;;   :straight
+;;   :ensure t
+;;   :config
+;;   (super-save-mode +1))
+
+;; (use-package fira-code-mode
+;;   :hook prog-mode)
+
 ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
 (setq lsp-keymap-prefix "C-c l")
 
@@ -463,12 +473,14 @@
 ;; ;; optionally
 ;; (use-package lsp-ui :commands lsp-ui-mode)
 ;; ;; if you are ivy user
-;; (use-package lsp-ivy
-;;   :straight
-;;   (:host github :repo "emacs-lsp/lsp-ivy")
-;;   :commands lsp-ivy-workspace-symbol)
+(use-package lsp-ivy
+  :straight
+  (:host github :repo "emacs-lsp/lsp-ivy")
+  :commands lsp-ivy-workspace-symbol)
 
-;; (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+;; (use-package emacs-format-all-the-code)
+
+;; (Use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
 ;; ;; optionally if you want to use debugger
 ;; (use-package dap-mode)
@@ -477,7 +489,7 @@
 
 
 (load "~/.emacs.d/utility-functions.el")
-;; (load "~/.emacs.d/init-flycheck.el")
+(load "~/.emacs.d/init-flycheck.el")
 (load "~/.emacs.d/init-powerline.el")
 (load "~/.emacs.d/init-bm.el")
 (load "~/.emacs.d/init-company.el")

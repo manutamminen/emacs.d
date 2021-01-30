@@ -54,10 +54,10 @@
                          "~/Dropbox/Muistettavaa/gtd.org"
                          "~/Dropbox/Muistettavaa/someday.org"
                          "~/Dropbox/Muistettavaa/tickler.org"))
-(setq inferior-R-program-name "~/miniconda3/bin/R")
-(setq inferior-ess-program "~/miniconda3/bin/R")
-(setq inferior-ess-program-name "~/miniconda3/bin/R")
-(setq python-shell-interpreter "~/miniconda3/bin/ipython"
+(setq inferior-R-program-name "/usr/local/bin/R")
+(setq inferior-ess-program "/usr/local/bin/R")
+(setq inferior-ess-program-name "/usr/local/bin/R")
+(setq python-shell-interpreter "/Library/Frameworks/Python.framework/Versions/3.9/bin/ipython"
       python-shell-interpreter-args "--simple-prompt -i")
 (setq python-shell-enable-font-lock nil)
 (add-to-list 'exec-path "~/bin")
