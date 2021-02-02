@@ -29,8 +29,9 @@
   :config
   (setq doom-themes-enable-bold t)
   (setq doom-themes-enable-italic t)
-  ;; (load-theme 'doom-one t)
-  (load-theme 'doom-city-lights t)
+  (load-theme 'doom-one t)
+  ;; (load-theme 'doom-city-lights t)
+  ;; (load-theme 'doom-acario-dark t)
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
@@ -55,7 +56,8 @@
 (use-package s)
 (use-package f)
 (use-package ht)
-(use-package cl)
+(require 'cl-lib)
+(use-package ssh)
 
 (use-package ivy
   :config
@@ -82,25 +84,25 @@
     (use-package evil-magit
       :config
       (add-hook 'magit-mode-hook 'evil-local-mode)))
-  (loop for (mode . state) in '((inferior-emacs-lisp-mode . emacs)
-                                (nrepl-mode . insert)
-                                (pylookup-mode . emacs)
-                                (epa-key-list-mode . insert)
-                                (comint-mode . normal)
-                                (shell-mode . insert)
-                                (git-commit-mode . insert)
-                                (git-rebase-mode . emacs)
-                                (term-mode . emacs)
-                                (mu4e-view-mode . insert)
-                                (help-mode . insert)
-                                (helpful-mode . insert)
-                                (elfeed-search-mode . insert)
-                                (elfeed-show-mode . insert)
-                                (helm-grep-mode . emacs)
-                                (grep-mode . emacs)
-                                (magit-branch-manager-mode . emacs)
-                                (dired-mode . emacs))
-        do (evil-set-initial-state mode state))
+  (cl-loop for (mode . state) in '((inferior-emacs-lisp-mode . emacs)
+                                   (nrepl-mode . insert)
+                                   (pylookup-mode . emacs)
+                                   (epa-key-list-mode . insert)
+                                   (comint-mode . normal)
+                                   (shell-mode . insert)
+                                   (git-commit-mode . insert)
+                                   (git-rebase-mode . emacs)
+                                   (term-mode . emacs)
+                                   (mu4e-view-mode . insert)
+                                   (help-mode . insert)
+                                   (helpful-mode . insert)
+                                   (elfeed-search-mode . insert)
+                                   (elfeed-show-mode . insert)
+                                   (helm-grep-mode . emacs)
+                                   (grep-mode . emacs)
+                                   (magit-branch-manager-mode . emacs)
+                                   (dired-mode . emacs))
+           do (evil-set-initial-state mode state))
   :config
   (evil-mode 1)
   (setq-default evil-escape-key-sequence "kj")
@@ -128,12 +130,12 @@
 
 (use-package ess
   :init
-  (require 'ess-site) 
-  :hook
-  ((ess-mode . (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
-   (ess-mode . (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
-   (inferior-ess-mode . (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
-   (inferior-ess-mode . (lambda () (push '("function" . ?λ) prettify-symbols-alist)))))
+  (require 'ess-site))
+  ;; :hook
+  ;; ((ess-mode . (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
+  ;;  (ess-mode . (lambda () (push '("function" . ?λ) prettify-symbols-alist)))
+  ;;  (inferior-ess-mode . (lambda () (push '("%>%" . ?⇒) prettify-symbols-alist)))
+  ;;  (inferior-ess-mode . (lambda () (push '("function" . ?λ) prettify-symbols-alist)))))
 
 (require 'subr-x)
 
@@ -473,6 +475,44 @@
 ;; ;; optionally
 ;; (use-package lsp-ui :commands lsp-ui-mode)
 ;; ;; if you are ivy user
+(use-package ligature
+  :straight
+  (ligature :host github :repo "mickeynp/ligature.el")
+  :load-path "path-to-ligature-repo"
+  :config
+  ;; Enable the "www" ligature in every possible major mode
+  (ligature-set-ligatures 't '("www"))
+  ;; Enable traditional ligature support in eww-mode, if the
+  ;; `variable-pitch' face supports it
+  (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+  ;; Enable all Cascadia Code ligatures in programming modes
+  (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                                       ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                                       "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                                       "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                                       "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                                       "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                                       "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                                       "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                                       ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                                       "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                                       "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                                       "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                                       "://"))
+  ;; Enables ligature checks globally in all buffers. You can also do it
+  ;; per mode with `ligature-mode'.
+  (global-ligature-mode t))
+
+;; (use-package fira-code-mode
+;;   :straight
+;;   (:host github :repo "tonsky/FiraCode")
+;;   :hook prog-mode)
+
+(use-package fira-code-mode
+  :straight
+  (:host github :repo "jming422/fira-code-mode")
+  :hook prog-mode)
+
 (use-package lsp-ivy
   :straight
   (:host github :repo "emacs-lsp/lsp-ivy")

@@ -23,6 +23,9 @@
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier nil)
 (setq shell-file-name "/bin/bash")
+(set-background-color "black")
+
+(add-to-list 'default-frame-alist '(font . "Fira Code-13"))
 
 ;; encryption stuff
 (setq auth-source-debug t)
@@ -56,7 +59,7 @@
                          "~/Dropbox/Muistettavaa/tickler.org"))
 (setq inferior-R-program-name "/usr/local/bin/R")
 (setq inferior-ess-program "/usr/local/bin/R")
-(setq inferior-ess-program-name "/usr/local/bin/R")
+;; (setq inferior-ess-program-name "/usr/local/bin/R")
 (setq python-shell-interpreter "/Library/Frameworks/Python.framework/Versions/3.9/bin/ipython"
       python-shell-interpreter-args "--simple-prompt -i")
 (setq python-shell-enable-font-lock nil)
@@ -74,7 +77,7 @@
 ;; (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
 
 ;; Prettify things for the specified modes
-(global-prettify-symbols-mode 1)
+;; (global-prettify-symbols-mode 1)
 
 (defface org-block-begin-line
   '((t (:underline "#A7A6AA" :foreground "#008ED1" :background "#EAEAFF")))
